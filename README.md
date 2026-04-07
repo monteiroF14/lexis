@@ -15,4 +15,4 @@
 - NPM for package management
 - Vite for building the project alongside the dependencies
 - Bootstrap for easier CSS
-- Still need to find a library for PDF management
+- pdf-parse for pdf parsing
