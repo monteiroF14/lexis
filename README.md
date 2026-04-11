@@ -16,3 +16,4 @@
 - Vite for building the project alongside the dependencies
 - Bootstrap for easier CSS
 - pdf-parse for pdf parsing
+- Dicebear for avatar generation
