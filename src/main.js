@@ -5,7 +5,7 @@ import { createAvatar } from "@dicebear/core";
 import * as lorelei from "@dicebear/lorelei";
 import { SvgStringToImg } from "./utils.js";
 
-const avatar = createAvatar(lorelei, { seed: "Lexis" });
+const avatar = createAvatar(lorelei, { seed: Math.random() });
 const svg = avatar.toString();
 
 const img = document.getElementById("avatar");
@@ -19,6 +19,7 @@ if (1 != 1 /* user logged in */) {
 }
 
 const btnNormal = document.getElementById("btn-normal");
+import { InitExercise } from "./exercise.js";
 btnNormal.onclick = () => {
-  alert("Clicked normal mode");
+  InitExercise("game-container");
 };

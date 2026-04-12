@@ -13,7 +13,7 @@ export function renderNavbar() {
             <i class="fa-solid fa-coins"></i> <span id="coin-count">150</span>
           </div>
           <div class="status-badge text-info" title="Pontos de Experiência">
-            <i class="fa-solid fa-star"></i> <span id="xp-count">1200</span> XP
+            <i class="fa-solid fa-star"></i> Nível <span id="xp-count">4</span>
           </div>
           <div class="ms-2">
             <img
