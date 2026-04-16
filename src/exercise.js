@@ -1,75 +1,48 @@
-export function InitExercise(containerId) {
-  return new ExerciseController(
-    new ExerciseModel(),
-    new ExerciseView(containerId),
-  );
-}
-
-class ExerciseController {
+export class ExerciseController {
   constructor(model, view) {
+    if (this.constructor === ExerciseController) {
+      throw new Error("Class is of abstract type and can't be instantiated");
+    }
+    if (this.start === undefined) {
+      throw new Error("start method must be implemented");
+    }
+    if (this.handleAnswer === undefined) {
+      throw new Error("handleAnswer method must be implemented");
+    }
     this.model = model;
     this.view = view;
-
     this.start();
   }
-
-  start() {
-    this.model.loadQuestion();
-    this.view.render(this.model.currentQuestion, this.handleAnswer);
-  }
-
-  handleAnswer = (answer) => {
-    const isCorrect = this.model.checkAnswer(answer);
-    this.view.showFeedback(isCorrect);
-  };
 }
 
-class ExerciseModel {
+export class ExerciseModel {
   constructor() {
     this.currentQuestion = null;
-  }
 
-  loadQuestion() {
-    this.currentQuestion = {
-      prompt: "Select the correct spelling:",
-      correct: "because",
-      options: ["becuase", "because", "becouse"],
-    };
-  }
-
-  checkAnswer(answer) {
-    return answer === this.currentQuestion.correct;
+    if (this.constructor === ExerciseModel) {
+      throw new Error("Class is of abstract type and can't be instantiated");
+    }
+    if (this.loadQuestion === undefined) {
+      throw new Error("loadQuestion method must be implemented");
+    }
+    if (this.checkAnswer === undefined) {
+      throw new Error("checkAnswer method must be implemented");
+    }
   }
 }
 
-class ExerciseView {
-  constructor(containerId) {
-    this.container = document.getElementById(containerId);
-  }
-
-  render(question, onAnswer) {
-    this.container.innerHTML = `
-      <h2>${question.prompt}</h2>
-      <div>
-        ${question.options
-          .map((opt) => `<button class="option">${opt}</button>`)
-          .join("")}
-      </div>
-      <p id="feedback"></p>
-    `;
-
-    document.querySelectorAll(".option").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        onAnswer(btn.textContent);
-      });
-    });
-  }
-
-  showFeedback(isCorrect) {
-    const feedback = document.getElementById("feedback");
-    feedback.textContent = isCorrect ? "✅ Correct!" : "❌ Try again";
-    document.querySelectorAll(".option").forEach((btn) => {
-      btn.disabled = isCorrect;
-    });
+export class ExerciseView {
+  constructor(container) {
+    this.container = container;
+    if (this.constructor === ExerciseView) {
+      throw new Error("Class is of abstract type and can't be instantiated");
+    }
+    if (this.render === undefined) {
+      throw new Error("render method must be implemented");
+    }
+    if (this.showFeedback === undefined) {
+      throw new Error("showFeedback method must be implemented");
+    }
+    this.container = container;
   }
 }

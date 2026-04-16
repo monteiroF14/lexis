@@ -19,7 +19,9 @@ if (1 != 1 /* user logged in */) {
 }
 
 const btnNormal = document.getElementById("btn-normal");
-import { InitExercise } from "./exercise.js";
-btnNormal.onclick = () => {
-  InitExercise("game-container");
-};
+import {
+  SpellingExerciseController,
+  SpellingExerciseModel,
+  SpellingExerciseView,
+} from "./spelling_exercise.js";
+btnNormal.onclick = () => {};
