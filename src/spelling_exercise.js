@@ -1,5 +1,4 @@
 import { ExerciseController, ExerciseModel, ExerciseView } from "./exercise.js";
-
 export class SpellingExerciseController extends ExerciseController {
   constructor(model, view) {
     super(model, view);
@@ -15,6 +14,9 @@ export class SpellingExerciseController extends ExerciseController {
   handleAnswer(answer) {
     const isCorrect = this.model.checkAnswer(answer);
     this.view.showFeedback(isCorrect);
+    if (isCorrect) {
+      setTimeout(2000, () => {});
+    }
   }
 }
 

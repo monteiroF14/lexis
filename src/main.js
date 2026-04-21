@@ -19,9 +19,15 @@ if (1 != 1 /* user logged in */) {
 }
 
 const btnNormal = document.getElementById("btn-normal");
+
 import {
-  SpellingExerciseController,
-  SpellingExerciseModel,
-  SpellingExerciseView,
-} from "./spelling_exercise.js";
-btnNormal.onclick = () => {};
+  WorksheetView,
+  WorksheetModel,
+  WorksheetController,
+} from "./worksheet.js";
+
+btnNormal.onclick = () => {
+  const view = new WorksheetView(document.getElementById("game-container"));
+  const model = new WorksheetModel();
+  const controller = new WorksheetController();
+};

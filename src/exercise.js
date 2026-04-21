@@ -12,6 +12,7 @@ export class ExerciseController {
     this.model = model;
     this.view = view;
     this.start();
+    this.exerciseCompleted = new CustomEvent("exerciseCompleted");
   }
 }
 
