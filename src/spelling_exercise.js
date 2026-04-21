@@ -43,6 +43,7 @@ export class SpellingExercise {
   handleAnswer(answer) {
     const isCorrect = this.checkAnswer(answer);
     this.showFeedback(isCorrect);
+    this.container.dispatchEvent(this.exerciseCompleted);
   }
 
   showFeedback(isCorrect) {
