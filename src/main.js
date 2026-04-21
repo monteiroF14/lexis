@@ -4,6 +4,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import { createAvatar } from "@dicebear/core";
 import * as lorelei from "@dicebear/lorelei";
 import { SvgStringToImg } from "./utils.js";
+import { session } from "./session.js";
+import { Worksheet } from "./worksheet.js";
 
 const avatar = createAvatar(lorelei, { seed: Math.random() });
 const svg = avatar.toString();
@@ -14,20 +16,11 @@ if (img) {
 }
 
 const welcomeText = document.getElementById("text-welcome");
-if (1 != 1 /* user logged in */) {
-  welcomeText.innerText = "Bem vindo, usuário! 👋";
+if (session.loggedIn) {
+  welcomeText.innerText = `Bem vindo, ${session.user.username}! 👋`;
 }
 
 const btnNormal = document.getElementById("btn-normal");
-
-import {
-  WorksheetView,
-  WorksheetModel,
-  WorksheetController,
-} from "./worksheet.js";
-
 btnNormal.onclick = () => {
-  const view = new WorksheetView(document.getElementById("game-container"));
-  const model = new WorksheetModel();
-  const controller = new WorksheetController();
+  new Worksheet(document.getElementById("game-container"));
 };

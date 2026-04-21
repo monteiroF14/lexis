@@ -1,25 +1,32 @@
-export class Session {
-  #isValid = false;
-  get isValid() {
-    return this.#isValid;
-  }
-
-  #user;
-  get user() {
-    return this.#user;
-  }
-}
-
 export class User {
-  #username;
-  #email;
-  #password;
-
-  User(username, email, password) {
-    this.#username = username;
-    this.#email = email;
-    this.#password = password;
+  constructor(username, email, password) {
+    this.username = username;
+    this.email = email;
+    this.password = password;
   }
 }
 
-export const session = Session.CreateSession();
+const USER_KEY = "user";
+
+export const session = {
+  loggedIn: false,
+  user: null,
+};
+
+export function login(user) {
+  session.user = user;
+  session.loggedIn = true;
+  localStorage.setItem(USER_KEY, JSON.stringify(user));
+}
+
+export function logout() {
+  session.user = null;
+  session.loggedIn = false;
+  localStorage.removeItem(USER_KEY);
+}
+
+// Restore session from localStorage on load
+const savedUser = localStorage.getItem(USER_KEY);
+if (savedUser) {
+  login(JSON.parse(savedUser));
+}

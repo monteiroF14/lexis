@@ -1,28 +1,13 @@
-import { ExerciseController, ExerciseModel, ExerciseView } from "./exercise.js";
-export class SpellingExerciseController extends ExerciseController {
-  constructor(model, view) {
-    super(model, view);
+export class SpellingExercise {
+  constructor(container) {
+    this.container = container;
+    this.currentQuestion = null;
+    this.exerciseCompleted = new CustomEvent("exerciseCompleted");
   }
 
   start() {
-    this.model.loadQuestion();
-    this.view.render(this.model.currentQuestion, (answer) =>
-      this.handleAnswer(answer),
-    );
-  }
-
-  handleAnswer(answer) {
-    const isCorrect = this.model.checkAnswer(answer);
-    this.view.showFeedback(isCorrect);
-    if (isCorrect) {
-      setTimeout(2000, () => {});
-    }
-  }
-}
-
-export class SpellingExerciseModel extends ExerciseModel {
-  constructor() {
-    super();
+    this.loadQuestion();
+    this.render();
   }
 
   loadQuestion() {
@@ -36,18 +21,12 @@ export class SpellingExerciseModel extends ExerciseModel {
   checkAnswer(answer) {
     return answer === this.currentQuestion.correct;
   }
-}
 
-export class SpellingExerciseView extends ExerciseView {
-  constructor(container) {
-    super(container);
-  }
-
-  render(question, onAnswer) {
+  render() {
     this.container.innerHTML = `
-      <h2>${question.prompt}</h2>
+      <h2>${this.currentQuestion.prompt}</h2>
       <div>
-        ${question.options
+        ${this.currentQuestion.options
           .map((opt) => `<button class="option">${opt}</button>`)
           .join("")}
       </div>
@@ -56,9 +35,14 @@ export class SpellingExerciseView extends ExerciseView {
 
     this.container.querySelectorAll(".option").forEach((btn) => {
       btn.addEventListener("click", () => {
-        onAnswer(btn.textContent);
+        this.handleAnswer(btn.textContent);
       });
     });
+  }
+
+  handleAnswer(answer) {
+    const isCorrect = this.checkAnswer(answer);
+    this.showFeedback(isCorrect);
   }
 
   showFeedback(isCorrect) {
