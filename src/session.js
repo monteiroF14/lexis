@@ -25,7 +25,6 @@ export function logout() {
   localStorage.removeItem(USER_KEY);
 }
 
-// Restore session from localStorage on load
 const savedUser = localStorage.getItem(USER_KEY);
 if (savedUser) {
   login(JSON.parse(savedUser));
