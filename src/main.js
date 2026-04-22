@@ -4,8 +4,10 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import { createAvatar } from "@dicebear/core";
 import * as lorelei from "@dicebear/lorelei";
 import { SvgStringToImg } from "./utils.js";
+import { session } from "./session.js";
+import { Worksheet } from "./worksheet.js";
 
-const avatar = createAvatar(lorelei, { seed: "Lexis" });
+const avatar = createAvatar(lorelei, { seed: Math.random() });
 const svg = avatar.toString();
 
 const img = document.getElementById("avatar");
@@ -14,11 +16,11 @@ if (img) {
 }
 
 const welcomeText = document.getElementById("text-welcome");
-if (1 != 1 /* user logged in */) {
-  welcomeText.innerText = "Bem vindo, usuário! 👋";
+if (session.loggedIn) {
+  welcomeText.innerText = `Bem vindo, ${session.user.username}! 👋`;
 }
 
 const btnNormal = document.getElementById("btn-normal");
 btnNormal.onclick = () => {
-  alert("Clicked normal mode");
+  new Worksheet(document.getElementById("game-container"));
 };
