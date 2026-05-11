@@ -22,5 +22,5 @@ if (session.loggedIn) {
 
 const btnNormal = document.getElementById("btn-normal");
 btnNormal.onclick = () => {
-  new Worksheet(document.getElementById("game-container"));
+  new Worksheet();
 };
