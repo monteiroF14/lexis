@@ -44,7 +44,7 @@ export class CreateAccountView {
       } else {
         console.log("Account created:", result.user);
         // TODO: navigate to app page
-        window.location.href = "html/dashboard.html";
+        window.location.href = import.meta.env.BASE_URL + "html/dashboard.html";
       }
     };
   };
