@@ -1,12 +1,19 @@
 export class IndexModel {
-  login(email, password) {
-    /* valida e guarda estado */
+  #sessionModel;
+
+  constructor(sessionModel) {
+    this.#sessionModel = sessionModel;
   }
-  createAccount(data) {
-    /* valida e cria user */
+
+  login(email, password) {
+    return this.#sessionModel.login(email, password);
+  }
+
+  createAccount({ name, email, password }) {
+    return this.#sessionModel.createAccount({
+      name: name,
+      email: email,
+      password: password,
+    });
   }
 }
-
-const indexModel = new IndexModel();
-
-export default indexModel;
