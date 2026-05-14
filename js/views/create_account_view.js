@@ -1,31 +1,62 @@
 export class CreateAccountView {
-  indexHtml = "";
+  #model;
+  #savedHtml = "";
 
-  renderHtml = `
-    <h1 id="return-btn">Create account</h1>
+  #formHtml = `
+    <form id="create-account-form">
+      <h2>Create Account</h2>
+      <input type="text"  id="ca-name"     placeholder="Name"     required />
+      <input type="email" id="ca-email"    placeholder="Email"    required />
+      <input type="password" id="ca-password" placeholder="Password" required />
+      <p id="ca-error" style="color:red; display:none;"></p>
+      <button type="submit">Create Account</button>
+      <button type="button" id="return-btn">Back</button>
+    </form>
   `;
 
-  render = () => {
+  #render = () => {
     const main = document.getElementById("main-container");
     if (!main) return;
 
-    this.indexHtml = main.innerHTML;
-    main.innerHTML = this.renderHtml;
+    this.#savedHtml = main.innerHTML;
+    main.innerHTML = this.#formHtml;
+
     document.getElementById("return-btn").onclick = () => {
-      main.innerHTML = this.indexHtml;
-      const btn = document.getElementById("get-started-btn");
-      if (btn) {
-        btn.addEventListener("click", this.render);
+      main.innerHTML = this.#savedHtml;
+      const indexViewRenderedEvent = new CustomEvent("indexViewRenderedEvent");
+      main.dispatchEvent(indexViewRenderedEvent);
+    };
+
+    document.getElementById("create-account-form").onsubmit = (e) => {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById("ca-name").value,
+        email: document.getElementById("ca-email").value,
+        password: document.getElementById("ca-password").value,
+      };
+
+      const result = this.#model.createAccount(data); // ← model call
+
+      if (!result.ok) {
+        const err = document.getElementById("ca-error");
+        err.textContent = result.error;
+        err.style.display = "block";
+      } else {
+        console.log("Account created:", result.user);
+        // TODO: navigate to app page
+        window.location.href = "html/dashboard.html";
       }
     };
   };
 
-  constructor() {
-    console.log("bootstrapping login view");
+  attachTrigger() {
+    document
+      .getElementById("get-started-btn")
+      ?.addEventListener("click", this.#render);
+  }
 
-    const btn = document.getElementById("get-started-btn");
-    if (btn) {
-      btn.addEventListener("click", this.render);
-    }
+  constructor(model) {
+    this.#model = model;
+    this.attachTrigger();
   }
 }
