@@ -1,49 +1,128 @@
-<!DOCTYPE html>
+<!doctype html>
 <html data-bs-theme="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <title>Lexis - Aprendizagem das palavras</title>
+    <meta
+      name="description"
+      content="Lexis is a learning web application meant for people with dyslexia to improve their reading and vocal comprehension.
+"
+    />
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/Navbar-Centered-Brand-icons.css" />
+    <script defer type="module" src="js/init.js"></script>
+    <!-- <script defer src="js/models/index_model.js" type="module"></script> -->
+    <!-- <script defer src="js/views/login_view.js" type="module"></script> -->
+    <!-- <script defer src="js/views/create_account_view.js" type="module"></script> -->
+  </head>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Lexis</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/animate.min.css">
-    <link rel="stylesheet" href="assets/css/Navbar-Centered-Brand-icons.css">
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-md bg-body py-3">
-        <div class="container"><a class="navbar-brand d-flex flex-grow-1 justify-content-center align-items-center align-content-center" href="#"><img class="overflow-scroll pulse animated" id="navbar-home-btn" src="assets/img/LogoBlue.png" width="202" height="84"></a></div>
+  <body>
+    <nav class="navbar navbar-expand-md sticky-top bg-body py-3">
+      <div class="container">
+        <a
+          class="navbar-brand d-flex flex-grow-1 justify-content-center align-items-center align-content-center"
+          href="#"
+          ><img
+            class="overflow-scroll"
+            id="navbar-home-btn"
+            src="assets/img/LogoBlue.png"
+            width="202"
+            height="84"
+        /></a>
+      </div>
     </nav>
     <div class="container" id="main-container">
-        <div class="d-flex h-75" data-anime-opacity="1, 0" data-anime-scale="1, 0.8" data-anime-start="0" data-anime-end="100vh" id="welcome-container" data-anime-scroll-animation="">
-            <div class="container-xxl h-100 px-4 py-4 py-xl-5">
-                <div class="row row-cols-1 row-cols-md-2">
-                    <div class="col"><img class="rounded object-fit-contain w-100 h-100 tada animated" style="min-height: 300px;" src="assets/img/genius.svg"></div>
-                    <div class="col text-start d-flex flex-column justify-content-center align-items-center gap-5 p-4">
-                        <div class="d-flex flex-column">
-                            <h3 class="display-3 fw-normal">Welcome to Lexis!</h3><span class="fs-3 fw-light">Improve your comprehension.</span>
-                        </div>
-                        <div class="d-flex flex-column align-items-stretch align-self-center gap-2 align-self-lg-start"><button class="btn btn-dark text-center" type="button">Get Started</button><button class="btn btn-light text-center" type="button">I already have an account</button></div>
-                    </div>
-                </div>
+      <div
+        class="d-flex h-75 min-vh-100 mh-100"
+        data-anime-opacity="1, 0"
+        data-anime-scale="1, 0.8"
+        data-anime-start="0"
+        data-anime-end="100vh"
+        id="welcome-container"
+        data-anime-scroll-animation=""
+      >
+        <div class="container-xxl h-100 px-4 py-4 py-xl-5">
+          <div class="row row-cols-1 row-cols-md-2">
+            <div class="col">
+              <img
+                class="rounded object-fit-contain w-100 h-100"
+                style="min-height: 300px"
+                src="assets/img/genius.svg"
+              />
             </div>
-        </div>
-        <div class="d-flex vh-100 justify-content-center align-items-center" data-anime-opacity="0, 1, 0" data-anime-scale="0.8, 1" data-anime-end="100vh" id="info-container" data-anime-scroll-animation="">
-            <div class="container-xl d-flex align-items-start px-4 py-4 py-xl-5" data-bs-spy="scroll" data-bs-smooth-scroll="true">
-                <div class="row row-cols-1 row-cols-md-2 d-flex flex-row-reverse">
-                    <div class="col"><img class="rounded object-fit-contain w-100 h-100" style="min-height: 300px;" src="assets/img/studying.svg"></div>
-                    <div class="col text-start d-flex flex-column justify-content-center align-items-center gap-5 p-4">
-                        <div class="d-flex flex-column">
-                            <h3 class="display-3 fw-normal">The best learning platform.</h3><span class="fs-3 fw-light">It is a long established fact that a reader will be distracted by the <br>readable content of a page when looking at its layout. The point of <br>using Lorem Ipsum is that it has a more-or-less normal distribution of <br>letters, as opposed to using 'Content here, content here', making it <br>look like readable English.</span>
-                        </div>
-                    </div>
-                </div>
+            <div
+              class="col text-start d-flex flex-column justify-content-center align-items-center gap-5 p-4"
+            >
+              <div class="d-flex flex-column">
+                <h3 class="display-3 fw-normal">Welcome to Lexis!</h3>
+                <span class="fs-3 fw-light">Improve your comprehension.</span>
+              </div>
+              <div
+                class="d-flex flex-column align-items-stretch align-self-center gap-3"
+              >
+                <button
+                  class="btn btn-dark btn-lg text-center"
+                  id="get-started-btn"
+                  type="button"
+                >
+                  Get Started</button
+                ><button
+                  class="btn btn-light btn-lg text-center"
+                  id="login-btn"
+                  type="button"
+                >
+                  I already have an account
+                </button>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
+      <div
+        class="d-flex vh-100 justify-content-center align-items-center"
+        data-anime-opacity="0, 1, 0"
+        data-anime-scale="0.8, 1"
+        data-anime-end="100vh"
+        id="info-container"
+        data-anime-scroll-animation=""
+      >
+        <div
+          class="container-xl d-flex align-items-start px-4 py-4 py-xl-5"
+          data-bs-spy="scroll"
+          data-bs-smooth-scroll="true"
+        >
+          <div class="row row-cols-1 row-cols-md-2 d-flex flex-row-reverse">
+            <div class="col">
+              <img
+                class="rounded object-fit-contain w-100 h-100"
+                style="min-height: 300px"
+                src="assets/img/studying.svg"
+              />
+            </div>
+            <div
+              class="col text-start d-flex flex-column justify-content-center align-items-center gap-5 p-4"
+            >
+              <div class="d-flex flex-column">
+                <h3 class="display-3 fw-normal">The best learning platform.</h3>
+                <span class="fs-3 fw-light"
+                  >It is a long established fact that a reader will be
+                  distracted by the <br />readable content of a page when
+                  looking at its layout. The point of <br />using Lorem Ipsum is
+                  that it has a more-or-less normal distribution of
+                  <br />letters, as opposed to using 'Content here, content
+                  here', making it <br />look like readable English.</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/Scroll-Animation-script.js"></script>
-</body>
-
+  </body>
 </html>
