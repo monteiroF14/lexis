@@ -22,5 +22,4 @@ const avatar = createAvatar(bigSmile, {
   size: 128,
 }).toDataUri();
 
-document.getElementById("user-avatar").src = avatar;
-console.log("should put avatar");
+document.querySelector("#user-avatar").src = avatar;
