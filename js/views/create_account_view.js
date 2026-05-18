@@ -23,7 +23,7 @@ export class CreateAccountView {
 
     document.getElementById("return-btn").onclick = () => {
       main.innerHTML = this.#savedHtml;
-      const indexViewRenderedEvent = new CustomEvent("indexViewRenderedEvent");
+      const indexViewRenderedEvent = new CustomEvent("index:render");
       main.dispatchEvent(indexViewRenderedEvent);
     };
 
