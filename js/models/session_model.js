@@ -34,10 +34,13 @@ export class SessionModel {
     this.startAnonymousSession();
   }
 
-  login(email, password) {
-    if (!email || !password) return { ok: false, error: "Fill in all fields." };
+  login(identifier, password) {
+    if (!identifier || !password)
+      return { ok: false, error: "Fill in all fields." };
     const user = this.#getUsers().find(
-      (u) => u.email === email && u.password === password,
+      (u) =>
+        (u.email === identifier || u.name === identifier) &&
+        u.password === password,
     );
     if (!user) return { ok: false, error: "Invalid email or password." };
     this.#saveSession(user);
