@@ -9,5 +9,11 @@ export class User {
     this.coins = 0;
     this.solvedSheets = [];
     this.avatar = {};
+    this.currentTitle = "Explorer";
+    this.level = 1;
+
+    function getLevelTitle() {
+      return `Level ${this.level} - ${this.title}`;
+    }
   }
 }

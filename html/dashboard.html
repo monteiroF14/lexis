@@ -12,301 +12,97 @@
       content="Lexis is a learning web application meant for people with dyslexia to improve their reading and vocal comprehension.
 "
     />
-    <link rel="stylesheet" href="../src/style.css" />
-    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../assets/css/Navbar-Centered-Brand-icons.css" />
     <script src="../js/dashboard_init.js" type="module"></script>
   </head>
   <body>
-    <div class="container-fluid dashboard-shell">
-      <div class="row g-0 min-vh-100">
-        <aside
-          class="col-lg-2 sidebar-panel p-3 p-xl-4 d-flex flex-column gap-4"
-        >
-          <div class="d-flex align-items-center gap-3">
-            <div class="brand-badge">
-              <i class="fa-solid fa-otter"></i>
-            </div>
-            <div>
-              <div class="fw-bold fs-5">LingoQuest</div>
-              <div class="text-secondary small">Daily skill run</div>
-            </div>
-          </div>
+    <div
+      class="container-fluid py-4"
+      style="min-height: 100vh; background: #f5f7fb"
+    >
+      <div class="row g-4">
+        <!-- Left sidebar -->
+        <aside class="col-12 col-lg-2">
+          <div class="card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4">
+              <h4 class="fw-bold mb-4">Lexis</h4>
 
-          <nav class="d-grid gap-3">
-            <button class="menu-btn active d-flex align-items-center gap-3">
-              <span class="menu-icon icon-green"
-                ><i class="fa-solid fa-fire"></i
-              ></span>
-              <span>Hardcore Mode</span>
-            </button>
-            <button class="menu-btn d-flex align-items-center gap-3">
-              <span class="menu-icon icon-blue"
-                ><i class="fa-solid fa-file-pdf"></i
-              ></span>
-              <span>Read PDF's</span>
-            </button>
-            <button class="menu-btn d-flex align-items-center gap-3">
-              <span class="menu-icon icon-orange"
-                ><i class="fa-solid fa-store"></i
-              ></span>
-              <span>Store</span>
-            </button>
-          </nav>
-
-          <div
-            class="mt-auto rounded-4 p-4"
-            style="background: #f4ffea; border: 2px solid #daf2b8"
-          >
-            <div
-              class="d-flex align-items-center gap-2 fw-bold mb-2 text-success-emphasis"
-            >
-              <i class="fa-solid fa-bolt"></i>
-              Daily streak
-            </div>
-            <div class="display-6 fw-bold lh-1">21</div>
-            <div class="text-secondary small mt-2">
-              Keep your run alive with one lesson today.
+              <div class="d-grid gap-3">
+                <button
+                  class="btn btn-light text-start rounded-4 py-3 px-3 border"
+                  id="btn-pdf"
+                >
+                  📄 Read PDFs
+                </button>
+                <button
+                  class="btn btn-light text-start rounded-4 py-3 px-3 border"
+                  id="btn-levels"
+                >
+                  Levels
+                </button>
+                <button
+                  class="btn btn-light text-start rounded-4 py-3 px-3 border"
+                  id="btn-store"
+                >
+                  🛍️ Store
+                </button>
+                <button
+                  class="btn btn-light text-start rounded-4 py-3 px-3 border"
+                  id="btn-customization"
+                >
+                  🎨 Customization
+                </button>
+                <button
+                  class="btn btn-light text-start rounded-4 py-3 px-3 border"
+                  id="btn-settings"
+                >
+                  ⚙️ Settings
+                </button>
+              </div>
             </div>
           </div>
         </aside>
 
-        <main class="col-lg-7 roadmap-panel px-3 px-md-4 px-xl-5 py-4 py-xl-5">
-          <section class="hero-card p-4 p-xl-5 mb-4">
-            <div class="hero-orb"></div>
-            <div class="row align-items-center g-4 position-relative">
-              <div class="col-xl-8">
-                <span class="mini-badge mb-3">Unit 4 · Shadow Vocabulary</span>
-                <h1 class="h2 fw-bold mb-3">
-                  Your roadmap looks strong. Push one more lesson and unlock the
-                  boss review.
-                </h1>
-                <p class="text-secondary mb-4">
-                  A playful Duolingo-inspired dashboard with chunky cards,
-                  bright progress states, and a winding lesson path.
-                </p>
-                <div class="d-flex flex-wrap gap-3">
-                  <button
-                    class="btn btn-success btn-lg rounded-pill px-4 fw-bold"
-                    style="
-                      background: var(--duo-green);
-                      border-color: var(--duo-green-dark);
-                      box-shadow: var(--pill-shadow);
-                    "
-                  >
-                    Continue
-                  </button>
-                  <div class="xp-pill">
-                    <i class="fa-solid fa-star"></i>
-                    420 XP this week
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-4">
-                <div
-                  class="p-4 rounded-4"
-                  style="background: white; border: 2px solid var(--border)"
-                >
-                  <div
-                    class="d-flex justify-content-between align-items-center mb-2"
-                  >
-                    <span class="fw-bold">Unit progress</span>
-                    <span class="small text-secondary">7 / 10 nodes</span>
-                  </div>
-                  <div class="progress mb-3">
-                    <div class="progress-bar" style="width: 70%"></div>
-                  </div>
-                  <div class="small text-secondary">
-                    Next reward: 50 coins + legendary chest.
-                  </div>
-                </div>
-              </div>
+        <!-- Main content -->
+        <main class="col-12 col-lg-7" id="main-container"></main>
+
+        <!-- Right sidebar -->
+        <aside class="col-12 col-lg-3">
+          <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-body p-4 text-center">
+              <img
+                id="user-avatar"
+                alt="User avatar"
+                class="rounded-circle mx-auto d-block mb-3 border"
+                style="width: 120px; height: 120px; object-fit: cover"
+              />
+              <h4 class="fw-bold mb-1">Miguel</h4>
+              <p class="text-secondary mb-0">Level 1 Explorer</p>
             </div>
-          </section>
+          </div>
 
-          <section>
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <div>
-                <h2 class="h4 fw-bold mb-1">Exercise roadmap</h2>
-                <p class="text-secondary mb-0">
-                  Follow the trail and complete each lesson bubble.
-                </p>
+          <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-body p-4">
+              <h5 class="fw-bold mb-3">Progress</h5>
+              <p class="mb-2">XP: <strong>120</strong></p>
+              <div class="progress mb-3" style="height: 10px">
+                <div class="progress-bar bg-primary" style="width: 60%"></div>
               </div>
-              <span class="mini-badge">Legendary path on</span>
+              <p class="mb-0">Coins: <strong>45</strong></p>
             </div>
+          </div>
 
-            <div class="path">
-              <div class="road-step center">
-                <article class="road-node text-center">
-                  <div class="lesson-bubble bubble-green">
-                    <i class="fa-solid fa-book-open"></i>
-                  </div>
-                  <h3 class="h6 fw-bold mb-1">Basics refresh</h3>
-                  <p class="small text-secondary mb-0">
-                    Completed with perfect accuracy.
-                  </p>
-                </article>
-              </div>
-
-              <div class="road-step left">
-                <article class="road-node text-center">
-                  <div class="lesson-bubble bubble-blue">
-                    <i class="fa-solid fa-volume-high"></i>
-                  </div>
-                  <h3 class="h6 fw-bold mb-1">Listening drill</h3>
-                  <p class="small text-secondary mb-0">
-                    Audio challenge with timed answers.
-                  </p>
-                </article>
-              </div>
-
-              <div class="road-step right">
-                <article class="road-node text-center">
-                  <div class="lesson-bubble bubble-orange">
-                    <i class="fa-solid fa-keyboard"></i>
-                  </div>
-                  <h3 class="h6 fw-bold mb-1">Type the phrase</h3>
-                  <p class="small text-secondary mb-0">
-                    Earn 30 XP and one streak freeze shard.
-                  </p>
-                </article>
-              </div>
-
-              <div class="road-step center">
-                <article
-                  class="road-node text-center border-success"
-                  style="border-width: 2px; background: #f7ffef"
-                >
-                  <div class="lesson-bubble bubble-green">
-                    <i class="fa-solid fa-crown"></i>
-                  </div>
-                  <h3 class="h6 fw-bold mb-1">Boss review</h3>
-                  <p class="small text-secondary mb-2">
-                    Current checkpoint. Beat this to level up.
-                  </p>
-                  <button
-                    class="btn btn-success rounded-pill fw-bold px-4"
-                    style="
-                      background: var(--duo-green);
-                      border-color: var(--duo-green-dark);
-                    "
-                  >
-                    Start
-                  </button>
-                </article>
-              </div>
-
-              <div class="road-step left">
-                <article class="road-node text-center opacity-75">
-                  <div class="lesson-bubble bubble-gray">
-                    <i class="fa-solid fa-gem"></i>
-                  </div>
-                  <h3 class="h6 fw-bold mb-1">Legendary node</h3>
-                  <p class="small text-secondary mb-0">
-                    Locked until the boss review is cleared.
-                  </p>
-                </article>
-              </div>
+          <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4">
+              <h5 class="fw-bold mb-3">Quick Info</h5>
+              <ul class="list-unstyled mb-0">
+                <li class="mb-2">✅ 3 worksheets completed</li>
+                <li class="mb-2">⭐ 1 reward unlocked</li>
+                <li class="mb-0">🎁 New store items available</li>
+              </ul>
             </div>
-          </section>
-        </main>
-
-        <aside class="col-lg-3 stats-panel p-3 p-xl-4">
-          <section class="user-card p-4 text-center mb-4">
-            <h2 class="h5 fw-bold mb-1">PixelRider</h2>
-            <p class="text-secondary small mb-4">Fearless learner</p>
-            <img
-              id="user-avatar"
-              class="user-avatar mx-auto mb-3"
-              src="https://api.dicebear.com/7.x/adventurer/svg?seed=Brody"
-            />
-
-          </section>
-                      <section class="user-card p-4 text-center mb-4">
-
-            <div class="row g-2 text-start">
-              <div class="col-12">
-                <div
-                  class="xp-stat-pill d-flex justify-content-between align-items-center"
-                >
-                  <span><i class="fa-solid fa-star me-2"></i>XP</span>
-                  <span>12,480</span>
-                </div>
-              <div class="col-12">
-                <div
-                  class="xp-stat-pill d-flex justify-content-between align-items-center"
-                >
-                  <span><i class="fa-solid fa-star me-2"></i>Level</span>
-                  <span>20</span>
-                </div>
-              <div class="col-12">
-                <div
-                  class="xp-stat-pill d-flex justify-content-between align-items-center"
-                >
-                  <span><i class="fa-solid fa-star me-2"></i>Coins</span>
-                  <span>480</span>
-                </div>
-              </div>
-              </div>
-              <!-- <div class="col-6"> -->
-              <!--   <div class="level-pill"> -->
-              <!--     <div class="small text-uppercase">Level</div> -->
-              <!--     <div class="stat-value mt-1">19</div> -->
-              <!--   </div> -->
-              <!-- </div> -->
-              <!-- <div class="col-6"> -->
-              <!--   <div class="coin-pill"> -->
-              <!--     <div class="small text-uppercase">Coins</div> -->
-              <!--     <div class="stat-value mt-1">860</div> -->
-              <!--   </div> -->
-              <!-- </div> -->
-            </div>
-          </section>
-
-          <section class="stat-card p-4 mb-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h3 class="h6 fw-bold mb-0">Today</h3>
-              <span class="mini-badge">On track</span>
-            </div>
-            <div class="d-grid gap-3">
-              <div>
-                <div
-                  class="d-flex justify-content-between small fw-semibold mb-2"
-                >
-                  <span>Daily XP goal</span>
-                  <span>40 / 50</span>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar" style="width: 80%"></div>
-                </div>
-              </div>
-              <div>
-                <div
-                  class="d-flex justify-content-between small fw-semibold mb-2"
-                >
-                  <span>Focus meter</span>
-                  <span>92%</span>
-                </div>
-                <div class="progress">
-                  <div
-                    class="progress-bar"
-                    style="
-                      width: 92%;
-                      background: linear-gradient(
-                        90deg,
-                        #52c7ff,
-                        var(--duo-blue)
-                      );
-                    "
-                  ></div>
-                </div>
-              </div>
-            </div>
-          </section>
+          </div>
         </aside>
       </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

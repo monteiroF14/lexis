@@ -11,7 +11,6 @@ export class Worksheet {
     }
     container.addEventListener("exerciseCompleted", () => {
       setTimeout(() => {
-        console.log("hi");
         this.currentExerciseIdx++;
         this.exercises[this.currentExerciseIdx].start();
       }, 2000);
