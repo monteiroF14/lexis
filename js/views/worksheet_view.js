@@ -20,6 +20,10 @@ export default class WorksheetView {
   }
 
   render() {
+    // Hide sidebars for full‑screen worksheet
+    document
+      .querySelectorAll("aside")
+      .forEach((as) => (as.style.display = "none"));
     if (this.model.isCompleted()) {
       this._renderResults();
       return;
@@ -32,12 +36,24 @@ export default class WorksheetView {
           (this.model.currentIndex / this.model.exercises.length) * 100
         }%" aria-valuenow="${this.model.currentIndex}" aria-valuemin="0" aria-valuemax="${this.model.exercises.length}"></div>
       </div>`;
-    // clear container and add progress
-    this.container.innerHTML = `<div class="card rounded-4 shadow-sm border-0 p-4">${progressHtml}<div id="exercise-container"></div></div>`;
-    // instantiate appropriate view
+    // cancel button
+    const cancelBtn = `<button id="cancel-worksheet" class="btn btn-outline-danger mb-3">Cancel</button>`;
+    // clear container and add UI
+    this.container.innerHTML = `<div class="card rounded-4 shadow-sm border-0 p-4">${cancelBtn}${progressHtml}<div id="exercise-container"></div></div>`;
+    this.container
+      .querySelector("#cancel-worksheet")
+      .addEventListener("click", () => {
+        if (window.confirm("Exit worksheet? Progress will be lost.")) {
+          document
+            .querySelectorAll("aside")
+            .forEach((as) => (as.style.display = ""));
+          this.container.dispatchEvent(new CustomEvent("worksheet:cancel"));
+        }
+      });
     const exerciseContainer = this.container.querySelector(
       "#exercise-container",
     );
+    // instantiate appropriate view
     let view;
     switch (exercise.type) {
       case "spelling":
@@ -50,8 +66,8 @@ export default class WorksheetView {
         view = new MissingLettersView(new MissingLettersModel(exercise.data));
         break;
       case "word_order":
-          view = new WordOrderView(new WordOrderModel(exercise.data));
-          break;
+        view = new WordOrderView(new WordOrderModel(exercise.data));
+        break;
       default:
         exerciseContainer.innerHTML =
           '<div class="alert alert-danger">Unknown exercise type</div>';
@@ -95,8 +111,7 @@ export default class WorksheetView {
       </div>`;
     this.container.innerHTML = html;
     this.container.querySelector("#back-btn").addEventListener("click", () => {
-      const levelsView = new LevelsView();
-      levelsView.render();
+      this.container.dispatchEvent(new CustomEvent("worksheet:cancel"));
     });
   }
 }

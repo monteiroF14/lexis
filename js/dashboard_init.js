@@ -36,3 +36,12 @@ const customizationView = new CustomizationView(dashboardModel);
 const storeView = new StoreView(dashboardModel);
 const settingsView = new SettingsView(dashboardModel);
 levelsView.render();
+
+const mainContainer = document.querySelector("#main-container");
+// worksheet:cancel
+mainContainer.addEventListener("worksheet:cancel", () => {
+  levelsView.render();
+  document
+    .querySelectorAll("aside")
+    .forEach((as) => (as.style.display = "block"));
+});
