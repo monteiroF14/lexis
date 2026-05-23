@@ -9,6 +9,11 @@ const sessionModel = new SessionModel();
 const model = new IndexModel(sessionModel); // single shared instance
 sessionModel.initSession();
 
+// Apply saved dark‑mode preference from session user
+const savedUser = sessionModel.getSession();
+const savedTheme = (savedUser && savedUser.theme) || "light";
+document.documentElement.setAttribute("data-bs-theme", savedTheme);
+
 const loginView = new LoginView(model);
 const createAccountView = new CreateAccountView(model);
 document

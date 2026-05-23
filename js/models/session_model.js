@@ -64,4 +64,16 @@ export class SessionModel {
     this.#saveSession(newUser);
     return { ok: true, user: newUser };
   }
+
+  updateUser(user) {
+    this.#saveSession(user);
+    if (!user.isAnonymous) {
+      const users = this.#getUsers();
+      const index = users.findIndex((u) => u.id === user.id);
+      if (index !== -1) {
+        users[index] = user;
+        this.#saveUsers(users);
+      }
+    }
+  }
 }

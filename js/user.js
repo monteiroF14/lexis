@@ -11,6 +11,7 @@ export class User {
     this.avatar = {};
     this.currentTitle = "Explorer";
     this.level = 1;
+    this.theme = "light";
 
     function getLevelTitle() {
       return `Level ${this.level} - ${this.title}`;

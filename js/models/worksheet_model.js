@@ -52,7 +52,7 @@ export default class WorksheetModel {
   _persistProgress() {
     const session = SessionModel.getSession();
     if (!session) return; // no session – nothing to persist
-    const user = session.user;
+    const user = session;
     if (!user || user.isAnonymous) return; // anonymous sessions are not persisted
 
     // add worksheet id to solvedSheets if not already present

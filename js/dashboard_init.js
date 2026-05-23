@@ -13,6 +13,10 @@ import { SettingsView } from "./views/settings_view.js";
 const sessionModel = new SessionModel();
 const session = sessionModel.getSession();
 
+// Apply saved dark‑mode preference from session user
+const savedTheme = (session && session.theme) || "light";
+document.documentElement.setAttribute("data-bs-theme", savedTheme);
+
 console.log(session);
 
 const avatar = createAvatar(bigSmile, {
