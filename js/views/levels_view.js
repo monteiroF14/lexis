@@ -1,4 +1,5 @@
 import WorksheetModel from "../models/worksheet_model.js";
+import HardcoreWorksheetModel from "../models/hardcore_worksheet_model.js";
 import WorksheetView from "./worksheet_view.js";
 
 export class LevelsView {
@@ -47,6 +48,16 @@ export class LevelsView {
         </div>
       </div>
 
+      <div class="card border-0 shadow-sm rounded-4 mb-3">
+        <div class="card-body p-4 d-flex align-items-center justify-content-between">
+          <h3 class="fw-bold mb-0">Worksheet Mode</h3>
+          <select id="mode-select" class="form-select w-auto">
+            <option value="normal" selected>Normal</option>
+            <option value="hardcore">Hardcore</option>
+          </select>
+        </div>
+      </div>
+
       <div class="card border-0 shadow-sm rounded-4">
         <div class="card-body p-4">
           <h3 class="fw-bold mb-3">Today’s Worksheets</h3>
@@ -92,23 +103,29 @@ export class LevelsView {
       </div>
     `;
 
-    // Wire Open buttons to launch a worksheet
+    // Wire Open buttons to launch a worksheet based on selected mode
     const openButtons = mainContainer.querySelectorAll(
       ".card-body button.btn-primary",
     );
     openButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
-        const exercises = [
-          { type: "missing", data: { word: "banana" } },
-          { type: "spelling", data: { word: "apple" } },
-          { type: "letter_dnd", data: { word: "cat", hint: "🐱" } },
-          {
-            type: "word_order",
-            data: { sentence: "the quick brown fox jumps" },
-          },
-        ];
-        const worksheetId = `worksheet-${Date.now()}`;
-        const model = new WorksheetModel(exercises, worksheetId);
+        const mode = document.querySelector('#mode-select').value;
+        let model;
+        if (mode === 'hardcore') {
+          model = new HardcoreWorksheetModel();
+        } else {
+          const exercises = [
+            { type: "missing", data: { word: "banana" } },
+            { type: "spelling", data: { word: "apple" } },
+            { type: "letter_dnd", data: { word: "cat", hint: "🐱" } },
+            {
+              type: "word_order",
+              data: { sentence: "the quick brown fox jumps" },
+            },
+          ];
+          const worksheetId = `worksheet-${Date.now()}`;
+          model = new WorksheetModel(exercises, worksheetId);
+        }
         const view = new WorksheetView(model);
         view.render();
       });
