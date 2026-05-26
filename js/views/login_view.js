@@ -5,7 +5,7 @@ export class LoginView {
   #formHtml = `
     <form id="login-form">
       <h2>Login</h2>
-      <input type="email" id="login-email" placeholder="Email" required />
+      <input id="login-email" placeholder="Email or username" required />
       <input type="password" id="login-password" placeholder="Password" required />
       <p id="login-error" style="color:red; display:none;"></p>
       <button type="submit">Login</button>
