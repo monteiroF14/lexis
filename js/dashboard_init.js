@@ -34,7 +34,7 @@ const avatar = createAvatar(bigSmile, {
 document.querySelector("#user-avatar").src = avatar;
 
 const dashboardModel = new DashboardModel();
-const levelsView = new LevelsView(dashboardModel);
+const levelsView = new LevelsView(sessionModel, dashboardModel);
 const pdfView = new PdfView(dashboardModel);
 const customizationView = new CustomizationView(dashboardModel);
 const storeView = new StoreView(dashboardModel);

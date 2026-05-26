@@ -1,22 +1,16 @@
-/*
- * WorksheetModel – manages a list of exercises, navigation, scoring and persistence.
- * Follows the MV pattern used in the project.
- */
-
-import { SessionModel } from './session_model.js';
-
 export default class WorksheetModel {
   /**
    * @param {Array<Object>} exercises – array of exercise objects. Each object must contain:
    *   {string} type – the exercise type identifier (e.g. 'spelling')
    *   {Object} data – any data needed by the exercise model
    */
-  constructor(exercises, worksheetId) {
+  constructor(exercises, worksheetId, sessionModel) {
     this.exercises = exercises;
     this.currentIndex = 0;
     this.correctAnswers = 0;
     this.totalAnswers = 0;
-    this.worksheetId = worksheetId; // unique id for persistence
+    this.worksheetId = worksheetId;
+    this.sessionModel = sessionModel;
   }
 
   getCurrentExercise() {
@@ -50,7 +44,7 @@ export default class WorksheetModel {
   }
 
   _persistProgress() {
-    const session = SessionModel.getSession();
+    const session = this.sessionModel.getSession();
     if (!session) return; // no session – nothing to persist
     const user = session;
     if (!user || user.isAnonymous) return; // anonymous sessions are not persisted
@@ -63,8 +57,6 @@ export default class WorksheetModel {
     const xpEarned = this.correctAnswers * 10;
     user.xp += xpEarned;
 
-    // Update session storage via SessionModel helpers
-    SessionModel.updateUser(user);
-    // also store the updated user list (SessionModel.updateUser does that)
+    this.sessionModel?.updateUser(user);
   }
 }
