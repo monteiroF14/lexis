@@ -9,6 +9,7 @@ export class User {
     this.coins = 0;
     this.solvedSheets = [];
     this.avatar = {};
+    this.purchasedStoreItems = [];
     this.currentTitle = "Explorer";
     this.level = 1;
     this.theme = "light";
