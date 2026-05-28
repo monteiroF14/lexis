@@ -57,6 +57,10 @@ export default class WorksheetModel {
     const xpEarned = this.correctAnswers * 10;
     user.xp += xpEarned;
 
+    // award coins – 3 per correct answer
+    const coinsEarned = this.correctAnswers * 3;
+    user.coins += coinsEarned;
+
     this.sessionModel?.updateUser(user);
   }
 }
