@@ -5,6 +5,9 @@ import { resolve } from "node:path";
 const root = fileURLToPath(new URL(".", import.meta.url));
 
 export default defineConfig({
+  resolve: {
+    dedupe: ["pdfjs-dist"],
+  },
   server: {
     port: 3000,
     open: true,
