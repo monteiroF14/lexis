@@ -1,5 +1,3 @@
-import { SessionModel } from "../models/session_model.js";
-
 export class SettingsView {
   constructor(sessionModel) {
     this.sessionModel = sessionModel;

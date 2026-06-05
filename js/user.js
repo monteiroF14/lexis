@@ -13,9 +13,5 @@ export class User {
     this.currentTitle = "Explorer";
     this.level = 1;
     this.theme = "light";
-
-    function getLevelTitle() {
-      return `Level ${this.level} - ${this.title}`;
-    }
   }
 }

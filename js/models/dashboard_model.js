@@ -1,3 +1,0 @@
-export class DashboardModel {
-  constructor() {}
-}

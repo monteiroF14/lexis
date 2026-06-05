@@ -35,8 +35,7 @@ function generateExercises(count) {
 const TOTAL_STEPS = 10;
 
 export class LevelsView {
-  constructor(sessionModel, model) {
-    this.model = model;
+  constructor(sessionModel) {
     this.sessionModel = sessionModel;
     this.currentMode = "normal";
     const btn = document.querySelector("#btn-levels");
@@ -140,7 +139,7 @@ export class LevelsView {
   _startWorksheet() {
     const mode = document.querySelector("#mode-select").value;
     const model = mode === "hardcore"
-      ? new HardcoreWorksheetModel()
+      ?       new HardcoreWorksheetModel(this.sessionModel)
       : new WorksheetModel(generateExercises(5), `worksheet-${Date.now()}`, this.sessionModel);
     new WorksheetView(model).render();
   }
