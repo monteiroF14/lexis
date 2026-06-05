@@ -88,6 +88,27 @@ function refreshSidebar() {
   if (dailyCoinsText) dailyCoinsText.textContent = `${dailyCoinsPct}%`;
 }
 
+// Apply adapt text on page load
+if (session?.adaptText) {
+  document.body.classList.add("dyslexic-mode");
+}
+
+// Sidebar active tab highlighter – exposed globally so views can call it
+window.setActiveSidebar = (activeId) => {
+  const ids = ["btn-pdf", "btn-store", "btn-customization", "btn-settings"];
+  ids.forEach((id) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    if (id === activeId) {
+      btn.style.backgroundColor = "#4f46e5";
+      btn.style.color = "white";
+    } else {
+      btn.style.backgroundColor = "#e5e7eb";
+      btn.style.color = "#374151";
+    }
+  });
+};
+
 refreshSidebar();
 
 const dashboardModel = new DashboardModel();
@@ -101,7 +122,10 @@ levelsView.render();
 // Logo click → home / levels
 const logo = document.querySelector("#sidebar-logo");
 if (logo) {
-  logo.addEventListener("click", () => levelsView.render());
+  logo.addEventListener("click", () => {
+    window.setActiveSidebar(null);
+    levelsView.render();
+  });
 }
 
 // Logout
@@ -115,6 +139,7 @@ if (logoutBtn) {
 
 const mainContainer = document.querySelector("#main-container");
 mainContainer.addEventListener("worksheet:cancel", () => {
+  window.setActiveSidebar(null);
   refreshSidebar();
   levelsView.render();
 });
