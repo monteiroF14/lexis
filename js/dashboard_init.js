@@ -111,14 +111,12 @@ if (session?.adaptText) {
 
 // Tab highlighter – uses data-tab attributes on both desktop and mobile nav buttons
 window.setActiveTab = (tab) => {
-  document.querySelectorAll('[data-tab]').forEach(btn => {
-    btn.style.backgroundColor = "";
-    btn.style.color = "";
+  document.querySelectorAll("[data-tab]").forEach((btn) => {
+    btn.classList.remove("lexis-nav-btn-active");
   });
   if (tab) {
-    document.querySelectorAll(`[data-tab="${tab}"]`).forEach(btn => {
-      btn.style.backgroundColor = "#4f46e5";
-      btn.style.color = "white";
+    document.querySelectorAll(`[data-tab="${tab}"]`).forEach((btn) => {
+      btn.classList.add("lexis-nav-btn-active");
     });
   }
 };

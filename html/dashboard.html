@@ -1,116 +1,103 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-bs-theme="light">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <title>Lexis - Aprendizagem das palavras</title>
-    <meta
-      name="description"
-      content="Lexis is a learning web application meant for people with dyslexia to improve their reading and vocal comprehension."
-    />
+    <meta name="description" content="Lexis is a learning web application meant for people with dyslexia to improve their reading and vocal comprehension." />
     <script src="../js/dashboard_init.js" type="module"></script>
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
-    <div class="d-flex flex-column flex-md-row" style="height: 100vh; overflow: hidden; background: #f0f0f0;">
+    <div class="d-flex flex-column flex-md-row lexis-viewport lexis-dashboard-wrapper">
 
-      <!-- ====== Left nav (desktop) / Bottom nav (mobile) ====== -->
-      <nav class="order-3 order-md-1 flex-md-shrink-0 bg-white d-flex flex-column">
-        <!-- Desktop: left sidebar -->
-        <div class="d-none d-md-block position-relative" style="width: 200px; height: 100vh;">
+      <nav class="order-3 order-md-1 flex-md-shrink-0 d-flex flex-column lexis-sidebar-left">
+        <div class="d-none d-md-block position-relative lexis-sidebar-desktop">
           <div class="p-3 text-center">
-            <img id="sidebar-logo" src="../assets/img/LogoBlue.png" style="height: 50px; cursor: pointer;" alt="Lexis" />
+            <img id="sidebar-logo" class="lexis-logo-img" src="../assets/img/LogoBlue.png" alt="Lexis" />
           </div>
-          <div class="position-absolute d-flex align-items-center justify-content-center" style="top: 0; left: 0; right: 0; bottom: 0; pointer-events: none;">
-            <div class="mx-3 p-3 rounded-4" style="background: #f3f4f6; pointer-events: auto;">
+          <div class="lexis-sidebar-overlay">
+            <div class="mx-3 p-3 rounded-4 lexis-sidebar-inner" style="pointer-events: auto;">
               <div class="d-flex flex-column align-items-center gap-2">
-                <button class="btn rounded-3 py-2 px-4 text-center border-0" data-tab="pdf" style="background-color: #e5e7eb; color: #374151;">Documents</button>
-                <button class="btn rounded-3 py-2 px-4 text-center border-0" data-tab="store" style="background-color: #e5e7eb; color: #374151;">Store</button>
-                <button class="btn rounded-3 py-2 px-4 text-center border-0" data-tab="customization" style="background-color: #e5e7eb; color: #374151;">Customize</button>
-                <button class="btn rounded-3 py-2 px-4 text-center border-0" data-tab="settings" style="background-color: #e5e7eb; color: #374151;">Settings</button>
+                <button class="btn rounded-3 py-2 px-4 text-center border-0 lexis-nav-btn" data-tab="pdf">Documents</button>
+                <button class="btn rounded-3 py-2 px-4 text-center border-0 lexis-nav-btn" data-tab="store">Store</button>
+                <button class="btn rounded-3 py-2 px-4 text-center border-0 lexis-nav-btn" data-tab="customization">Customize</button>
+                <button class="btn rounded-3 py-2 px-4 text-center border-0 lexis-nav-btn" data-tab="settings">Settings</button>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Mobile: bottom icon nav -->
-        <div class="d-flex d-md-none justify-content-around align-items-center py-2 border-top bg-white flex-shrink-0" style="padding-bottom: env(safe-area-inset-bottom);">
-          <button class="btn btn-sm p-2 border-0 rounded-3" data-tab="pdf" style="font-size: 1.2rem; background: none; color: #374151;">📄</button>
-          <button class="btn btn-sm p-2 border-0 rounded-3" data-tab="store" style="font-size: 1.2rem; background: none; color: #374151;">🛒</button>
-          <button id="btn-levels-mobile" class="btn btn-sm p-2 border-0 rounded-3" style="font-size: 1.4rem; background: none; color: #374151;">🏠</button>
-          <button class="btn btn-sm p-2 border-0 rounded-3" data-tab="customization" style="font-size: 1.2rem; background: none; color: #374151;">🎨</button>
-          <button class="btn btn-sm p-2 border-0 rounded-3" data-tab="settings" style="font-size: 1.2rem; background: none; color: #374151;">⚙️</button>
+        <div class="d-flex d-md-none justify-content-around align-items-center py-2 border-top lexis-sidebar-left lexis-safe-bottom flex-shrink-0">
+          <button class="btn btn-sm p-2 border-0 rounded-3 lexis-mobile-nav-btn" data-tab="pdf">📄</button>
+          <button class="btn btn-sm p-2 border-0 rounded-3 lexis-mobile-nav-btn" data-tab="store">🛒</button>
+          <button id="btn-levels-mobile" class="btn btn-sm p-2 border-0 rounded-3 lexis-mobile-home-btn">🏠</button>
+          <button class="btn btn-sm p-2 border-0 rounded-3 lexis-mobile-nav-btn" data-tab="customization">🎨</button>
+          <button class="btn btn-sm p-2 border-0 rounded-3 lexis-mobile-nav-btn" data-tab="settings">⚙️</button>
         </div>
       </nav>
 
-      <!-- ====== Main content ====== -->
-      <main class="order-2 flex-grow-1 overflow-y-auto" id="main-container" style="background: #f0f0f0;"></main>
+      <main class="order-2 flex-grow-1 overflow-y-auto lexis-bg-main" id="main-container"></main>
 
-      <!-- ====== Right sidebar (desktop) / Top header (mobile) ====== -->
-      <aside class="order-1 order-md-3 bg-white flex-md-shrink-0">
-        <!-- Mobile: top header row -->
-        <div class="d-flex d-md-none align-items-center px-3 py-2 border-bottom bg-white flex-shrink-0" style="gap: 0.5rem;">
-          <img id="user-avatar-mobile" class="rounded-circle border" style="width: 32px; height: 32px; object-fit: cover;" alt="" />
-          <span class="fw-bold small" id="user-name-mobile">Guest</span>
+      <aside class="order-1 order-md-3 lexis-sidebar-right flex-md-shrink-0">
+        <div class="d-flex d-md-none align-items-center px-3 py-2 border-bottom lexis-sidebar-right lexis-gap-sm flex-shrink-0">
+          <img id="user-avatar-mobile" class="rounded-circle border lexis-avatar-sm" alt="" />
+          <span class="fw-bold small lexis-text-p" id="user-name-mobile">Guest</span>
           <span class="small text-secondary" id="user-level-mobile"></span>
-          <span class="small ms-auto" style="color: #22c55e;">⭐<span id="user-xp-mobile">0</span></span>
-          <span class="small" style="color: #f97316;">🪙<span id="user-coins-mobile">0</span></span>
+          <span class="small ms-auto lexis-text-green">⭐<span id="user-xp-mobile">0</span></span>
+          <span class="small lexis-text-orange">🪙<span id="user-coins-mobile">0</span></span>
         </div>
 
-        <!-- Desktop: full right sidebar -->
-        <div class="d-none d-md-flex flex-column" style="width: 260px; height: 100vh;">
+        <div class="d-none d-md-flex flex-column lexis-sidebar-right-desktop">
           <div class="p-3 flex-grow-1">
             <div class="card border-0 shadow-sm rounded-4 mb-3 text-center">
               <div class="card-body p-3">
-                <h5 class="fw-bold mb-2" id="user-name">Guest</h5>
-                <img id="user-avatar" alt="User avatar" class="rounded-circle mx-auto d-block mb-2 border" style="width: 100px; height: 100px; object-fit: cover" />
+                <h5 class="fw-bold mb-2 lexis-text-p" id="user-name">Guest</h5>
+                <img id="user-avatar" alt="User avatar" class="rounded-circle mx-auto d-block mb-2 border lexis-avatar-lg" />
                 <p class="text-secondary mb-0 small" id="user-level">Level 1 Explorer</p>
               </div>
             </div>
             <div class="card border-0 shadow-sm rounded-4 mb-3">
               <div class="card-body p-3">
-                <div class="d-flex justify-content-between align-items-center mb-2 pb-2" style="border-bottom: 1px solid #eee;">
-                  <span class="small" style="color: #ef4444;">Level</span>
-                  <span class="fw-bold small" id="user-stats-level">1</span>
+                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 lexis-stat-row">
+                  <span class="small lexis-text-red">Level</span>
+                  <span class="fw-bold small lexis-text-p" id="user-stats-level">1</span>
                 </div>
-                <div class="d-flex justify-content-between align-items-center mb-2 pb-2" style="border-bottom: 1px solid #eee;">
-                  <span class="small" style="color: #22c55e;">XP</span>
-                  <span class="fw-bold small" id="user-stats-xp">0</span>
+                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 lexis-stat-row">
+                  <span class="small lexis-text-green">XP</span>
+                  <span class="fw-bold small lexis-text-p" id="user-stats-xp">0</span>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
-                  <span class="small" style="color: #f97316;">Coins</span>
-                  <span class="fw-bold small" id="user-stats-coins">0</span>
+                  <span class="small lexis-text-orange">Coins</span>
+                  <span class="fw-bold small lexis-text-p" id="user-stats-coins">0</span>
                 </div>
               </div>
             </div>
             <div class="card border-0 shadow-sm rounded-4 mb-3">
               <div class="card-body p-3">
                 <div class="d-flex justify-content-between align-items-center mb-1">
-                  <span class="small" style="color: #22c55e;">Daily XP</span>
-                  <span class="small" id="daily-xp-text">0%</span>
+                  <span class="small lexis-text-green">Daily XP</span>
+                  <span class="small lexis-text-p" id="daily-xp-text">0%</span>
                 </div>
-                <div class="progress" style="height: 8px;">
-                  <div class="progress-bar" id="daily-xp-bar" role="progressbar" style="width: 0%; background-color: #22c55e;"></div>
+                <div class="progress lexis-progress-thin">
+                  <div class="progress-bar lexis-bar-green" id="daily-xp-bar" role="progressbar" style="width: 0%;"></div>
                 </div>
               </div>
             </div>
             <div class="card border-0 shadow-sm rounded-4 mb-3">
               <div class="card-body p-3">
                 <div class="d-flex justify-content-between align-items-center mb-1">
-                  <span class="small" style="color: #f97316;">Daily Coins</span>
-                  <span class="small" id="daily-coins-text">0%</span>
+                  <span class="small lexis-text-orange">Daily Coins</span>
+                  <span class="small lexis-text-p" id="daily-coins-text">0%</span>
                 </div>
-                <div class="progress" style="height: 8px;">
-                  <div class="progress-bar" id="daily-coins-bar" role="progressbar" style="width: 0%; background-color: #f97316;"></div>
+                <div class="progress lexis-progress-thin">
+                  <div class="progress-bar lexis-bar-orange" id="daily-coins-bar" role="progressbar" style="width: 0%;"></div>
                 </div>
               </div>
             </div>
           </div>
           <div class="p-3">
-            <button id="btn-logout" class="btn w-100 rounded-3 text-white py-2" style="background-color: #4f46e5; border: none;">Log Out</button>
+            <button id="btn-logout" class="btn w-100 rounded-3 text-white py-2 lexis-btn-logout">Log Out</button>
           </div>
         </div>
       </aside>
