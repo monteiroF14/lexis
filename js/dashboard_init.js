@@ -48,28 +48,44 @@ function refreshSidebar() {
   const user = sessionModel.getSession();
   if (!user) return;
 
-  // Avatar
+  // Desktop avatar
   const avatarEl = document.querySelector("#user-avatar");
   if (avatarEl) {
     avatarEl.src = createAvatar(bigSmile, getAvatarOptions(user)).toDataUri();
   }
+  // Mobile avatar
+  const avatarMob = document.querySelector("#user-avatar-mobile");
+  if (avatarMob) {
+    avatarMob.src = createAvatar(bigSmile, getAvatarOptions(user)).toDataUri();
+  }
 
-  // Name & level title
+  // Desktop name
   const nameEl = document.querySelector("#user-name");
   if (nameEl) nameEl.textContent = user.name;
+  // Mobile name
+  const nameMob = document.querySelector("#user-name-mobile");
+  if (nameMob) nameMob.textContent = user.name;
 
+  // Desktop level title
   const levelEl = document.querySelector("#user-level");
   if (levelEl) levelEl.textContent = `Level ${user.level} ${user.currentTitle}`;
+  // Mobile level
+  const levelMob = document.querySelector("#user-level-mobile");
+  if (levelMob) levelMob.textContent = `Lv.${user.level}`;
 
-  // Stats card
+  // Desktop stats card
   const statsLevel = document.querySelector("#user-stats-level");
   if (statsLevel) statsLevel.textContent = user.level;
-
   const statsXp = document.querySelector("#user-stats-xp");
   if (statsXp) statsXp.textContent = user.xp;
-
   const statsCoins = document.querySelector("#user-stats-coins");
   if (statsCoins) statsCoins.textContent = user.coins;
+
+  // Mobile XP / coins
+  const xpMob = document.querySelector("#user-xp-mobile");
+  if (xpMob) xpMob.textContent = user.xp;
+  const coinsMob = document.querySelector("#user-coins-mobile");
+  if (coinsMob) coinsMob.textContent = user.coins;
 
   // Daily XP progress (cap at 200 XP = one level)
   const dailyXpCap = 200;
@@ -93,20 +109,18 @@ if (session?.adaptText) {
   document.body.classList.add("dyslexic-mode");
 }
 
-// Sidebar active tab highlighter – exposed globally so views can call it
-window.setActiveSidebar = (activeId) => {
-  const ids = ["btn-pdf", "btn-store", "btn-customization", "btn-settings"];
-  ids.forEach((id) => {
-    const btn = document.getElementById(id);
-    if (!btn) return;
-    if (id === activeId) {
+// Tab highlighter – uses data-tab attributes on both desktop and mobile nav buttons
+window.setActiveTab = (tab) => {
+  document.querySelectorAll('[data-tab]').forEach(btn => {
+    btn.style.backgroundColor = "";
+    btn.style.color = "";
+  });
+  if (tab) {
+    document.querySelectorAll(`[data-tab="${tab}"]`).forEach(btn => {
       btn.style.backgroundColor = "#4f46e5";
       btn.style.color = "white";
-    } else {
-      btn.style.backgroundColor = "#e5e7eb";
-      btn.style.color = "#374151";
-    }
-  });
+    });
+  }
 };
 
 refreshSidebar();
@@ -123,7 +137,7 @@ levelsView.render();
 const logo = document.querySelector("#sidebar-logo");
 if (logo) {
   logo.addEventListener("click", () => {
-    window.setActiveSidebar(null);
+    window.setActiveTab(null);
     levelsView.render();
   });
 }
@@ -139,7 +153,7 @@ if (logoutBtn) {
 
 const mainContainer = document.querySelector("#main-container");
 mainContainer.addEventListener("worksheet:cancel", () => {
-  window.setActiveSidebar(null);
+  window.setActiveTab(null);
   refreshSidebar();
   levelsView.render();
 });
