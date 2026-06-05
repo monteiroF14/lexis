@@ -54,8 +54,11 @@ export default class HardcoreWorksheetModel extends WorksheetModel {
     return this.getCurrentExercise();
   }
 
-  // No completion persistence for hardcore mode
+  // Hardcore mode rewards coins per correct answer (no XP, no leveling)
   _persistProgress() {
-    // override noop
+    const user = this.sessionModel?.getSession();
+    if (!user) return;
+    user.coins += 3;
+    this.sessionModel.updateUser(user);
   }
 }

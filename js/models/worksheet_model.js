@@ -33,8 +33,10 @@ export default class WorksheetModel {
   recordAnswer(isCorrect) {
     this.totalAnswers++;
     if (isCorrect) this.correctAnswers++;
-    // If worksheet is finished, persist progress for the user.
-    if (this.isCompleted()) {
+    // If all exercises have been answered, persist progress for the user.
+    // Note: isCompleted() checks currentIndex which hasn't advanced yet
+    // for the final exercise, so we check totalAnswers instead.
+    if (this.totalAnswers >= this.exercises.length) {
       this._persistProgress();
     }
   }
@@ -45,21 +47,23 @@ export default class WorksheetModel {
 
   _persistProgress() {
     const session = this.sessionModel.getSession();
-    if (!session) return; // no session – nothing to persist
+    if (!session) return;
     const user = session;
-    if (!user || user.isAnonymous) return; // anonymous sessions are not persisted
+    if (!user || user.isAnonymous) return;
 
-    // add worksheet id to solvedSheets if not already present
     if (!user.solvedSheets.includes(this.worksheetId)) {
       user.solvedSheets.push(this.worksheetId);
     }
-    // award XP – 10 per correct answer
+
     const xpEarned = this.correctAnswers * 10;
     user.xp += xpEarned;
 
-    // award coins – 3 per correct answer
-    const coinsEarned = this.correctAnswers * 3;
-    user.coins += coinsEarned;
+    const newLevel = Math.floor(user.xp / 200) + 1;
+    if (newLevel !== user.level) {
+      user.level = newLevel;
+      const titles = ['', 'Explorer', 'Adventurer', 'Scholar', 'Wizard', 'Master', 'Legend'];
+      user.currentTitle = titles[Math.min(newLevel, titles.length - 1)] || 'Legend';
+    }
 
     this.sessionModel?.updateUser(user);
   }
