@@ -1,12 +1,9 @@
 /*
  * Letter Drag & Drop View – Duolingo-style letter tile exercise.
- * Tiles follow cursor on drag. On drop, cursor position decides placement.
- * Uses only Bootstrap 5 classes + minimal inline sizing.
  */
 export default class LetterDndView {
   constructor(model) {
     this.model = model;
-    this.container = document.getElementById('main-container');
     this.dragState = null;
     this._onPointerDown = this._onPointerDown.bind(this);
     this._onPointerMove = this._onPointerMove.bind(this);
@@ -14,31 +11,40 @@ export default class LetterDndView {
     this._onCheck = this._onCheck.bind(this);
   }
 
+  _getContainer() {
+    return document.getElementById('exercise-container') || document.getElementById('main-container');
+  }
+
   render() {
+    const container = this._getContainer();
+    if (!container) return;
+
     const poolHtml = this.model.letters
       .map((l, i) =>
-        `<div class="btn btn-light border fw-bold fs-5 d-flex align-items-center justify-content-center user-select-none" style="width:52px;height:52px;touch-action:none;cursor:grab;" data-idx="${i}">${l}</div>`
+        `<div class="bg-white rounded-3 shadow-sm fw-bold fs-5 d-flex align-items-center justify-content-center user-select-none"
+              style="width:52px;height:52px;touch-action:none;cursor:grab; border: none;"
+              data-idx="${i}">${l}</div>`
       ).join('');
 
     const slotsHtml = this.model.letters
-      .map(() => `<div class="border border-2 rounded-3 d-flex align-items-center justify-content-center" style="width:52px;height:52px;border-style:dashed !important;"></div>`).join('');
+      .map(() => `<div class="bg-white rounded-3 shadow-sm d-flex align-items-center justify-content-center"
+                        style="width:52px;height:52px; border: 2px dashed #d1d5db;"></div>`).join('');
 
-    this.container.innerHTML = `
-      <div class="card rounded-4 shadow-sm border-0 p-4" style="max-width:520px;margin:0 auto;">
-        <div class="text-center mb-3">
-          <div class="fs-2 mb-2">🔤</div>
-          <h5 class="fw-bold mb-2">Arrange the letters</h5>
-          ${this.model.hint ? `<p class="text-secondary small mb-0">${this.model.hint}</p>` : ''}
+    container.innerHTML = `
+      <div class="w-100 d-flex flex-column align-items-center gap-4" style="max-width: 500px;">
+        <div class="bg-white rounded-4 shadow-sm px-4 py-3 text-center w-100">
+          Arrange the letters
         </div>
-        <div class="d-flex justify-content-center flex-wrap gap-2 p-3 bg-light rounded-3 mb-3" id="construction-zone">${slotsHtml}</div>
-        <div class="d-flex justify-content-center flex-wrap gap-2 p-3 rounded-3 border mb-4" id="letter-pool">${poolHtml}</div>
-        <button class="btn btn-success w-100 fw-bold rounded-3" id="check-btn">Check</button>
-        <div class="mt-3" id="dnd-feedback"></div>
+        <div class="d-flex justify-content-center flex-wrap gap-2 p-3 bg-white rounded-4 shadow-sm w-100" id="construction-zone">${slotsHtml}</div>
+        <div class="d-flex justify-content-center flex-wrap gap-2 p-3 bg-white rounded-4 shadow-sm w-100" id="letter-pool">${poolHtml}</div>
+        <button class="btn text-white w-100 fw-bold rounded-4 py-2" id="check-btn"
+                style="background-color: #4f46e5; border: none;">Check</button>
+        <div id="dnd-feedback"></div>
       </div>`;
 
-    this.container.querySelectorAll('#letter-pool > div')
+    container.querySelectorAll('#letter-pool > div')
       .forEach(el => el.addEventListener('pointerdown', this._onPointerDown));
-    this.container.querySelector('#check-btn').addEventListener('click', this._onCheck);
+    container.querySelector('#check-btn').addEventListener('click', this._onCheck);
   }
 
   _onPointerDown(e) {
@@ -56,7 +62,7 @@ export default class LetterDndView {
     clone.style.zIndex = '9999';
     clone.style.transition = 'none';
     clone.style.boxShadow = '0 8px 24px rgba(0,0,0,0.15)';
-    clone.style.borderColor = '#198754';
+    clone.style.borderColor = '#4f46e5';
     clone.style.transform = 'scale(1.08)';
     document.body.appendChild(clone);
 
@@ -108,15 +114,17 @@ export default class LetterDndView {
   }
 
   _finalize(e) {
+    const container = this._getContainer();
+    if (!container) return;
+
     const tile = this.dragState.tile;
-    const pool = this.container.querySelector('#letter-pool');
-    const slots = this.container.querySelectorAll('#construction-zone > div');
-    const poolTiles = this.container.querySelectorAll('#letter-pool > div');
+    const pool = container.querySelector('#letter-pool');
+    const slots = container.querySelectorAll('#construction-zone > div');
+    const poolTiles = container.querySelectorAll('#letter-pool > div');
 
     const cx = e.clientX;
     const cy = e.clientY;
 
-    // 1) cursor over a slot → place tile there, displaced tile goes to original spot
     for (const slot of slots) {
       const sr = slot.getBoundingClientRect();
       if (cx >= sr.left && cx <= sr.right && cy >= sr.top && cy <= sr.bottom) {
@@ -130,7 +138,6 @@ export default class LetterDndView {
       }
     }
 
-    // 2) cursor over another pool tile → swap positions
     for (const other of poolTiles) {
       if (other === tile) continue;
       const r = other.getBoundingClientRect();
@@ -145,30 +152,30 @@ export default class LetterDndView {
       }
     }
 
-    // 3) cursor inside pool area → append to pool
     const pr = pool.getBoundingClientRect();
     if (cx >= pr.left && cx <= pr.right && cy >= pr.top && cy <= pr.bottom) {
       pool.appendChild(tile);
       return;
     }
-
-    // 4) otherwise leave tile where it is
   }
 
   _onCheck() {
+    const container = this._getContainer();
+    if (!container) return;
+
     const arranged = Array.from(
-      this.container.querySelectorAll('#construction-zone > div > div')
+      container.querySelectorAll('#construction-zone > div > div')
     ).map(el => el.textContent.trim());
 
     const isCorrect = this.model.checkAnswer(arranged);
-    const feedback = this.container.querySelector('#dnd-feedback');
+    const feedback = container.querySelector('#dnd-feedback');
 
     if (isCorrect) {
-      feedback.innerHTML = '<div class="alert alert-success text-center fw-semibold">Correct!</div>';
-      this.container.querySelector('#check-btn').disabled = true;
-      this.container.dispatchEvent(new CustomEvent('exerciseCompleted', { detail: { correct: true } }));
+      feedback.innerHTML = '<div class="alert alert-success text-center fw-semibold rounded-4 py-2">Correct!</div>';
+      container.querySelector('#check-btn').disabled = true;
+      container.dispatchEvent(new CustomEvent('exerciseCompleted', { detail: { correct: true }, bubbles: true }));
     } else {
-      feedback.innerHTML = '<div class="alert alert-danger text-center fw-semibold">Incorrect – try again</div>';
+      feedback.innerHTML = '<div class="alert alert-danger text-center fw-semibold rounded-4 py-2">Incorrect – try again</div>';
       setTimeout(() => feedback.innerHTML = '', 1200);
     }
   }

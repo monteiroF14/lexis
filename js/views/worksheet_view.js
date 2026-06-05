@@ -1,7 +1,5 @@
 /*
  * Worksheet View – orchestrates the flow of exercises within a worksheet.
- * Expects a WorksheetModel instance containing an array of exercise objects:
- *   { type: 'spelling'|'letter_dnd'|'missing'|'word_order'|'matching', data: {...} }
  */
 import SpellingModel from "../models/spelling_model.js";
 import LetterDndModel from "../models/letter_dnd_model.js";
@@ -20,40 +18,36 @@ export default class WorksheetView {
   }
 
   render() {
-    // Hide sidebars for full‑screen worksheet
-    document
-      .querySelectorAll("aside")
-      .forEach((as) => (as.style.display = "none"));
     if (this.model.isCompleted()) {
       this._renderResults();
       return;
     }
     const exercise = this.model.getCurrentExercise();
-    // render progress bar
-    const progressHtml = `
-      <div class="progress mb-4" style="height: 20px;">
-        <div class="progress-bar" role="progressbar" style="width: ${
-          (this.model.currentIndex / this.model.exercises.length) * 100
-        }%" aria-valuenow="${this.model.currentIndex}" aria-valuemin="0" aria-valuemax="${this.model.exercises.length}"></div>
+
+    this.container.innerHTML = `
+      <div class="d-flex flex-column align-items-center justify-content-center position-relative w-100" style="min-height: 100%;">
+        <!-- Leave button -->
+        <button id="leave-exercise" class="btn btn-light rounded-pill position-absolute shadow-sm"
+                style="top: 1rem; left: 1rem; font-size: 0.9rem;">
+          Leave the exercise
+        </button>
+        <!-- Speaker button -->
+        <button id="speaker-btn" class="btn btn-light rounded-circle position-absolute shadow-sm d-flex align-items-center justify-content-center"
+                style="top: 1rem; width: 40px; height: 40px; padding: 0;"
+                title="Text to speech">
+          🔊
+        </button>
+        <div id="exercise-container" class="w-100 d-flex flex-column align-items-center" style="max-width: 500px; padding-top: 4rem;"></div>
       </div>`;
-    // cancel button
-    const cancelBtn = `<button id="cancel-worksheet" class="btn btn-outline-danger mb-3">Cancel</button>`;
-    // clear container and add UI
-    this.container.innerHTML = `<div class="card rounded-4 shadow-sm border-0 p-4">${cancelBtn}${progressHtml}<div id="exercise-container"></div></div>`;
-    this.container
-      .querySelector("#cancel-worksheet")
-      .addEventListener("click", () => {
-        if (window.confirm("Exit worksheet? Progress will be lost.")) {
-          document
-            .querySelectorAll("aside")
-            .forEach((as) => (as.style.display = ""));
-          this.container.dispatchEvent(new CustomEvent("worksheet:cancel"));
-        }
-      });
-    const exerciseContainer = this.container.querySelector(
-      "#exercise-container",
-    );
-    // instantiate appropriate view
+
+    this.container.querySelector("#leave-exercise").addEventListener("click", () => {
+      if (window.confirm("Exit worksheet? Progress will be lost.")) {
+        this.container.dispatchEvent(new CustomEvent("worksheet:cancel"));
+      }
+    });
+
+    const exerciseContainer = this.container.querySelector("#exercise-container");
+
     let view;
     switch (exercise.type) {
       case "spelling":
@@ -74,7 +68,7 @@ export default class WorksheetView {
         return;
     }
     view.render();
-    // listen for completion event from the child view
+
     this.container.addEventListener(
       "exerciseCompleted",
       this._onExerciseCompleted,
@@ -82,16 +76,12 @@ export default class WorksheetView {
   }
 
   _onExerciseCompleted(e) {
-    // record answer (correct flag from event detail)
     this.model.recordAnswer(e.detail.correct);
-    // remove listener to avoid duplicate handling when next view renders
     this.container.removeEventListener(
       "exerciseCompleted",
       this._onExerciseCompleted,
     );
-    // advance to next exercise (or complete)
     if (!this.model.isCompleted()) this.model.nextExercise();
-    // small fade transition
     this.container.classList.add("fade");
     setTimeout(() => {
       this.container.classList.remove("fade");
@@ -103,11 +93,13 @@ export default class WorksheetView {
     const { correct, total } = this.model.getScore();
     const xpEarned = correct * 10;
     const html = `
-      <div class="card rounded-4 shadow-sm border-0 p-4 text-center">
-        <h4 class="mb-3">Worksheet Completed!</h4>
-        <p class="fs-5">Score: <strong>${correct}/${total}</strong></p>
-        <p class="fs-5">XP earned: <strong>${xpEarned}</strong></p>
-        <button id="back-btn" class="btn btn-primary mt-3">Back to Levels</button>
+      <div class="d-flex flex-column align-items-center justify-content-center w-100" style="min-height: 100%;">
+        <div class="bg-white rounded-4 shadow-sm p-4 text-center" style="max-width: 420px; width: 100%;">
+          <h4 class="mb-3">Worksheet Completed!</h4>
+          <p class="fs-5">Score: <strong>${correct}/${total}</strong></p>
+          <p class="fs-5">XP earned: <strong>${xpEarned}</strong></p>
+          <button id="back-btn" class="btn text-white mt-3 rounded-3 px-4" style="background-color: #4f46e5; border: none;">Back to Levels</button>
+        </div>
       </div>`;
     this.container.innerHTML = html;
     this.container.querySelector("#back-btn").addEventListener("click", () => {
