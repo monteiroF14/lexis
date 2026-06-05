@@ -1,6 +1,3 @@
-/*
- * Worksheet View – orchestrates the flow of exercises within a worksheet.
- */
 import SpellingModel from "../models/spelling_model.js";
 import LetterDndModel from "../models/letter_dnd_model.js";
 import MissingLettersModel from "../models/missing_letters_model.js";
@@ -18,92 +15,53 @@ export default class WorksheetView {
   }
 
   render() {
-    if (this.model.isCompleted()) {
-      this._renderResults();
-      return;
-    }
+    if (this.model.isCompleted()) { this._renderResults(); return; }
     const exercise = this.model.getCurrentExercise();
 
     this.container.innerHTML = `
-      <div class="d-flex flex-column align-items-center justify-content-center position-relative w-100" style="min-height: 100%;">
-        <!-- Leave button -->
-        <button id="leave-exercise" class="btn btn-light rounded-pill position-absolute shadow-sm"
-                style="top: 1rem; left: 1rem; font-size: 0.9rem;">
-          Leave the exercise
-        </button>
-        <!-- Speaker button -->
-        <button id="speaker-btn" class="btn btn-light rounded-circle position-absolute shadow-sm d-flex align-items-center justify-content-center"
-                style="top: 1rem; width: 40px; height: 40px; padding: 0;"
-                title="Text to speech">
-          🔊
-        </button>
-        <div id="exercise-container" class="w-100 d-flex flex-column align-items-center" style="max-width: 500px; padding-top: 4rem;"></div>
+      <div class="d-flex flex-column align-items-center justify-content-center position-relative w-100 lexis-min-h-full">
+        <button id="leave-exercise" class="btn btn-light rounded-pill position-absolute shadow-sm lexis-leave-btn">Leave the exercise</button>
+        <button id="speaker-btn" class="btn btn-light rounded-circle position-absolute shadow-sm d-flex align-items-center justify-content-center lexis-speaker-btn">🔊</button>
+        <div id="exercise-container" class="w-100 d-flex flex-column align-items-center lexis-contained-narrow lexis-ex-pad"></div>
       </div>`;
 
     this.container.querySelector("#leave-exercise").addEventListener("click", () => {
-      if (window.confirm("Exit worksheet? Progress will be lost.")) {
-        this.container.dispatchEvent(new CustomEvent("worksheet:cancel"));
-      }
+      if (window.confirm("Exit worksheet? Progress will be lost.")) this.container.dispatchEvent(new CustomEvent("worksheet:cancel"));
     });
 
-    const exerciseContainer = this.container.querySelector("#exercise-container");
-
+    const ec = this.container.querySelector("#exercise-container");
     let view;
     switch (exercise.type) {
-      case "spelling":
-        view = new SpellingView(new SpellingModel(exercise.data));
-        break;
-      case "letter_dnd":
-        view = new LetterDndView(new LetterDndModel(exercise.data));
-        break;
-      case "missing":
-        view = new MissingLettersView(new MissingLettersModel(exercise.data));
-        break;
-      case "word_order":
-        view = new WordOrderView(new WordOrderModel(exercise.data));
-        break;
-      default:
-        exerciseContainer.innerHTML =
-          '<div class="alert alert-danger">Unknown exercise type</div>';
-        return;
+      case "spelling": view = new SpellingView(new SpellingModel(exercise.data)); break;
+      case "letter_dnd": view = new LetterDndView(new LetterDndModel(exercise.data)); break;
+      case "missing": view = new MissingLettersView(new MissingLettersModel(exercise.data)); break;
+      case "word_order": view = new WordOrderView(new WordOrderModel(exercise.data)); break;
+      default: ec.innerHTML = '<div class="alert alert-danger">Unknown exercise type</div>'; return;
     }
     view.render();
-
-    this.container.addEventListener(
-      "exerciseCompleted",
-      this._onExerciseCompleted,
-    );
+    this.container.addEventListener("exerciseCompleted", this._onExerciseCompleted);
   }
 
   _onExerciseCompleted(e) {
     this.model.recordAnswer(e.detail.correct);
-    this.container.removeEventListener(
-      "exerciseCompleted",
-      this._onExerciseCompleted,
-    );
+    this.container.removeEventListener("exerciseCompleted", this._onExerciseCompleted);
     if (!this.model.isCompleted()) this.model.nextExercise();
     this.container.classList.add("fade");
-    setTimeout(() => {
-      this.container.classList.remove("fade");
-      this.render();
-    }, 300);
+    setTimeout(() => { this.container.classList.remove("fade"); this.render(); }, 300);
   }
 
   _renderResults() {
     const { correct, total } = this.model.getScore();
-    const xpEarned = correct * 10;
-    const html = `
-      <div class="d-flex flex-column align-items-center justify-content-center w-100" style="min-height: 100%;">
-        <div class="bg-white rounded-4 shadow-sm p-4 text-center" style="max-width: 420px; width: 100%;">
-          <h4 class="mb-3">Worksheet Completed!</h4>
-          <p class="fs-5">Score: <strong>${correct}/${total}</strong></p>
-          <p class="fs-5">XP earned: <strong>${xpEarned}</strong></p>
-          <button id="back-btn" class="btn text-white mt-3 rounded-3 px-4" style="background-color: #4f46e5; border: none;">Back to Levels</button>
+    const xp = correct * 10;
+    this.container.innerHTML = `
+      <div class="d-flex flex-column align-items-center justify-content-center w-100 lexis-min-h-full">
+        <div class="rounded-4 shadow-sm p-4 text-center lexis-result-card">
+          <h4 class="mb-3 lexis-text-p">Worksheet Completed!</h4>
+          <p class="fs-5 lexis-text-p">Score: <strong>${correct}/${total}</strong></p>
+          <p class="fs-5 lexis-text-p">XP earned: <strong>${xp}</strong></p>
+          <button id="back-btn" class="btn text-white mt-3 rounded-3 px-4 lexis-btn-primary">Back to Levels</button>
         </div>
       </div>`;
-    this.container.innerHTML = html;
-    this.container.querySelector("#back-btn").addEventListener("click", () => {
-      this.container.dispatchEvent(new CustomEvent("worksheet:cancel"));
-    });
+    this.container.querySelector("#back-btn").addEventListener("click", () => this.container.dispatchEvent(new CustomEvent("worksheet:cancel")));
   }
 }
