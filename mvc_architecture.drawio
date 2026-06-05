@@ -4,137 +4,197 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-8" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="0IPAZzpCnt1gQSqNXSjR-5">
+
+        <!-- ====== Directory tree labels ====== -->
+        <mxCell id="lbl-root" parent="1" style="html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;" value="/" vertex="1">
+          <mxGeometry height="30" width="80" x="-240" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl-html" parent="1" style="html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;" value="/html" vertex="1">
+          <mxGeometry height="30" width="80" x="-240" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl-js" parent="1" style="html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;" value="/js" vertex="1">
+          <mxGeometry height="30" width="80" x="-240" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl-utils" parent="1" style="html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;" value="/js/utils" vertex="1">
+          <mxGeometry height="30" width="80" x="-240" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl-views" parent="1" style="html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;" value="/js/views" vertex="1">
+          <mxGeometry height="30" width="80" x="-240" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl-models" parent="1" style="html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;" value="/js/models" vertex="1">
+          <mxGeometry height="30" width="80" x="-240" y="580" as="geometry" />
+        </mxCell>
+
+        <!-- ====== HTML files ====== -->
+        <mxCell id="html-index" parent="1" style="html=1;whiteSpace=wrap;fillColor=none;" value="index.html" vertex="1">
+          <mxGeometry height="40" width="110" x="60" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="html-dash" parent="1" style="html=1;whiteSpace=wrap;fillColor=none;" value="dashboard.html" vertex="1">
+          <mxGeometry height="40" width="130" x="60" y="100" as="geometry" />
+        </mxCell>
+
+        <!-- ====== JS entry points ====== -->
+        <mxCell id="js-init" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;fontColor=#FFFFFF;" value="init.js" vertex="1">
+          <mxGeometry height="40" width="100" x="300" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="js-dash-init" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;fontColor=#FFFFFF;" value="dashboard_init.js" vertex="1">
+          <mxGeometry height="40" width="130" x="440" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="js-user" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;fontColor=#FFFFFF;" value="user.js" vertex="1">
+          <mxGeometry height="40" width="100" x="620" y="180" as="geometry" />
+        </mxCell>
+
+        <!-- ====== Utils ====== -->
+        <mxCell id="js-utils" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;fontColor=#FFFFFF;" value="utils.js" vertex="1">
+          <mxGeometry height="40" width="100" x="300" y="260" as="geometry" />
+        </mxCell>
+
+        <!-- ====== Views — Row 1 ====== -->
+        <mxCell id="view-login" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;fontColor=#FFFFFF;" value="login_view.js" vertex="1">
+          <mxGeometry height="40" width="130" x="60" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="view-createacct" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;fontColor=#FFFFFF;" value="create_account_view.js" vertex="1">
+          <mxGeometry height="40" width="150" x="230" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="view-settings" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;fontColor=#FFFFFF;" value="settings_view.js" vertex="1">
+          <mxGeometry height="40" width="130" x="420" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="view-levels" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;fontColor=#FFFFFF;" value="levels_view.js" vertex="1">
+          <mxGeometry height="40" width="130" x="590" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="view-shop" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;fontColor=#FFFFFF;" value="shop_view.js" vertex="1">
+          <mxGeometry height="40" width="130" x="760" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="view-pdf" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;fontColor=#FFFFFF;" value="pdf_view.js" vertex="1">
+          <mxGeometry height="40" width="130" x="930" y="340" as="geometry" />
+        </mxCell>
+
+        <!-- ====== Views — Row 2 ====== -->
+        <mxCell id="view-worksheet" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;fontColor=#FFFFFF;" value="worksheet_view.js" vertex="1">
+          <mxGeometry height="40" width="150" x="60" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="view-spelling" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;fontColor=#FFFFFF;" value="spelling_view.js" vertex="1">
+          <mxGeometry height="40" width="130" x="250" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="view-letterdnd" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;fontColor=#FFFFFF;" value="letter_dnd_view.js" vertex="1">
+          <mxGeometry height="40" width="140" x="420" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="view-missing" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;fontColor=#FFFFFF;" value="missing_letters_view.js" vertex="1">
+          <mxGeometry height="40" width="150" x="600" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="view-wordorder" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;fontColor=#FFFFFF;" value="word_order_view.js" vertex="1">
+          <mxGeometry height="40" width="140" x="790" y="410" as="geometry" />
+        </mxCell>
+
+        <!-- ====== Models ====== -->
+        <mxCell id="model-session" parent="1" style="html=1;whiteSpace=wrap;fillColor=#000000;fontColor=#FFFFFF;strokeColor=none;" value="session_model.js" vertex="1">
+          <mxGeometry height="40" width="130" x="60" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="model-store" parent="1" style="html=1;whiteSpace=wrap;fillColor=#000000;fontColor=#FFFFFF;strokeColor=none;" value="store_model.js" vertex="1">
+          <mxGeometry height="40" width="130" x="230" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="model-worksheet" parent="1" style="html=1;whiteSpace=wrap;fillColor=#000000;fontColor=#FFFFFF;strokeColor=none;" value="worksheet_model.js" vertex="1">
+          <mxGeometry height="40" width="140" x="400" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="model-hardcore" parent="1" style="html=1;whiteSpace=wrap;fillColor=#000000;fontColor=#FFFFFF;strokeColor=none;" value="hardcore_worksheet_model.js" vertex="1">
+          <mxGeometry height="40" width="180" x="570" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="model-pdf" parent="1" style="html=1;whiteSpace=wrap;fillColor=#000000;fontColor=#FFFFFF;strokeColor=none;" value="pdf_model.js" vertex="1">
+          <mxGeometry height="40" width="130" x="790" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="model-spelling" parent="1" style="html=1;whiteSpace=wrap;fillColor=#000000;fontColor=#FFFFFF;strokeColor=none;" value="spelling_model.js" vertex="1">
+          <mxGeometry height="40" width="140" x="60" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="model-letterdnd" parent="1" style="html=1;whiteSpace=wrap;fillColor=#000000;fontColor=#FFFFFF;strokeColor=none;" value="letter_dnd_model.js" vertex="1">
+          <mxGeometry height="40" width="150" x="240" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="model-missing" parent="1" style="html=1;whiteSpace=wrap;fillColor=#000000;fontColor=#FFFFFF;strokeColor=none;" value="missing_letters_model.js" vertex="1">
+          <mxGeometry height="40" width="170" x="430" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="model-wordorder" parent="1" style="html=1;whiteSpace=wrap;fillColor=#000000;fontColor=#FFFFFF;strokeColor=none;" value="word_order_model.js" vertex="1">
+          <mxGeometry height="40" width="150" x="640" y="650" as="geometry" />
+        </mxCell>
+
+        <!-- ====== Edges: HTML → JS entry points ====== -->
+        <mxCell id="edge-index-init" edge="1" parent="1" source="html-index" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="js-init">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-13" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="0IPAZzpCnt1gQSqNXSjR-9">
+        <mxCell id="edge-dash-dashinit" edge="1" parent="1" source="html-dash" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="js-dash-init">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-1" parent="1" style="html=1;whiteSpace=wrap;fillColor=none;" value="Index.html" vertex="1">
-          <mxGeometry height="50" width="110" x="939" y="20" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-23" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-2" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;edgeStyle=orthogonalEdgeStyle;dashed=1;" target="0IPAZzpCnt1gQSqNXSjR-19">
+
+        <!-- ====== Edges: dashboard_init.js → views ====== -->
+        <mxCell id="edge-dashinit-settings" edge="1" parent="1" source="js-dash-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="view-settings">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-24" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="0IPAZzpCnt1gQSqNXSjR-20">
+        <mxCell id="edge-dashinit-levels" edge="1" parent="1" source="js-dash-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="view-levels">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-25" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="0IPAZzpCnt1gQSqNXSjR-21">
+        <mxCell id="edge-dashinit-shop" edge="1" parent="1" source="js-dash-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="view-shop">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-26" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="0IPAZzpCnt1gQSqNXSjR-22">
+        <mxCell id="edge-dashinit-pdf" edge="1" parent="1" source="js-dash-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="view-pdf">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-37" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="0IPAZzpCnt1gQSqNXSjR-36">
+        <mxCell id="edge-dashinit-worksheet" edge="1" parent="1" source="js-dash-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="view-worksheet">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-2" parent="1" style="html=1;whiteSpace=wrap;fillColor=none;" value="Dashboard.html" vertex="1">
-          <mxGeometry height="50" width="110" x="181" y="101" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-17" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="1345" y="261" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-18" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="0IPAZzpCnt1gQSqNXSjR-14">
+
+        <!-- ====== Edges: init.js → landing views ====== -->
+        <mxCell id="edge-init-login" edge="1" parent="1" source="js-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="view-login">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-3" parent="1" style="html=1;whiteSpace=wrap;fillColor=none;" value="Worksheet.html" vertex="1">
-          <mxGeometry height="50" width="110" x="1195" y="101" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-5" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;" value="init.js" vertex="1">
-          <mxGeometry height="50" width="110" x="970" y="171" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-9" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;" value="LoginView.js" vertex="1">
-          <mxGeometry height="50" width="110" x="720" y="261" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-10" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;" value="CreateAccountView.js" vertex="1">
-          <mxGeometry height="50" width="130" x="850" y="261" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-12" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-1" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.462;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;edgeStyle=elbowEdgeStyle;dashed=1;" target="0IPAZzpCnt1gQSqNXSjR-10">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="909" y="150" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-14" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;" value="WorksheetNormalView.js" vertex="1">
-          <mxGeometry height="50" width="160" x="1065" y="261" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-16" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;" value="WorksheetHardView.js" vertex="1">
-          <mxGeometry height="50" width="160" x="1264" y="260" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-19" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;" value="DocumentsView.js" vertex="1">
-          <mxGeometry height="50" width="110" x="381" y="261" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-20" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;" value="StoreView.js" vertex="1">
-          <mxGeometry height="50" width="110" x="251" y="261" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-21" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;" value="CustomizationView.js" vertex="1">
-          <mxGeometry height="50" width="130" x="101" y="261" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-22" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;" value="SettingsView.js" vertex="1">
-          <mxGeometry height="50" width="110" x="-29" y="261" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-31" parent="1" style="html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;" value="/" vertex="1">
-          <mxGeometry height="50" width="110" x="-210" y="20" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-32" parent="1" style="html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;" value="/html" vertex="1">
-          <mxGeometry height="50" width="110" x="-210" y="101" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-33" parent="1" style="html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;" value="/js" vertex="1">
-          <mxGeometry height="50" width="110" x="-210" y="171" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-34" parent="1" style="html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;" value="/js/views" vertex="1">
-          <mxGeometry height="50" width="110" x="-210" y="261" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-35" parent="1" style="html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;" value="/js/models" vertex="1">
-          <mxGeometry height="50" width="110" x="-210" y="350" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-36" parent="1" style="html=1;whiteSpace=wrap;fillColor=#272727;" value="AccountView.js" vertex="1">
-          <mxGeometry height="50" width="110" x="510" y="260" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-42" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="0IPAZzpCnt1gQSqNXSjR-22">
+        <mxCell id="edge-init-createacct" edge="1" parent="1" source="js-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="view-createacct">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-43" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="0IPAZzpCnt1gQSqNXSjR-21">
+
+        <!-- ====== Edges: views → models ====== -->
+        <mxCell id="edge-worksheet-model" edge="1" parent="1" source="view-worksheet" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-worksheet">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-44" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="0IPAZzpCnt1gQSqNXSjR-20">
+        <mxCell id="edge-worksheet-hardcore" edge="1" parent="1" source="view-worksheet" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-hardcore">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-48" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-38" style="edgeStyle=elbowEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;elbow=vertical;" target="0IPAZzpCnt1gQSqNXSjR-36">
+        <mxCell id="edge-spelling" edge="1" parent="1" source="view-spelling" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-spelling">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-38" parent="1" style="html=1;whiteSpace=wrap;fillColor=#000000;fontColor=#FEFEFE;strokeColor=none;" value="DashboardModel.js" vertex="1">
-          <mxGeometry height="50" width="129" x="102" y="350" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-46" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="0IPAZzpCnt1gQSqNXSjR-36">
+        <mxCell id="edge-letterdnd" edge="1" parent="1" source="view-letterdnd" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-letterdnd">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-45" parent="1" style="html=1;whiteSpace=wrap;fillColor=#000000;fontColor=#FEFEFE;strokeColor=none;" value="AccountModel.js" vertex="1">
-          <mxGeometry height="50" width="129" x="420" y="350" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-51" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="0IPAZzpCnt1gQSqNXSjR-10">
+        <mxCell id="edge-missing" edge="1" parent="1" source="view-missing" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-missing">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-52" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="0IPAZzpCnt1gQSqNXSjR-9">
+        <mxCell id="edge-wordorder" edge="1" parent="1" source="view-wordorder" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-wordorder">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-50" parent="1" style="html=1;whiteSpace=wrap;fillColor=#000000;fontColor=#FEFEFE;strokeColor=none;" value="IndexModel.js" vertex="1">
-          <mxGeometry height="50" width="129" x="780" y="350" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-55" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="0IPAZzpCnt1gQSqNXSjR-14">
+        <mxCell id="edge-shop-store" edge="1" parent="1" source="view-shop" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-store">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-53" parent="1" style="html=1;whiteSpace=wrap;fillColor=#000000;fontColor=#FEFEFE;strokeColor=none;" value="WorksheetNormalModel.js" vertex="1">
-          <mxGeometry height="50" width="159.5" x="1065" y="350" as="geometry" />
-        </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-59" edge="1" parent="1" source="0IPAZzpCnt1gQSqNXSjR-58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="0IPAZzpCnt1gQSqNXSjR-16">
+        <mxCell id="edge-pdf-model" edge="1" parent="1" source="view-pdf" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-pdf">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="0IPAZzpCnt1gQSqNXSjR-58" parent="1" style="html=1;whiteSpace=wrap;fillColor=#000000;fontColor=#FEFEFE;strokeColor=none;" value="WorksheetNormalModel.js" vertex="1">
-          <mxGeometry height="50" width="159.5" x="1264.5" y="350" as="geometry" />
+        <mxCell id="edge-settings-session" edge="1" parent="1" source="view-settings" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-session">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-login-session" edge="1" parent="1" source="view-login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-session">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-createacct-session" edge="1" parent="1" source="view-createacct" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-session">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-levels-session" edge="1" parent="1" source="view-levels" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-session">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ====== Edges: models → utils ====== -->
+        <mxCell id="edge-spelling-utils" edge="1" parent="1" source="model-spelling" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="js-utils">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-letterdnd-utils" edge="1" parent="1" source="model-letterdnd" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="js-utils">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-wordorder-utils" edge="1" parent="1" source="model-wordorder" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="js-utils">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
