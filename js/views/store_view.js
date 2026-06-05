@@ -2,19 +2,21 @@ import { createAvatar } from "@dicebear/core";
 import { bigSmile } from "@dicebear/collection";
 import { StoreModel } from "../models/store_model.js";
 
-const CATEGORY_META = {
-  eyes: { label: "Eyes", icon: "👁️" },
-  mouth: { label: "Mouth", icon: "👄" },
-  hair: { label: "Hair", icon: "💇" },
-  skinColor: { label: "Skin Tone", icon: "🎨" },
-  hairColor: { label: "Hair Color", icon: "🎭" },
-  accessories: { label: "Accessories", icon: "✨" },
+// Store categories: no skinColor since it's free
+const CATEGORY_ORDER = ["hair", "hairColor", "eyes", "mouth", "accessories", "backgroundColor"];
+
+const CATEGORY_LABELS = {
+  hair: "Hair",
+  hairColor: "Hair Color",
+  eyes: "Eyes",
+  mouth: "Mouth",
+  accessories: "Accessories",
+  backgroundColor: "Background Color",
 };
 
-function avatarDataUri(options, size = 128) {
+function avatarDataUri(options, size = 80) {
   return createAvatar(bigSmile, {
     ...options,
-    backgroundColor: ["transparent"],
     size,
   }).toDataUri();
 }
@@ -28,7 +30,7 @@ function equippedToOptions(equipped) {
     hairColor: [equipped.hairColor],
     accessories: equipped.accessories || [],
     accessoriesProbability: (equipped.accessories || []).length > 0 ? 100 : 0,
-    backgroundColor: ["transparent"],
+    backgroundColor: equipped.backgroundColor ? [equipped.backgroundColor] : ["transparent"],
   };
   return opts;
 }
@@ -43,6 +45,8 @@ function itemThumbOptions(equipped, category, value) {
       opts.accessories = [value];
       opts.accessoriesProbability = 100;
     }
+  } else if (category === "backgroundColor") {
+    opts.backgroundColor = [value];
   } else {
     opts[category] = [value];
   }
@@ -53,51 +57,9 @@ export class StoreView {
   constructor(sessionModel) {
     this.sessionModel = sessionModel;
     this.storeModel = new StoreModel(sessionModel);
-    this.activeCategory = "eyes";
+    this.activeCategory = "hair";
     const btn = document.querySelector("#btn-store");
     if (btn) btn.onclick = () => this.render();
-  }
-
-  render() {
-    const equipped = this.storeModel.getEquipped();
-    const coins = this.storeModel.getCoins();
-    const catalog = this.storeModel.getCatalog();
-    const purchased = this.storeModel.getPurchased();
-
-    const previewSrc = avatarDataUri(equippedToOptions(equipped));
-
-    const mainContainer = document.querySelector("#main-container");
-    mainContainer.innerHTML = `
-      <div class="card rounded-4 shadow-sm border-0">
-        <div class="p-4 border-bottom">
-          <div class="d-flex justify-content-between align-items-center">
-            <h3 class="fw-bold mb-0">🛍️ Store</h3>
-            <span class="badge bg-warning text-dark fs-6">🪙 <span id="store-coins">${coins}</span></span>
-          </div>
-        </div>
-        <div class="text-center py-4 border-bottom" style="background:#f8f9fa;">
-          <img id="store-avatar-preview" src="${previewSrc}"
-               class="rounded-circle border" alt="Avatar preview"
-               style="width:160px;height:160px;object-fit:cover;" />
-        </div>
-        <div class="p-3 border-bottom">
-          <div class="d-flex flex-wrap gap-2 justify-content-center" id="store-categories">
-            ${Object.entries(CATEGORY_META)
-              .map(
-                ([key, meta]) => `
-              <button class="btn ${key === this.activeCategory ? "btn-primary" : "btn-outline-secondary"} btn-sm rounded-pill px-3" data-category="${key}">
-                ${meta.icon} ${meta.label}
-              </button>`,
-              )
-              .join("")}
-          </div>
-        </div>
-        <div class="p-4" id="store-items-grid">
-          ${this._renderItems()}
-        </div>
-      </div>`;
-
-    this._wireEvents();
   }
 
   _isEquipped(item) {
@@ -106,64 +68,100 @@ export class StoreView {
       if (item.value === "none") return (equipped.accessories || []).length === 0;
       return (equipped.accessories || []).includes(item.value);
     }
+    if (this.activeCategory === "backgroundColor") {
+      return equipped.backgroundColor === item.value;
+    }
     return equipped[this.activeCategory] === item.value;
+  }
+
+  render() {
+    const equipped = this.storeModel.getEquipped();
+
+    const mainContainer = document.querySelector("#main-container");
+    mainContainer.innerHTML = `
+      <div class="d-flex flex-column align-items-center py-4 w-100">
+        <!-- Prompt bar -->
+        <div class="bg-white rounded-4 shadow-sm px-4 py-3 text-center mb-4 w-100" style="max-width: 720px;">
+          You can buy things to customize your avatar with your in game coins here!
+        </div>
+
+        <!-- Category tabs -->
+        <div class="d-flex flex-wrap gap-2 justify-content-center mb-4" id="store-categories">
+          ${CATEGORY_ORDER.map((key) => `
+            <button class="btn btn-sm rounded-pill px-3 py-1" data-category="${key}"
+                    style="${key === this.activeCategory
+                      ? 'background-color: #4f46e5; color: white; border: none;'
+                      : 'background-color: white; color: #374151; border: none; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'}">
+              ${CATEGORY_LABELS[key]}
+            </button>
+          `).join("")}
+        </div>
+
+        <!-- Items grid -->
+        <div class="d-flex flex-wrap gap-3 justify-content-center" id="store-items-grid" style="max-width: 720px;">
+          ${this._renderItems()}
+        </div>
+      </div>`;
+
+    this._wireEvents();
   }
 
   _renderItems() {
     const catalog = this.storeModel.getCatalog();
-    const items = catalog[this.activeCategory];
-    const coins = this.storeModel.getCoins();
+    const items = catalog[this.activeCategory] || [];
     const purchased = this.storeModel.getPurchased();
     const equipped = this.storeModel.getEquipped();
-    const isColor =
-      this.activeCategory === "skinColor" ||
-      this.activeCategory === "hairColor";
 
-    return `<div class="row g-3">${items
-      .map((item) => {
-        const owned = purchased.includes(item.id);
-        const isEquipped = this._isEquipped(item);
-        const canAfford = coins >= item.price;
+    return items.map((item) => {
+      const owned = purchased.includes(item.id);
+      const isEquipped = this._isEquipped(item);
 
-        let actionHtml;
-        if (isEquipped) {
-          actionHtml = `<span class="badge bg-success">Equipped ✓</span>`;
-        } else if (owned) {
-          actionHtml = `<button class="btn btn-sm btn-primary" data-action="equip" data-item-id="${item.id}" data-category="${this.activeCategory}" data-value="${item.value}">Equip</button>`;
-        } else if (item.price === 0) {
-          actionHtml = `<button class="btn btn-sm btn-primary" data-action="equip" data-item-id="${item.id}" data-category="${this.activeCategory}" data-value="${item.value}">Free</button>`;
-        } else if (canAfford) {
-          actionHtml = `<button class="btn btn-sm btn-warning text-dark" data-action="buy" data-item-id="${item.id}">🪙 ${item.price}</button>`;
-        } else {
-          actionHtml = `<button class="btn btn-sm btn-outline-secondary" disabled>🪙 ${item.price}</button>`;
-        }
+      let thumbHtml;
+      if (this.activeCategory === "backgroundColor") {
+        const color = item.value === "transparent" ? "white" : `#${item.value}`;
+        const border = item.value === "transparent" ? "2px dashed #d1d5db" : "none";
+        thumbHtml = `<div class="rounded-3 d-flex align-items-center justify-content-center mx-auto"
+                          style="width:70px;height:70px;background:${color};border:${border};">
+          ${isEquipped ? '<span style="color:#4f46e5;font-size:1.2rem;">✓</span>' : ""}
+        </div>`;
+      } else if (this.activeCategory === "skinColor" || this.activeCategory === "hairColor") {
+        thumbHtml = `<div class="rounded-circle d-flex align-items-center justify-content-center mx-auto"
+                          style="width:70px;height:70px;background:#${item.value};border:2px solid ${isEquipped ? '#4f46e5' : '#e5e7eb'};">
+        </div>`;
+      } else {
+        const thumbSrc = avatarDataUri(
+          itemThumbOptions(equipped, this.activeCategory, item.value),
+          70,
+        );
+        const borderStyle = isEquipped ? "3px solid #4f46e5" : "2px solid #e5e7eb";
+        thumbHtml = `<img src="${thumbSrc}" class="rounded-3 mx-auto" alt="${item.name}"
+                          style="width:70px;height:70px;object-fit:cover;border:${borderStyle};" />`;
+      }
 
-        let thumbHtml;
-        if (isColor) {
-          thumbHtml = `<div class="rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width:64px;height:64px;background:#${item.value};border:3px solid ${isEquipped ? "#198754" : "#dee2e6"};">
-            ${isEquipped ? '<span class="text-white fw-bold" style="text-shadow:0 1px 2px rgba(0,0,0,.5);">✓</span>' : ""}
-          </div>`;
-        } else {
-          const thumbSrc = avatarDataUri(
-            itemThumbOptions(equipped, this.activeCategory, item.value),
-            64,
-          );
-          const borderCls = isEquipped ? "border-success" : "";
-          thumbHtml = `<img src="${thumbSrc}" class="rounded-circle mx-auto mb-2 ${borderCls}" alt="${item.name}" style="width:64px;height:64px;object-fit:cover;" />`;
-        }
+      const cardBorder = isEquipped ? "border: 2px solid #4f46e5;" : "border: none;";
 
-        const equippedBorder = isEquipped ? "border-success" : "";
+      let priceLabel = "";
+      if (!owned && item.price > 0) {
+        priceLabel = `<div class="rounded-pill py-1 px-2 text-center mt-2" style="background-color: #f97316; color: white; font-size: 0.75rem; font-weight: 500;">
+          ${item.price} coins
+        </div>`;
+      } else if (!owned && item.price === 0) {
+        priceLabel = `<div class="rounded-pill py-1 px-2 text-center mt-2" style="background-color: #f97316; color: white; font-size: 0.75rem; font-weight: 500;">
+          Free
+        </div>`;
+      }
 
-        return `
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="card text-center p-3 h-100 ${equippedBorder}">
-              ${thumbHtml}
-              <span class="small fw-semibold d-block mb-2">${item.name}</span>
-              ${actionHtml}
-            </div>
-          </div>`;
-      })
-      .join("")}</div>`;
+      const clickAction = owned
+        ? ""
+        : `onclick="this.dispatchEvent(new CustomEvent('store:buy',{bubbles:true,detail:'${item.id}'}))"`;
+
+      return `
+        <div class="bg-white rounded-4 shadow-sm p-3 text-center" style="width: 110px; ${cardBorder} cursor: ${owned ? 'default' : 'pointer'};"
+             ${clickAction}>
+          ${thumbHtml}
+          ${priceLabel}
+        </div>`;
+    }).join("");
   }
 
   _wireEvents() {
@@ -171,33 +169,14 @@ export class StoreView {
     catBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
         this.activeCategory = btn.dataset.category;
-        const grid = document.querySelector("#store-items-grid");
-        grid.innerHTML = this._renderItems();
-        catBtns.forEach((b) => {
-          b.classList.remove("btn-primary");
-          b.classList.add("btn-outline-secondary");
-        });
-        btn.classList.remove("btn-outline-secondary");
-        btn.classList.add("btn-primary");
-        this._wireItemEvents();
+        this.render();
       });
     });
 
-    this._wireItemEvents();
-  }
-
-  _wireItemEvents() {
     const grid = document.querySelector("#store-items-grid");
-    if (!grid) return;
-
-    grid.addEventListener("click", (e) => {
-      const btn = e.target.closest("button[data-action]");
-      if (!btn) return;
-
-      const action = btn.dataset.action;
-      const itemId = btn.dataset.itemId;
-
-      if (action === "buy") {
+    if (grid) {
+      grid.addEventListener("store:buy", (e) => {
+        const itemId = e.detail;
         const result = this.storeModel.purchase(itemId);
         if (result.ok) {
           const item = this.storeModel.getItemById(itemId);
@@ -208,33 +187,21 @@ export class StoreView {
           this._notifyAvatarUpdate();
           this.render();
         } else {
-          this._showToast(result.error);
+          // Show error as a temporary alert
+          const mainContainer = document.querySelector("#main-container");
+          const errDiv = document.createElement("div");
+          errDiv.className = "alert alert-danger rounded-4 py-2 px-3 position-fixed";
+          errDiv.style.cssText = "top: 1rem; right: 1rem; z-index: 9999;";
+          errDiv.textContent = result.error;
+          document.body.appendChild(errDiv);
+          setTimeout(() => errDiv.remove(), 2000);
         }
-      } else if (action === "equip") {
-        const category = btn.dataset.category;
-        const value = btn.dataset.value;
-        this.storeModel.equip(category, value);
-        this._notifyAvatarUpdate();
-        this.render();
-      }
-    });
+      });
+    }
   }
 
   _notifyAvatarUpdate() {
     const mainContainer = document.querySelector("#main-container");
     mainContainer.dispatchEvent(new CustomEvent("avatar:updated"));
-  }
-
-  _showToast(message) {
-    const coinsEl = document.querySelector("#store-coins");
-    if (!coinsEl) return;
-    const originalText = coinsEl.textContent;
-    const originalColor = coinsEl.style.color;
-    coinsEl.textContent = message;
-    coinsEl.style.color = "#dc3545";
-    setTimeout(() => {
-      coinsEl.textContent = this.storeModel.getCoins();
-      coinsEl.style.color = originalColor;
-    }, 2000);
   }
 }

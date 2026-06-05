@@ -67,6 +67,14 @@ const CATALOG = {
     { id: "acc_faceMask", name: "Face Mask", value: "faceMask", price: 10 },
     { id: "acc_sleepMask", name: "Sleep Mask", value: "sleepMask", price: 15 },
   ],
+  backgroundColor: [
+    { id: "bg_transparent", name: "Transparent", value: "transparent", price: 0 },
+    { id: "bg_lightBlue", name: "Light Blue", value: "c0aede", price: 0 },
+    { id: "bg_pink", name: "Pink", value: "ffdfbf", price: 5 },
+    { id: "bg_green", name: "Green", value: "c0ebdf", price: 5 },
+    { id: "bg_yellow", name: "Yellow", value: "ffd5dc", price: 5 },
+    { id: "bg_purple", name: "Purple", value: "d1d4f9", price: 5 },
+  ],
 };
 
 const DEFAULT_AVATAR = {
@@ -76,6 +84,7 @@ const DEFAULT_AVATAR = {
   skinColor: "a47539",
   hairColor: "238d80",
   accessories: [],
+  backgroundColor: "transparent",
 };
 
 const FREE_ITEM_IDS = Object.values(CATALOG)
