@@ -116,84 +116,84 @@
         </mxCell>
 
         <!-- ====== Edges: HTML → JS entry points ====== -->
-        <mxCell id="edge-index-init" edge="1" parent="1" source="html-index" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="js-init">
+        <mxCell id="edge-index-init" edge="1" parent="1" source="html-index" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="js-init">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-dash-dashinit" edge="1" parent="1" source="html-dash" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="js-dash-init">
+        <mxCell id="edge-dash-dashinit" edge="1" parent="1" source="html-dash" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="js-dash-init">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- ====== Edges: dashboard_init.js → views ====== -->
-        <mxCell id="edge-dashinit-settings" edge="1" parent="1" source="js-dash-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="view-settings">
+        <mxCell id="edge-dashinit-settings" edge="1" parent="1" source="js-dash-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="view-settings">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-dashinit-levels" edge="1" parent="1" source="js-dash-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="view-levels">
+        <mxCell id="edge-dashinit-levels" edge="1" parent="1" source="js-dash-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="view-levels">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-dashinit-shop" edge="1" parent="1" source="js-dash-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="view-shop">
+        <mxCell id="edge-dashinit-shop" edge="1" parent="1" source="js-dash-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="view-shop">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-dashinit-pdf" edge="1" parent="1" source="js-dash-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="view-pdf">
+        <mxCell id="edge-dashinit-pdf" edge="1" parent="1" source="js-dash-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="view-pdf">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-dashinit-worksheet" edge="1" parent="1" source="js-dash-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="view-worksheet">
+        <mxCell id="edge-dashinit-worksheet" edge="1" parent="1" source="js-dash-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="view-worksheet">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- ====== Edges: init.js → landing views ====== -->
-        <mxCell id="edge-init-login" edge="1" parent="1" source="js-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="view-login">
+        <mxCell id="edge-init-login" edge="1" parent="1" source="js-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="view-login">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-init-createacct" edge="1" parent="1" source="js-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="view-createacct">
+        <mxCell id="edge-init-createacct" edge="1" parent="1" source="js-init" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="view-createacct">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
         <!-- ====== Edges: views → models ====== -->
-        <mxCell id="edge-worksheet-model" edge="1" parent="1" source="view-worksheet" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-worksheet">
+        <mxCell id="edge-worksheet-model" edge="1" parent="1" source="view-worksheet" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="model-worksheet">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-worksheet-hardcore" edge="1" parent="1" source="view-worksheet" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-hardcore">
+        <mxCell id="edge-worksheet-hardcore" edge="1" parent="1" source="view-worksheet" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="model-hardcore">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-spelling" edge="1" parent="1" source="view-spelling" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-spelling">
+        <mxCell id="edge-spelling" edge="1" parent="1" source="view-spelling" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="model-spelling">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-letterdnd" edge="1" parent="1" source="view-letterdnd" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-letterdnd">
+        <mxCell id="edge-letterdnd" edge="1" parent="1" source="view-letterdnd" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="model-letterdnd">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-missing" edge="1" parent="1" source="view-missing" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-missing">
+        <mxCell id="edge-missing" edge="1" parent="1" source="view-missing" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="model-missing">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-wordorder" edge="1" parent="1" source="view-wordorder" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-wordorder">
+        <mxCell id="edge-wordorder" edge="1" parent="1" source="view-wordorder" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="model-wordorder">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-shop-store" edge="1" parent="1" source="view-shop" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-store">
+        <mxCell id="edge-shop-store" edge="1" parent="1" source="view-shop" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="model-store">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-pdf-model" edge="1" parent="1" source="view-pdf" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-pdf">
+        <mxCell id="edge-pdf-model" edge="1" parent="1" source="view-pdf" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="model-pdf">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-settings-session" edge="1" parent="1" source="view-settings" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-session">
+        <mxCell id="edge-settings-session" edge="1" parent="1" source="view-settings" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="model-session">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-login-session" edge="1" parent="1" source="view-login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-session">
+        <mxCell id="edge-login-session" edge="1" parent="1" source="view-login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="model-session">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-createacct-session" edge="1" parent="1" source="view-createacct" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-session">
+        <mxCell id="edge-createacct-session" edge="1" parent="1" source="view-createacct" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="model-session">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-levels-session" edge="1" parent="1" source="view-levels" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="model-session">
+        <mxCell id="edge-levels-session" edge="1" parent="1" source="view-levels" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="model-session">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- ====== Edges: models → utils ====== -->
-        <mxCell id="edge-spelling-utils" edge="1" parent="1" source="model-spelling" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="js-utils">
+        <!-- ====== Edges: models → utils (reverse direction, enter from bottom) ====== -->
+        <mxCell id="edge-spelling-utils" edge="1" parent="1" source="model-spelling" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;" target="js-utils">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-letterdnd-utils" edge="1" parent="1" source="model-letterdnd" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="js-utils">
+        <mxCell id="edge-letterdnd-utils" edge="1" parent="1" source="model-letterdnd" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;" target="js-utils">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-wordorder-utils" edge="1" parent="1" source="model-wordorder" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;entryX=0.5;entryY=0;" target="js-utils">
+        <mxCell id="edge-wordorder-utils" edge="1" parent="1" source="model-wordorder" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;" target="js-utils">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
