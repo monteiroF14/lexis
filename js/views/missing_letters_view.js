@@ -14,7 +14,7 @@ export default class MissingLettersView {
     c.innerHTML = `
       <div class="w-100 d-flex flex-column align-items-center gap-4 lexis-contained-narrow">
         <div class="rounded-4 shadow-sm px-4 py-3 text-center w-100 lexis-ex-prompt">Fill in the missing letters</div>
-        <div class="d-flex align-items-center justify-content-center flex-wrap py-3">${html}</div>
+        <div class="d-flex align-items-center justify-content-center flex-nowrap py-3" style="white-space: nowrap;">${html}</div>
         <button id="missing-submit" class="btn text-white w-100 fw-bold rounded-4 py-2 lexis-btn-primary">Submit</button>
         <div id="missing-feedback"></div>
       </div>`;
