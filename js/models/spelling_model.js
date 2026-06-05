@@ -1,6 +1,7 @@
 /*
  * Spelling Exercise Model – provides a word and three options (one correct, two incorrect).
  */
+import { shuffle } from "../utils.js";
 
 export default class SpellingModel {
   constructor(data) {
@@ -35,12 +36,7 @@ export default class SpellingModel {
     const wrong1 = this.makeMistake(correct);
     const wrong2 = this.makeMistake(correct);
     const opts = [correct, wrong1, wrong2];
-    // shuffle
-    for (let i = opts.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [opts[i], opts[j]] = [opts[j], opts[i]];
-    }
-    return opts;
+    return shuffle(opts);
   }
 
   checkAnswer(choice) {

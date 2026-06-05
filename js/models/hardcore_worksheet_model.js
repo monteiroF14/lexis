@@ -39,9 +39,9 @@ function generateExercise() {
 }
 
 export default class HardcoreWorksheetModel extends WorksheetModel {
-  constructor() {
+  constructor(sessionModel) {
     // start with a single generated exercise; list will grow as we go
-    super([generateExercise()], 'hardcore');
+    super([generateExercise()], 'hardcore', sessionModel);
     this.hardcore = true;
   }
 
