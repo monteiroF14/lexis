@@ -48,46 +48,75 @@ function refreshSidebar() {
   const user = sessionModel.getSession();
   if (!user) return;
 
-  document.querySelector("#user-avatar").src = createAvatar(
-    bigSmile,
-    getAvatarOptions(user),
-  ).toDataUri();
+  // Avatar
+  const avatarEl = document.querySelector("#user-avatar");
+  if (avatarEl) {
+    avatarEl.src = createAvatar(bigSmile, getAvatarOptions(user)).toDataUri();
+  }
 
+  // Name & level title
   const nameEl = document.querySelector("#user-name");
   if (nameEl) nameEl.textContent = user.name;
 
   const levelEl = document.querySelector("#user-level");
   if (levelEl) levelEl.textContent = `Level ${user.level} ${user.currentTitle}`;
 
-  const coinsEl = document.querySelector("#user-coins");
-  if (coinsEl) coinsEl.textContent = user.coins;
+  // Stats card
+  const statsLevel = document.querySelector("#user-stats-level");
+  if (statsLevel) statsLevel.textContent = user.level;
 
-  const xpEl = document.querySelector("#user-xp");
-  if (xpEl) xpEl.textContent = user.xp;
+  const statsXp = document.querySelector("#user-stats-xp");
+  if (statsXp) statsXp.textContent = user.xp;
 
-  const progressEl = document.querySelector("#user-progress");
-  if (progressEl) {
-    const xpInLevel = user.xp % 200;
-    progressEl.style.width = `${(xpInLevel / 200) * 100}%`;
-  }
+  const statsCoins = document.querySelector("#user-stats-coins");
+  if (statsCoins) statsCoins.textContent = user.coins;
+
+  // Daily XP progress (cap at 200 XP = one level)
+  const dailyXpCap = 200;
+  const dailyXpPct = Math.min(Math.round((user.xp % dailyXpCap) / dailyXpCap * 100), 100);
+  const dailyXpBar = document.querySelector("#daily-xp-bar");
+  const dailyXpText = document.querySelector("#daily-xp-text");
+  if (dailyXpBar) dailyXpBar.style.width = `${dailyXpPct}%`;
+  if (dailyXpText) dailyXpText.textContent = `${dailyXpPct}%`;
+
+  // Daily Coins progress (cap at 100)
+  const dailyCoinsCap = 100;
+  const dailyCoinsPct = Math.min(Math.round((user.coins / dailyCoinsCap) * 100), 100);
+  const dailyCoinsBar = document.querySelector("#daily-coins-bar");
+  const dailyCoinsText = document.querySelector("#daily-coins-text");
+  if (dailyCoinsBar) dailyCoinsBar.style.width = `${dailyCoinsPct}%`;
+  if (dailyCoinsText) dailyCoinsText.textContent = `${dailyCoinsPct}%`;
 }
 
 refreshSidebar();
 
 const dashboardModel = new DashboardModel();
 const levelsView = new LevelsView(sessionModel, dashboardModel);
-const pdfView = new PdfView(dashboardModel);
-const customizationView = new CustomizationView(dashboardModel);
+const pdfView = new PdfView(sessionModel);
+const customizationView = new CustomizationView(sessionModel);
 const storeView = new StoreView(sessionModel);
 const settingsView = new SettingsView(dashboardModel);
 levelsView.render();
 
+// Logo click → home / levels
+const logo = document.querySelector("#sidebar-logo");
+if (logo) {
+  logo.addEventListener("click", () => levelsView.render());
+}
+
+// Logout
+const logoutBtn = document.querySelector("#btn-logout");
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    sessionModel.logout();
+    window.location.href = import.meta.env.BASE_URL + "index.html";
+  });
+}
+
 const mainContainer = document.querySelector("#main-container");
 mainContainer.addEventListener("worksheet:cancel", () => {
+  refreshSidebar();
   levelsView.render();
-  document
-    .querySelectorAll("aside")
-    .forEach((as) => (as.style.display = "block"));
 });
 
 mainContainer.addEventListener("avatar:updated", () => {
