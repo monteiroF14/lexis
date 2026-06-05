@@ -21,7 +21,6 @@ export default class WorksheetView {
     this.container.innerHTML = `
       <div class="d-flex flex-column align-items-center justify-content-center position-relative w-100 lexis-min-h-full">
         <button id="leave-exercise" class="btn btn-light rounded-pill position-absolute shadow-sm lexis-leave-btn">Leave the exercise</button>
-        <button id="speaker-btn" class="btn btn-light rounded-circle position-absolute shadow-sm d-flex align-items-center justify-content-center lexis-speaker-btn">🔊</button>
         <div id="exercise-container" class="w-100 d-flex flex-column align-items-center lexis-contained-narrow lexis-ex-pad"></div>
       </div>`;
 
