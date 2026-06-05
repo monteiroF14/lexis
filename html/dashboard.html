@@ -15,28 +15,30 @@
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
-    <div class="container-fluid g-0" style="min-height: 100vh; background: #f0f0f0;">
-      <div class="row g-0 flex-nowrap" style="min-height: 100vh;">
+    <div class="container-fluid g-0" style="height: 100vh; background: #f0f0f0;">
+      <div class="row g-0 flex-nowrap" style="height: 100vh; overflow: hidden;">
         <!-- Left sidebar -->
-        <aside class="col-auto bg-white d-flex flex-column" style="width: 200px; min-height: 100vh;">
+        <aside class="col-auto bg-white d-flex flex-column" style="width: 200px; height: 100vh; flex-shrink: 0;">
           <div class="p-3 text-center">
             <img id="sidebar-logo" src="../assets/img/LogoBlue.png" style="height: 50px; cursor: pointer;" alt="Lexis" />
           </div>
-          <div class="mx-3 mb-3 p-3 rounded-4" style="background: #f3f4f6;">
-            <div class="d-flex flex-column align-items-center gap-2" id="sidebar-nav">
-              <button class="btn rounded-3 py-2 px-4 text-center border-0" id="btn-pdf" style="background-color: #e5e7eb; color: #374151;">Documents</button>
-              <button class="btn rounded-3 py-2 px-4 text-center border-0" id="btn-store" style="background-color: #e5e7eb; color: #374151;">Store</button>
-              <button class="btn rounded-3 py-2 px-4 text-center border-0" id="btn-customization" style="background-color: #e5e7eb; color: #374151;">Customize</button>
-              <button class="btn rounded-3 py-2 px-4 text-center border-0" id="btn-settings" style="background-color: #e5e7eb; color: #374151;">Settings</button>
+          <div class="flex-grow-1 d-flex align-items-center justify-content-center">
+            <div class="mx-3 p-3 rounded-4" style="background: #f3f4f6;">
+              <div class="d-flex flex-column align-items-center gap-2" id="sidebar-nav">
+                <button class="btn rounded-3 py-2 px-4 text-center border-0" id="btn-pdf" style="background-color: #e5e7eb; color: #374151;">Documents</button>
+                <button class="btn rounded-3 py-2 px-4 text-center border-0" id="btn-store" style="background-color: #e5e7eb; color: #374151;">Store</button>
+                <button class="btn rounded-3 py-2 px-4 text-center border-0" id="btn-customization" style="background-color: #e5e7eb; color: #374151;">Customize</button>
+                <button class="btn rounded-3 py-2 px-4 text-center border-0" id="btn-settings" style="background-color: #e5e7eb; color: #374151;">Settings</button>
+              </div>
             </div>
           </div>
         </aside>
 
         <!-- Main content -->
-        <main class="col" id="main-container" style="background: #f0f0f0; min-height: 100vh;"></main>
+        <main class="col" id="main-container" style="background: #f0f0f0; height: 100vh; overflow-y: auto;"></main>
 
         <!-- Right sidebar -->
-        <aside class="col-auto bg-white d-flex flex-column" style="width: 260px; min-height: 100vh;">
+        <aside class="col-auto bg-white d-flex flex-column" style="width: 260px; height: 100vh; flex-shrink: 0;">
           <div class="p-3 flex-grow-1">
             <!-- Profile card -->
             <div class="card border-0 shadow-sm rounded-4 mb-3 text-center">
