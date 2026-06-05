@@ -4,3 +4,7 @@
   font-weight: normal;
   font-style: normal;
 }
+
+body.dyslexic-mode {
+  font-family: "OpenDyslexic", sans-serif !important;
+}
