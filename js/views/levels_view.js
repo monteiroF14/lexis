@@ -51,6 +51,7 @@ export class LevelsView {
   }
 
   render() {
+    if (window.setActiveTab) window.setActiveTab(null);
     const progress = this._getProgress();
     const mc = document.querySelector("#main-container");
     const isNormal = this.currentMode === "normal";

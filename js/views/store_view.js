@@ -58,8 +58,9 @@ export class StoreView {
     this.sessionModel = sessionModel;
     this.storeModel = new StoreModel(sessionModel);
     this.activeCategory = "hair";
-    const btn = document.querySelector("#btn-store");
-    if (btn) btn.onclick = () => this.render();
+    document.querySelectorAll('[data-tab="store"]').forEach(btn => {
+      btn.onclick = () => this.render();
+    });
   }
 
   _isEquipped(item) {
@@ -75,7 +76,7 @@ export class StoreView {
   }
 
   render() {
-    if (window.setActiveSidebar) window.setActiveSidebar("btn-store");
+    if (window.setActiveTab) window.setActiveTab("store");
     const equipped = this.storeModel.getEquipped();
 
     const mainContainer = document.querySelector("#main-container");

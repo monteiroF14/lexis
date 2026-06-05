@@ -3,12 +3,13 @@ import { SessionModel } from "../models/session_model.js";
 export class SettingsView {
   constructor(sessionModel) {
     this.sessionModel = sessionModel;
-    const btn = document.querySelector("#btn-settings");
-    if (btn) btn.onclick = () => this.render();
+    document.querySelectorAll('[data-tab="settings"]').forEach(btn => {
+      btn.onclick = () => this.render();
+    });
   }
 
   render() {
-    if (window.setActiveSidebar) window.setActiveSidebar("btn-settings");
+    if (window.setActiveTab) window.setActiveTab("settings");
     const user = this.sessionModel.getSession() || {};
     const currentTheme = user.theme || "light";
     const adaptText = user.adaptText || false;

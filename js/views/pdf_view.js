@@ -3,8 +3,9 @@ import { PdfModel } from "../models/pdf_model.js";
 export class PdfView {
   constructor(sessionModel) {
     this.pdfModel = new PdfModel(sessionModel);
-    const btn = document.querySelector("#btn-pdf");
-    if (btn) btn.onclick = () => this.render();
+    document.querySelectorAll('[data-tab="pdf"]').forEach(btn => {
+      btn.onclick = () => this.render();
+    });
   }
 
   _renderContent() {
@@ -70,7 +71,7 @@ export class PdfView {
   }
 
   render() {
-    if (window.setActiveSidebar) window.setActiveSidebar("btn-pdf");
+    if (window.setActiveTab) window.setActiveTab("pdf");
     this._renderContent();
   }
 }

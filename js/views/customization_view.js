@@ -59,8 +59,9 @@ export class CustomizationView {
     this.sessionModel = sessionModel;
     this.storeModel = new StoreModel(sessionModel);
     this.activeCategory = "skinColor";
-    const btn = document.querySelector("#btn-customization");
-    if (btn) btn.onclick = () => this.render();
+    document.querySelectorAll('[data-tab="customization"]').forEach(btn => {
+      btn.onclick = () => this.render();
+    });
   }
 
   _isEquipped(item) {
@@ -76,7 +77,7 @@ export class CustomizationView {
   }
 
   render() {
-    if (window.setActiveSidebar) window.setActiveSidebar("btn-customization");
+    if (window.setActiveTab) window.setActiveTab("customization");
     const mainContainer = document.querySelector("#main-container");
     mainContainer.innerHTML = `
       <div class="d-flex flex-column align-items-center py-4 w-100">
