@@ -1,5 +1,5 @@
 export class LoginView {
-  #model;
+  #sessionModel;
   #savedHtml = "";
 
   #render = () => {
@@ -22,12 +22,12 @@ export class LoginView {
     document.getElementById("return-btn").onclick = () => { main.innerHTML = this.#savedHtml; main.dispatchEvent(new CustomEvent("index:render")); };
     document.getElementById("login-form").onsubmit = (e) => {
       e.preventDefault();
-      const r = this.#model.login(document.getElementById("login-identifier").value, document.getElementById("login-password").value);
+      const r = this.#sessionModel.login(document.getElementById("login-identifier").value, document.getElementById("login-password").value);
       if (!r.ok) { const err = document.getElementById("login-error"); err.textContent = r.error; err.style.display = "block"; }
       else window.location.href = import.meta.env.BASE_URL + "html/dashboard.html";
     };
   };
 
   attachTrigger() { document.getElementById("login-btn")?.addEventListener("click", this.#render); }
-  constructor(model) { this.#model = model; this.attachTrigger(); }
+  constructor(sessionModel) { this.#sessionModel = sessionModel; this.attachTrigger(); }
 }

@@ -1,5 +1,5 @@
 export class CreateAccountView {
-  #model;
+  #sessionModel;
   #savedHtml = "";
 
   #render = () => {
@@ -23,16 +23,15 @@ export class CreateAccountView {
     document.getElementById("ca-skip").onclick = () => { window.location.href = import.meta.env.BASE_URL + "html/dashboard.html"; };
     document.getElementById("create-account-form").onsubmit = (e) => {
       e.preventDefault();
-      const r = this.#model.createAccount({
-        name: document.getElementById("ca-name").value.trim(),
-        email: document.getElementById("ca-email").value.trim(),
-        password: document.getElementById("ca-password").value,
-      });
+      const name = document.getElementById("ca-name").value.trim();
+      const email = document.getElementById("ca-email").value.trim();
+      const password = document.getElementById("ca-password").value;
+      const r = this.#sessionModel.createAccount({ name, email, password });
       if (!r.ok) { const err = document.getElementById("ca-error"); err.textContent = r.error; err.style.display = "block"; }
       else window.location.href = import.meta.env.BASE_URL + "html/dashboard.html";
     };
   };
 
   attachTrigger() { document.getElementById("get-started-btn")?.addEventListener("click", this.#render); }
-  constructor(model) { this.#model = model; this.attachTrigger(); }
+  constructor(sessionModel) { this.#sessionModel = sessionModel; this.attachTrigger(); }
 }
