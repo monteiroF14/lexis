@@ -95,7 +95,7 @@ const levelsView = new LevelsView(sessionModel, dashboardModel);
 const pdfView = new PdfView(sessionModel);
 const customizationView = new CustomizationView(sessionModel);
 const storeView = new StoreView(sessionModel);
-const settingsView = new SettingsView(dashboardModel);
+const settingsView = new SettingsView(sessionModel);
 levelsView.render();
 
 // Logo click → home / levels
