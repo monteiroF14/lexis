@@ -142,6 +142,15 @@ if (logo) {
   });
 }
 
+// Mobile home button → levels
+const homeBtn = document.querySelector("#btn-levels-mobile");
+if (homeBtn) {
+  homeBtn.addEventListener("click", () => {
+    window.setActiveTab(null);
+    levelsView.render();
+  });
+}
+
 // Logout
 const logoutBtn = document.querySelector("#btn-logout");
 if (logoutBtn) {
