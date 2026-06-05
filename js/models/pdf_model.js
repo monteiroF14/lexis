@@ -5,16 +5,17 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url,
 ).toString();
 
-const PDF_KEY = "LAST_PDF_UPLOADED";
-
 export class PdfModel {
-  static getLastPdf() {
-    const pdfText = localStorage.getItem(PDF_KEY);
-    if (pdfText != null) {
-      return pdfText;
-    }
+  constructor(sessionModel) {
+    this.sessionModel = sessionModel;
   }
-  static async parse(file) {
+
+  getPdf() {
+    const user = this.sessionModel.getSession();
+    return user?.pdf || null;
+  }
+
+  async parseAndSave(file) {
     const bytes = new Uint8Array(await file.arrayBuffer());
     const pdf = await pdfjsLib.getDocument({ data: bytes }).promise;
 
@@ -25,7 +26,21 @@ export class PdfModel {
       text += content.items.map((item) => item.str).join(" ") + "\n\n";
     }
     text = text.trim();
-    localStorage.setItem(PDF_KEY, text);
-    return text;
+
+    const user = this.sessionModel.getSession();
+    if (user) {
+      user.pdf = { text, name: file.name };
+      this.sessionModel.updateUser(user);
+    }
+
+    return { text, name: file.name };
+  }
+
+  clearPdf() {
+    const user = this.sessionModel.getSession();
+    if (user) {
+      delete user.pdf;
+      this.sessionModel.updateUser(user);
+    }
   }
 }
