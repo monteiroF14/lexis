@@ -75,6 +75,7 @@ export class StoreView {
   }
 
   render() {
+    if (window.setActiveSidebar) window.setActiveSidebar("btn-store");
     const equipped = this.storeModel.getEquipped();
 
     const mainContainer = document.querySelector("#main-container");

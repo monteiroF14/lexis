@@ -8,6 +8,7 @@ export class SettingsView {
   }
 
   render() {
+    if (window.setActiveSidebar) window.setActiveSidebar("btn-settings");
     const user = this.sessionModel.getSession() || {};
     const currentTheme = user.theme || "light";
     const adaptText = user.adaptText || false;
@@ -67,6 +68,7 @@ export class SettingsView {
     adaptToggle.addEventListener("change", () => {
       user.adaptText = adaptToggle.checked;
       this.sessionModel.updateUser(user);
+      document.body.classList.toggle("dyslexic-mode", adaptToggle.checked);
     });
 
     // Toggle: Dark mode

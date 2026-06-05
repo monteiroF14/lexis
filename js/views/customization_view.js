@@ -76,6 +76,7 @@ export class CustomizationView {
   }
 
   render() {
+    if (window.setActiveSidebar) window.setActiveSidebar("btn-customization");
     const mainContainer = document.querySelector("#main-container");
     mainContainer.innerHTML = `
       <div class="d-flex flex-column align-items-center py-4 w-100">

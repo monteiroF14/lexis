@@ -19,7 +19,7 @@ export class PdfView {
               <h4 class="mb-0">📄 ${pdf.name}</h4>
               <button id="clear-pdf" class="btn btn-outline-danger rounded-pill btn-sm">Clear</button>
             </div>
-            <div id="pdf-content" style="font-family: 'OpenDyslexic', sans-serif; white-space: pre-wrap; max-height: 70vh; overflow-y: auto;">${pdf.text}</div>
+            <div id="pdf-content" style="white-space: pre-wrap; max-height: 70vh; overflow-y: auto;">${pdf.text}</div>
           </div>
         </div>`;
       mainContainer.querySelector("#clear-pdf").addEventListener("click", () => {
@@ -70,6 +70,7 @@ export class PdfView {
   }
 
   render() {
+    if (window.setActiveSidebar) window.setActiveSidebar("btn-pdf");
     this._renderContent();
   }
 }
