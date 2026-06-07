@@ -460,6 +460,32 @@ body {
 	min-height: 60px;
 }
 
+.lexis-zone-empty {
+	position: relative;
+}
+
+.lexis-zone-empty::before {
+	content: "◂";
+	position: absolute;
+	left: 0.5rem;
+	top: 50%;
+	transform: translateY(-50%);
+	color: var(--lexis-text-secondary);
+	opacity: 0.3;
+	font-size: 1.2rem;
+}
+
+.lexis-zone-empty::after {
+	content: "▸ .";
+	position: absolute;
+	right: 0.5rem;
+	top: 50%;
+	transform: translateY(-50%);
+	color: var(--lexis-text-secondary);
+	opacity: 0.3;
+	font-size: 1.2rem;
+}
+
 /* Level path */
 .lexis-path {
 	width: 280px;

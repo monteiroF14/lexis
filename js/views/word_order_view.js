@@ -9,14 +9,11 @@ export default class WordOrderView {
     this._onWordClick = this._onWordClick.bind(this);
     this._onUndo = this._onUndo.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
+    this._onHintWord = this._onHintWord.bind(this);
   }
 
   _getContainer() {
-    return (
-      this.container ||
-      document.getElementById("exercise-container") ||
-      document.getElementById("main-container")
-    );
+    return getExerciseContainer(this);
   }
 
   render() {
@@ -29,12 +26,13 @@ export default class WordOrderView {
           <span class="lexis-hint-arrow" style="font-size:0.65rem;">▶</span> Hint
         </div>
         <div class="lexis-hint-text small text-secondary mb-3 d-none">${this.model.hint || "No hint available"}</div>
-        <div id="sentence-zone" class="rounded-4 shadow-sm p-3 d-flex flex-wrap align-items-center w-100 lexis-sentence-zone"></div>
+        <div id="sentence-zone" class="rounded-4 shadow-sm p-3 d-flex flex-wrap align-items-center w-100 lexis-sentence-zone lexis-zone-empty"></div>
         <div id="word-pool" class="d-flex flex-wrap justify-content-center">
           ${this.model.shuffled.map((w, i) => `<button class="btn rounded-pill me-2 mb-2 word-chip shadow-sm lexis-word-chip" data-index="${i}">${w}</button>`).join("")}
         </div>
         <div class="d-flex gap-2 w-100">
-          <button id="undo-btn" class="btn rounded-4 py-2 flex-fill lexis-btn-undo">Undo last</button>
+          <button id="hint-btn" class="btn rounded-4 py-2 flex-fill lexis-btn-undo">Hint word</button>
+          <button id="undo-btn" class="btn rounded-4 py-2 flex-fill lexis-btn-undo">Undo</button>
           <button id="submit-btn" class="btn text-white rounded-4 py-2 flex-fill lexis-btn-primary">Submit</button>
         </div>
         <div id="order-feedback"></div>
@@ -42,6 +40,7 @@ export default class WordOrderView {
     c.querySelectorAll(".word-chip").forEach(b => b.addEventListener("click", this._onWordClick));
     c.querySelector("#undo-btn").addEventListener("click", this._onUndo);
     c.querySelector("#submit-btn").addEventListener("click", this._onSubmit);
+    c.querySelector("#hint-btn").addEventListener("click", this._onHintWord);
     const hintToggle = c.querySelector(".lexis-hint-toggle");
     const hintText = c.querySelector(".lexis-hint-text");
     if (hintToggle && hintText && this.model.hint) {
@@ -66,6 +65,7 @@ export default class WordOrderView {
     btn.classList.add("lexis-chip-selected");
     btn.disabled = true;
     c.querySelector("#sentence-zone").appendChild(btn);
+    c.querySelector("#sentence-zone").classList.remove("lexis-zone-empty");
   }
 
   _onUndo() {
@@ -80,6 +80,24 @@ export default class WordOrderView {
       btn.disabled = false;
       c.querySelector("#word-pool").appendChild(btn);
     }
+    if (!this.selected.length) {
+      c.querySelector("#sentence-zone").classList.add("lexis-zone-empty");
+    }
+  }
+
+  _onHintWord() {
+    const c = this._getContainer();
+    if (!c) return;
+    const usedIndices = new Set(this.selected.map(s => s.idx));
+    for (let i = 0; i < this.model.words.length; i++) {
+      const idx = this.model.shuffled.findIndex(w => w === this.model.words[i]);
+      if (!usedIndices.has(idx)) {
+        const chip = c.querySelector(`#word-pool button[data-index='${idx}']`);
+        if (chip) chip.click();
+        return;
+      }
+    }
+    c.querySelector("#hint-btn").disabled = true;
   }
 
   _onSubmit() {
@@ -87,19 +105,12 @@ export default class WordOrderView {
     if (!c) return;
     c.querySelector("#submit-btn").disabled = true;
     c.querySelector("#undo-btn").disabled = true;
+    c.querySelector("#hint-btn").disabled = true;
     const zone = c.querySelector("#sentence-zone");
 
     if (this.model.checkAnswer(this.selected.map((s) => s.word))) {
       playCorrect();
-      // zone.classList.add("lexis-correct-pulse", "lexis-flash-correct");
       zone.classList.add("lexis-correct-pulse");
-
-      [...zone.querySelectorAll("button")].map((el) =>
-        el.classList.add(
-          "lexis-flash-correct",
-          "lexis-flash-correct-word-order",
-        ),
-      );
       setTimeout(() => {
         c.dispatchEvent(
           new CustomEvent("exerciseCompleted", {
@@ -110,13 +121,12 @@ export default class WordOrderView {
       }, 600);
     } else {
       playIncorrect();
-      // zone.classList.add("lexis-shake", "lexis-flash-incorrect");
       zone.classList.add("lexis-shake");
       const correctWords = this.model.original.split(/\s+/);
       zone.innerHTML = correctWords
         .map(
           (w) =>
-            `<button class="btn rounded-pill me-2 mb-2 shadow-sm lexis-word-chip lexis-flash-incorrect">${w}</button>`,
+            `<button class="btn rounded-pill me-2 mb-2 shadow-sm lexis-word-chip lexis-flash-correct">${w}</button>`,
         )
         .join("");
       setTimeout(() => {
