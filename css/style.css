@@ -327,9 +327,9 @@ body {
 
 /* Tabs */
 .lexis-tab-active {
-	background-color: var(--lexis-primary);
-	color: white;
-	border: 1px solid var(--lexis-primary);
+	background-color: var(--lexis-primary) !important;
+	color: white !important;
+	border: 1px solid var(--lexis-primary) !important;
 }
 
 .lexis-tab-inactive {
