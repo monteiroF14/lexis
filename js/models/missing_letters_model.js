@@ -1,6 +1,7 @@
 export default class MissingLettersModel {
   constructor(data) {
     this.word = data.word;
+    this.hint = data.hint || "";
     this.blanks = this._selectBlanks();
     this.completed = false;
   }

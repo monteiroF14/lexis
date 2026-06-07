@@ -3,6 +3,7 @@ import { shuffle } from "../utils.js";
 export default class SpellingModel {
   constructor(data) {
     this.word = data.word;
+    this.hint = data.hint || "";
     this.options = this._generateOptions();
     this.completed = false;
   }

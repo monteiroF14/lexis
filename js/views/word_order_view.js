@@ -25,6 +25,10 @@ export default class WordOrderView {
     c.innerHTML = `
       <div class="w-100 d-flex flex-column align-items-center gap-4 lexis-contained-narrow">
         <div class="rounded-4 shadow-sm px-4 py-3 text-center w-100 lexis-ex-prompt">Arrange the words in correct order</div>
+        <div class="lexis-hint-toggle d-flex align-items-center gap-1 small cursor-pointer mb-2">
+          <span class="lexis-hint-arrow" style="font-size:0.65rem;">▶</span> Hint
+        </div>
+        <div class="lexis-hint-text small text-secondary mb-3 d-none">${this.model.hint || "No hint available"}</div>
         <div id="sentence-zone" class="rounded-4 shadow-sm p-3 d-flex flex-wrap align-items-center w-100 lexis-sentence-zone"></div>
         <div id="word-pool" class="d-flex flex-wrap justify-content-center">
           ${this.model.shuffled.map((w, i) => `<button class="btn rounded-pill me-2 mb-2 word-chip shadow-sm lexis-word-chip" data-index="${i}">${w}</button>`).join("")}
@@ -35,11 +39,20 @@ export default class WordOrderView {
         </div>
         <div id="order-feedback"></div>
       </div>`;
-    c.querySelectorAll(".word-chip").forEach((b) =>
-      b.addEventListener("click", this._onWordClick),
-    );
+    c.querySelectorAll(".word-chip").forEach(b => b.addEventListener("click", this._onWordClick));
     c.querySelector("#undo-btn").addEventListener("click", this._onUndo);
     c.querySelector("#submit-btn").addEventListener("click", this._onSubmit);
+    const hintToggle = c.querySelector(".lexis-hint-toggle");
+    const hintText = c.querySelector(".lexis-hint-text");
+    if (hintToggle && hintText && this.model.hint) {
+      hintToggle.addEventListener("click", () => {
+        hintText.classList.toggle("d-none");
+        hintToggle.querySelector(".lexis-hint-arrow").textContent =
+          hintText.classList.contains("d-none") ? "▶" : "▼";
+      });
+    } else if (hintToggle) {
+      hintToggle.classList.add("d-none");
+    }
   }
 
   _onWordClick(e) {

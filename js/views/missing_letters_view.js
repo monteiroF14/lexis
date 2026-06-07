@@ -17,11 +17,26 @@ export default class MissingLettersView {
     c.innerHTML = `
       <div class="w-100 d-flex flex-column align-items-center gap-4 lexis-contained-narrow">
         <div class="rounded-4 shadow-sm px-4 py-3 text-center w-100 lexis-ex-prompt">Fill in the missing letters</div>
+        <div class="lexis-hint-toggle d-flex align-items-center gap-1 small cursor-pointer mb-2">
+          <span class="lexis-hint-arrow" style="font-size:0.65rem;">▶</span> Hint
+        </div>
+        <div class="lexis-hint-text small text-secondary mb-3 d-none">${this.model.hint || "No hint available"}</div>
         <div class="d-flex align-items-center justify-content-center flex-nowrap py-3" style="white-space: nowrap;">${html}</div>
         <button id="missing-submit" class="btn text-white w-100 fw-bold rounded-4 py-2 lexis-btn-primary">Submit</button>
         <div id="missing-feedback"></div>
       </div>`;
     c.querySelector("#missing-submit").addEventListener("click", this._onSubmit);
+    const hintToggle = c.querySelector(".lexis-hint-toggle");
+    const hintText = c.querySelector(".lexis-hint-text");
+    if (hintToggle && hintText && this.model.hint) {
+      hintToggle.addEventListener("click", () => {
+        hintText.classList.toggle("d-none");
+        hintToggle.querySelector(".lexis-hint-arrow").textContent =
+          hintText.classList.contains("d-none") ? "▶" : "▼";
+      });
+    } else if (hintToggle) {
+      hintToggle.classList.add("d-none");
+    }
   }
 
   _onSubmit() {

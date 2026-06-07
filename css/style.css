@@ -835,3 +835,13 @@ body {
 	inset: 0;
 	z-index: 1050;
 }
+
+/* Hint toggle */
+.lexis-hint-toggle {
+	color: var(--lexis-text-secondary);
+	cursor: pointer;
+}
+
+.lexis-hint-toggle:hover {
+	color: var(--lexis-primary);
+}

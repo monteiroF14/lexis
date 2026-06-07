@@ -8,10 +8,10 @@ import MissingLettersView from "./views/missing_letters_view.js";
 import WordOrderView from "./views/word_order_view.js";
 
 const TABS = [
-  { label: "Spelling",   Model: SpellingModel,   View: SpellingView,   data: { word: "orange" } },
-  { label: "Letter DnD", Model: LetterDndModel,  View: LetterDndView,  data: { word: "apple", hint: "" } },
-  { label: "Missing",    Model: MissingLettersModel, View: MissingLettersView, data: { word: "banana" } },
-  { label: "Word Order", Model: WordOrderModel,  View: WordOrderView,  data: { sentence: "the cat sat" } },
+  { label: "Spelling",   Model: SpellingModel,   View: SpellingView,   data: { word: "orange", hint: "A citrus fruit" } },
+  { label: "Letter DnD", Model: LetterDndModel,  View: LetterDndView,  data: { word: "apple", hint: "A common fruit" } },
+  { label: "Missing",    Model: MissingLettersModel, View: MissingLettersView, data: { word: "banana", hint: "A long yellow fruit" } },
+  { label: "Word Order", Model: WordOrderModel,  View: WordOrderView,  data: { sentence: "the cat sat", hint: "A simple sentence with three words" } },
 ];
 
 let activeIndex = 0;

@@ -2,19 +2,39 @@ import WorksheetModel from "../models/worksheet_model.js";
 import HardcoreWorksheetModel from "../models/hardcore_worksheet_model.js";
 import WorksheetView from "./worksheet_view.js";
 
-const WORDS = [
-  "apple", "banana", "orange", "cat", "dog", "fish",
-  "house", "tree", "book", "star", "moon", "sun",
-  "bird", "rain", "snow", "cloud", "grass", "river",
-];
-const SENTENCES = [
-  "the quick brown fox jumps", "she sells sea shells",
-  "hello world program", "learning is fun",
-  "practice makes perfect", "a cat sat on the mat",
-];
 const TYPES = ["spelling", "letter_dnd", "missing", "word_order"];
 
 function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+const WORDS = [
+  { word: "apple",  hint: "A common fruit" },
+  { word: "banana", hint: "A long yellow fruit" },
+  { word: "orange", hint: "A citrus fruit" },
+  { word: "cat",    hint: "A furry pet that purrs" },
+  { word: "dog",    hint: "Man's best friend" },
+  { word: "fish",   hint: "Swims in water" },
+  { word: "house",  hint: "A place to live" },
+  { word: "tree",   hint: "Has leaves and branches" },
+  { word: "book",   hint: "Something you read" },
+  { word: "star",   hint: "Shines in the night sky" },
+  { word: "moon",   hint: "Orbits the Earth" },
+  { word: "sun",    hint: "Our closest star" },
+  { word: "bird",   hint: "Has feathers and flies" },
+  { word: "rain",   hint: "Water falling from clouds" },
+  { word: "snow",   hint: "White and cold, falls in winter" },
+  { word: "cloud",  hint: "Floats in the sky" },
+  { word: "grass",  hint: "Covers the ground, green" },
+  { word: "river",  hint: "Flows towards the sea" },
+];
+
+const SENTENCES = [
+  { sentence: "the quick brown fox jumps", hint: "Contains every letter of the alphabet" },
+  { sentence: "she sells sea shells",       hint: "A famous tongue twister" },
+  { sentence: "hello world program",        hint: "Every programmer writes this first" },
+  { sentence: "learning is fun",            hint: "An encouraging phrase" },
+  { sentence: "practice makes perfect",     hint: "A saying about hard work" },
+  { sentence: "a cat sat on the mat",       hint: "A simple rhyming sentence" },
+];
 
 function generateExercises(count) {
   const out = [];
@@ -22,10 +42,10 @@ function generateExercises(count) {
     const type = rand(TYPES);
     let data;
     switch (type) {
-      case "spelling": data = { word: rand(WORDS) }; break;
-      case "letter_dnd": data = { word: rand(WORDS), hint: "" }; break;
-      case "missing": data = { word: rand(WORDS) }; break;
-      case "word_order": data = { sentence: rand(SENTENCES) }; break;
+      case "spelling": { const w = rand(WORDS); data = { word: w.word, hint: w.hint }; break; }
+      case "letter_dnd": { const w = rand(WORDS); data = { word: w.word, hint: w.hint }; break; }
+      case "missing": { const w = rand(WORDS); data = { word: w.word, hint: w.hint }; break; }
+      case "word_order": { const s = rand(SENTENCES); data = { sentence: s.sentence, hint: s.hint }; break; }
     }
     out.push({ type, data });
   }

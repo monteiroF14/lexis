@@ -20,6 +20,10 @@ export default class LetterDndView {
     c.innerHTML = `
       <div class="w-100 d-flex flex-column align-items-center gap-4 lexis-contained-narrow">
         <div class="rounded-4 shadow-sm px-4 py-3 text-center w-100 lexis-ex-prompt">Arrange the letters</div>
+        <div class="lexis-hint-toggle d-flex align-items-center gap-1 small cursor-pointer mb-2">
+          <span class="lexis-hint-arrow" style="font-size:0.65rem;">▶</span> Hint
+        </div>
+        <div class="lexis-hint-text small text-secondary mb-3 d-none">${this.model.hint || "No hint available"}</div>
         <div class="d-flex justify-content-center flex-wrap gap-2 p-3 rounded-4 shadow-sm w-100 lexis-letter-zone" id="construction-zone">
           ${this.model.letters.map(() => `<div class="rounded-3 shadow-sm d-flex align-items-center justify-content-center lexis-tile-slot"></div>`).join("")}
         </div>
@@ -29,10 +33,19 @@ export default class LetterDndView {
         <button class="btn text-white w-100 fw-bold rounded-4 py-2 lexis-btn-primary" id="check-btn">Check</button>
         <div id="dnd-feedback"></div>
       </div>`;
-    c.querySelectorAll("#letter-pool > div").forEach((el) =>
-      el.addEventListener("pointerdown", this._onPointerDown),
-    );
+    c.querySelectorAll("#letter-pool > div").forEach(el => el.addEventListener("pointerdown", this._onPointerDown));
     c.querySelector("#check-btn").addEventListener("click", this._onCheck);
+    const hintToggle = c.querySelector(".lexis-hint-toggle");
+    const hintText = c.querySelector(".lexis-hint-text");
+    if (hintToggle && hintText && this.model.hint) {
+      hintToggle.addEventListener("click", () => {
+        hintText.classList.toggle("d-none");
+        hintToggle.querySelector(".lexis-hint-arrow").textContent =
+          hintText.classList.contains("d-none") ? "▶" : "▼";
+      });
+    } else if (hintToggle) {
+      hintToggle.classList.add("d-none");
+    }
   }
 
   _onPointerDown(e) {
