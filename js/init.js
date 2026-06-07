@@ -61,7 +61,3 @@ document.getElementById("main-container")
     loginView.attachTrigger();
     createAccountView.attachTrigger();
   });
-
-setTimeout(() => {
-  document.querySelector(".lexis-landing-hero")?.classList.add("hero-loaded");
-}, 300);
