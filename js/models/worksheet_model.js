@@ -1,9 +1,4 @@
 export default class WorksheetModel {
-  /**
-   * @param {Array<Object>} exercises – array of exercise objects. Each object must contain:
-   *   {string} type – the exercise type identifier (e.g. 'spelling')
-   *   {Object} data – any data needed by the exercise model
-   */
   constructor(exercises, worksheetId, sessionModel) {
     this.exercises = exercises;
     this.currentIndex = 0;
@@ -26,16 +21,9 @@ export default class WorksheetModel {
     return this.currentIndex >= this.exercises.length;
   }
 
-  /**
-   * Record the result of the current exercise.
-   * @param {boolean} isCorrect – whether the user answered correctly.
-   */
   recordAnswer(isCorrect) {
     this.totalAnswers++;
     if (isCorrect) this.correctAnswers++;
-    // If all exercises have been answered, persist progress for the user.
-    // Note: isCompleted() checks currentIndex which hasn't advanced yet
-    // for the final exercise, so we check totalAnswers instead.
     if (this.totalAnswers >= this.exercises.length) {
       this._persistProgress();
     }
@@ -51,7 +39,10 @@ export default class WorksheetModel {
     const user = session;
     if (!user || user.isAnonymous) return;
 
-    if (!user.solvedSheets.includes(this.worksheetId) && this.correctAnswers / this.totalAnswers >= 0.5) {
+    if (
+      !user.solvedSheets.includes(this.worksheetId) &&
+      this.correctAnswers / this.totalAnswers >= 0.5
+    ) {
       user.solvedSheets.push(this.worksheetId);
     }
 
@@ -62,12 +53,23 @@ export default class WorksheetModel {
     if (newLevel !== user.level) {
       const oldTitle = user.currentTitle;
       user.level = newLevel;
-      const titles = ['', 'Explorer', 'Adventurer', 'Scholar', 'Wizard', 'Master', 'Legend'];
-      user.currentTitle = titles[Math.min(newLevel, titles.length - 1)] || 'Legend';
+      const titles = [
+        "",
+        "Explorer",
+        "Adventurer",
+        "Scholar",
+        "Wizard",
+        "Master",
+        "Legend",
+      ];
+      user.currentTitle =
+        titles[Math.min(newLevel, titles.length - 1)] || "Legend";
       if (user.currentTitle !== oldTitle) {
-        document.body.dispatchEvent(new CustomEvent("level:up", {
-          detail: { level: newLevel, title: user.currentTitle, xp: user.xp }
-        }));
+        document.body.dispatchEvent(
+          new CustomEvent("level:up", {
+            detail: { level: newLevel, title: user.currentTitle, xp: user.xp },
+          }),
+        );
       }
     }
 
@@ -75,7 +77,9 @@ export default class WorksheetModel {
 
     const streakResult = this.sessionModel?.recordDailyActivity();
     if (streakResult) {
-      document.body.dispatchEvent(new CustomEvent("streak:updated", { detail: streakResult }));
+      document.body.dispatchEvent(
+        new CustomEvent("streak:updated", { detail: streakResult }),
+      );
     }
   }
 }

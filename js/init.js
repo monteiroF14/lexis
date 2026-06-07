@@ -7,7 +7,7 @@ import "bootstrap";
 const sessionModel = new SessionModel();
 sessionModel.initSession();
 
-// Apply saved dark‑mode preference from session user
+// Apply saved dark-mode preference from session user
 const savedUser = sessionModel.getSession();
 const savedTheme = (savedUser && savedUser.theme) || "light";
 document.documentElement.setAttribute("data-bs-theme", savedTheme);

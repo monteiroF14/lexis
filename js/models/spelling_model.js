@@ -1,11 +1,7 @@
-/*
- * Spelling Exercise Model – provides a word and three options (one correct, two incorrect).
- */
 import { shuffle } from "../utils.js";
 
 export default class SpellingModel {
   constructor(data) {
-    // data should contain the correct word
     this.word = data.word;
     this.options = this._generateOptions();
     this.completed = false;

@@ -63,32 +63,29 @@ function refreshSidebar() {
   const user = sessionModel.getSession();
   if (!user) return;
 
-  // Desktop avatar
+  // Avatar
   const avatarEl = document.querySelector("#user-avatar");
   if (avatarEl) {
     avatarEl.src = createAvatar(bigSmile, getAvatarOptions(user)).toDataUri();
   }
-  // Mobile avatar
   const avatarMob = document.querySelector("#user-avatar-mobile");
   if (avatarMob) {
     avatarMob.src = createAvatar(bigSmile, getAvatarOptions(user)).toDataUri();
   }
 
-  // Desktop name
+  // Name
   const nameEl = document.querySelector("#user-name");
   if (nameEl) nameEl.textContent = user.name;
-  // Mobile name
   const nameMob = document.querySelector("#user-name-mobile");
   if (nameMob) nameMob.textContent = user.name;
 
-  // Desktop level title
+  // Level
   const levelEl = document.querySelector("#user-level");
   if (levelEl) levelEl.textContent = `Level ${user.level} ${user.currentTitle}`;
-  // Mobile level
   const levelMob = document.querySelector("#user-level-mobile");
   if (levelMob) levelMob.textContent = `Lv.${user.level}`;
 
-  // Desktop stats card
+  // Stats
   const statsLevel = document.querySelector("#user-stats-level");
   if (statsLevel) statsLevel.textContent = user.level;
   const statsXp = document.querySelector("#user-stats-xp");
@@ -96,13 +93,12 @@ function refreshSidebar() {
   const statsCoins = document.querySelector("#user-stats-coins");
   if (statsCoins) statsCoins.textContent = user.coins;
 
-  // Mobile XP / coins
   const xpMob = document.querySelector("#user-xp-mobile");
   if (xpMob) xpMob.textContent = user.xp;
   const coinsMob = document.querySelector("#user-coins-mobile");
   if (coinsMob) coinsMob.textContent = user.coins;
 
-  // Daily XP progress (cap at 200 XP = one level)
+  // Daily progress
   const dailyXpCap = 200;
   const dailyXpPct = Math.min(Math.round((user.xp % dailyXpCap) / dailyXpCap * 100), 100);
   const dailyXpBar = document.querySelector("#daily-xp-bar");
@@ -110,7 +106,6 @@ function refreshSidebar() {
   if (dailyXpBar) dailyXpBar.style.width = `${dailyXpPct}%`;
   if (dailyXpText) dailyXpText.textContent = `${dailyXpPct}%`;
 
-  // Daily Coins progress (cap at 100)
   const dailyCoinsCap = 100;
   const dailyCoinsPct = Math.min(Math.round((user.coins / dailyCoinsCap) * 100), 100);
   const dailyCoinsBar = document.querySelector("#daily-coins-bar");
@@ -118,7 +113,7 @@ function refreshSidebar() {
   if (dailyCoinsBar) dailyCoinsBar.style.width = `${dailyCoinsPct}%`;
   if (dailyCoinsText) dailyCoinsText.textContent = `${dailyCoinsPct}%`;
 
-  // Streak display
+  // Streak
   const flame = document.querySelector("#streak-flame");
   const count = document.querySelector("#streak-count");
   const best = document.querySelector("#streak-best");

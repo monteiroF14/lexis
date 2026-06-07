@@ -2,9 +2,9 @@
 
 ## Development Instructions
 - Clone the repo
-- Install dependencies by running ```npm install```
+- Install dependencies with ```npm install```
 - Run development server by running ```npm run dev```
-- Edit the files located in ```src/```
+- Edit the files located in ```js/```, ```css/```, and ```html/```
 - Add new dependencies by running ```npm install <package>```
 
 ## Building Instructions
@@ -15,5 +15,5 @@
 - NPM for package management
 - Vite for building the project alongside the dependencies
 - Bootstrap for easier CSS
-- pdf-parse for pdf parsing
+- pdfjs-dist for PDF parsing
 - Dicebear for avatar generation

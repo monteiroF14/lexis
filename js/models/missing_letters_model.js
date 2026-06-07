@@ -1,11 +1,7 @@
-/*
- * Missing Letters Model – creates a word with 1‑2 blanks.
- */
 export default class MissingLettersModel {
   constructor(data) {
-    // data: { word: string }
     this.word = data.word;
-    this.blanks = this._selectBlanks(); // array of indices to hide
+    this.blanks = this._selectBlanks();
     this.completed = false;
   }
 
@@ -15,7 +11,6 @@ export default class MissingLettersModel {
     const indices = new Set();
     while (indices.size < count) {
       const idx = Math.floor(Math.random() * len);
-      // avoid first or last character for readability
       if (idx !== 0 && idx !== len - 1) indices.add(idx);
     }
     return Array.from(indices).sort((a, b) => a - b);

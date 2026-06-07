@@ -508,7 +508,7 @@ body.dyslexic-mode {
 .lexis-mode-select {
 	width: 220px;
 	background-color: var(--lexis-primary) !important;
-    color: var(--lexis-text-primary);
+	color: var(--lexis-text-primary);
 	text-align: center;
 	text-align-last: center;
 	appearance: none;
@@ -537,86 +537,86 @@ body.dyslexic-mode {
 
 /* Effects */
 .lexis-float-label {
-  position: fixed;
-  pointer-events: none;
-  font-weight: 700;
-  font-size: 1.1rem;
-  z-index: 1000;
-  animation: lexis-float-up 1s ease-out forwards;
-  transform: translate(-50%, -50%);
+	position: fixed;
+	pointer-events: none;
+	font-weight: 700;
+	font-size: 1.1rem;
+	z-index: 1000;
+	animation: lexis-float-up 1s ease-out forwards;
+	transform: translate(-50%, -50%);
 }
 
 @keyframes lexis-float-up {
-  0%   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  50%  { opacity: 1; transform: translate(-50%, calc(-50% - 20px)) scale(1.1); }
-  100% { opacity: 0; transform: translate(-50%, calc(-50% - 50px)) scale(0.9); }
+	0%   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+	50%  { opacity: 1; transform: translate(-50%, calc(-50% - 20px)) scale(1.1); }
+	100% { opacity: 0; transform: translate(-50%, calc(-50% - 50px)) scale(0.9); }
 }
 
 .lexis-levelup-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.6);
-  animation: lexis-fade-in 0.3s ease-out;
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0,0,0,0.6);
+	animation: lexis-fade-in 0.3s ease-out;
 }
 
 .lexis-levelup-card {
-  background: var(--lexis-bg-card);
-  color: var(--lexis-text-primary);
-  border-radius: 1.5rem;
-  padding: 2.5rem 3rem;
-  text-align: center;
-  animation: lexis-pop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	background: var(--lexis-bg-card);
+	color: var(--lexis-text-primary);
+	border-radius: 1.5rem;
+	padding: 2.5rem 3rem;
+	text-align: center;
+	animation: lexis-pop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @keyframes lexis-fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+	from { opacity: 0; }
+	to   { opacity: 1; }
 }
 
 @keyframes lexis-pop-in {
-  from { opacity: 0; transform: scale(0.7); }
-  to   { opacity: 1; transform: scale(1); }
+	from { opacity: 0; transform: scale(0.7); }
+	to   { opacity: 1; transform: scale(1); }
 }
 
 /* Feedback animations */
 .lexis-correct-pulse {
-  animation: lexis-pulse-green 0.5s ease-out;
+	animation: lexis-pulse-green 0.5s ease-out;
 }
 
 @keyframes lexis-pulse-green {
-  0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
-  50%  { box-shadow: 0 0 0 12px rgba(34, 197, 94, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+	0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
+	50%  { box-shadow: 0 0 0 12px rgba(34, 197, 94, 0); }
+	100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
 }
 
 .lexis-shake {
-  animation: lexis-shake 0.4s ease-out;
+	animation: lexis-shake 0.4s ease-out;
 }
 
 @keyframes lexis-shake {
-  0%, 100% { transform: translateX(0); }
-  15%      { transform: translateX(-6px); }
-  30%      { transform: translateX(6px); }
-  45%      { transform: translateX(-4px); }
-  60%      { transform: translateX(4px); }
-  75%      { transform: translateX(-2px); }
-  90%      { transform: translateX(2px); }
+	0%, 100% { transform: translateX(0); }
+	15%      { transform: translateX(-6px); }
+	30%      { transform: translateX(6px); }
+	45%      { transform: translateX(-4px); }
+	60%      { transform: translateX(4px); }
+	75%      { transform: translateX(-2px); }
+	90%      { transform: translateX(2px); }
 }
 
 .lexis-flash-correct {
-  background-color: rgba(34, 197, 94, 0.25) !important;
-  border-color: #22c55e !important;
-  transition: background-color 0.2s, border-color 0.2s;
+	background-color: rgba(34, 197, 94, 0.25) !important;
+	border-color: #22c55e !important;
+	transition: background-color 0.2s, border-color 0.2s;
 }
 
 .lexis-flash-incorrect {
-  background-color: rgba(239, 68, 68, 0.25) !important;
-  border-color: #ef4444 !important;
-  transition: background-color 0.2s, border-color 0.2s;
+	background-color: rgba(239, 68, 68, 0.25) !important;
+	border-color: #ef4444 !important;
+	transition: background-color 0.2s, border-color 0.2s;
 }
 
 /* Overrides */
