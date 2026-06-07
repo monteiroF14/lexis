@@ -64,6 +64,7 @@ export class LevelsView {
 
         ${isNormal ? `
         <div class="position-relative flex-grow-1 d-flex align-items-center justify-content-center">
+          ${progress === 0 ? '<div class="alert lexis-prompt-bar rounded-4 px-4 py-3 text-center position-absolute" style="top:0;z-index:2;font-size:0.95rem;">Complete worksheets to unlock levels along the path!</div>' : ''}
           <div class="position-relative lexis-path" id="path-container">
             <svg class="position-absolute w-100 h-100 lexis-path-svg"
                  viewBox="0 0 280 520" preserveAspectRatio="none">
@@ -73,8 +74,11 @@ export class LevelsView {
           </div>
         </div>
         ` : `
-        <div class="flex-grow-1 d-flex align-items-center justify-content-center">
-          <h2 class="fw-normal lexis-text-p">Good Luck!</h2>
+        <div class="flex-grow-1 d-flex flex-column align-items-center justify-content-center gap-2">
+          <h2 class="fw-normal lexis-text-p">Hard Mode</h2>
+          <p class="text-secondary">Earn <span class="lexis-text-orange">${HardcoreWorksheetModel.COIN_REWARD} coin</span> per correct answer</p>
+          ${this.sessionModel.getSession().hardcoreBest > 0 ? `<p class="small lexis-text-p">Your best: <strong>${this.sessionModel.getSession().hardcoreBest}</strong> correct</p>` : ''}
+          <p class="small text-secondary">One mistake and it's over</p>
         </div>
         `}
 

@@ -104,12 +104,35 @@ export default class WorksheetView {
   _renderResults() {
     const { correct, total } = this.model.getScore();
     const xp = correct * 10;
+    const pct = total > 0 ? correct / total : 0;
+    let msg = "Keep practicing!";
+    if (pct >= 1) msg = "Perfect!";
+    else if (pct >= 0.6) msg = "Good work!";
+
+    const user = this.model.sessionModel?.getSession();
+    let levelProgressHtml = "";
+    if (user) {
+      const xpInto = user.xp % 200;
+      const pct = Math.round((xpInto / 200) * 100);
+      levelProgressHtml = `
+        <div class="mt-3">
+          <div class="d-flex justify-content-between small text-secondary mb-1">
+            <span>Level ${user.level}</span>
+            <span>${xpInto}/200 XP</span>
+          </div>
+          <div class="progress lexis-progress-thin">
+            <div class="progress-bar lexis-bar-green" style="width:${pct}%"></div>
+          </div>
+        </div>`;
+    }
+
     this.container.innerHTML = `
       <div class="d-flex flex-column align-items-center justify-content-center w-100 lexis-min-h-full">
         <div class="rounded-4 shadow-sm p-4 text-center lexis-result-card">
-          <h4 class="mb-3 lexis-text-p">Worksheet Completed!</h4>
+          <h4 class="mb-3 lexis-text-p">${msg}</h4>
           <p class="fs-5 lexis-text-p">Score: <strong>${correct}/${total}</strong></p>
           <p class="fs-5 lexis-text-p">XP earned: <strong>${xp}</strong></p>
+          ${levelProgressHtml}
           <button id="back-btn" class="btn text-white mt-3 rounded-3 px-4 lexis-btn-primary">Back to Levels</button>
         </div>
       </div>`;

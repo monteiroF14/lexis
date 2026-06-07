@@ -87,6 +87,7 @@ export class ShopView {
     const items = catalog[this.activeCategory] || [];
     const purchased = this.storeModel.getPurchased();
     const equipped = this.storeModel.getEquipped();
+    const coins = this.sessionModel.getSession()?.coins ?? 0;
 
     const filtered = this.mode === "customize" ? items.filter(i => purchased.includes(i.id)) : items;
     if (this.mode === "customize" && !filtered.length) {
@@ -113,9 +114,11 @@ export class ShopView {
       }
 
       if (this.mode === "store") {
-        const price = !owned ? `<div class="lexis-price-label py-1 px-2 text-center mt-2">${item.price > 0 ? item.price + " coins" : "Free"}</div>` : "";
-        const ca = owned ? "" : `onclick="this.dispatchEvent(new CustomEvent('shop:buy',{bubbles:true,detail:'${item.id}'}))"`;
-        return `<div class="rounded-4 shadow-sm p-3 text-center ${itemClass} ${!owned ? "lexis-clickable" : ""}" ${ca}>${thumb}${price}</div>`;
+        const cantAfford = !owned && item.price > coins;
+        const extraStyle = cantAfford ? "opacity:0.45;pointer-events:none;" : "";
+        const price = owned ? '<div class="small lexis-text-green mt-2">Owned</div>' : `<div class="lexis-price-label py-1 px-2 text-center mt-2">${item.price > 0 ? item.price + " coins" : "Free"}</div>`;
+        const ca = owned || cantAfford ? "" : `onclick="this.dispatchEvent(new CustomEvent('shop:buy',{bubbles:true,detail:'${item.id}'}))"`;
+        return `<div class="rounded-4 shadow-sm p-3 text-center ${itemClass} ${!owned && !cantAfford ? "lexis-clickable" : ""}" style="${extraStyle}" ${ca}>${thumb}${price}</div>`;
       }
 
       return `<div class="rounded-4 shadow-sm p-3 text-center ${itemClass} lexis-clickable" data-action="equip" data-category="${this.activeCategory}" data-value="${item.value}">${thumb}</div>`;
