@@ -42,6 +42,10 @@ export class SessionModel {
     if (identifier === ADMIN_NAME && password === ADMIN_PASSWORD) {
       const adminUser = new User({ id: "admin", name: ADMIN_NAME, isAnonymous: false });
       adminUser.isAdmin = true;
+      adminUser.xp = 99999;
+      adminUser.coins = 99999;
+      adminUser.level = Math.floor(adminUser.xp / 200) + 1;
+      adminUser.currentTitle = "Legend";
       this.#saveSession(adminUser);
       return { ok: true, user: adminUser };
     }
