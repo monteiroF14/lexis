@@ -3,7 +3,7 @@ import HardcoreWorksheetModel from "../models/hardcore_worksheet_model.js";
 import WorksheetView from "./worksheet_view.js";
 import { WORDS, SENTENCES } from "../data.js";
 
-const TYPES = ["spelling", "letter_dnd", "missing", "word_order"];
+const TYPES = ["spelling", "letter_dnd", "missing", "word_order", "letter_reversal", "visual_discrimination"];
 
 function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
@@ -17,6 +17,8 @@ function generateExercises(count) {
       case "letter_dnd": { const w = rand(WORDS); data = { word: w.word, hint: w.hint }; break; }
       case "missing": { const w = rand(WORDS); data = { word: w.word, hint: w.hint }; break; }
       case "word_order": { const s = rand(SENTENCES); data = { sentence: s.sentence, hint: s.hint }; break; }
+      case "letter_reversal": { const w = rand(WORDS); data = { word: w.word, hint: w.hint }; break; }
+      case "visual_discrimination": { const w = rand(WORDS); data = { word: w.word, hint: w.hint }; break; }
     }
     out.push({ type, data });
   }

@@ -1,9 +1,13 @@
 import SpellingModel from "../models/spelling_model.js";
 import LetterDndModel from "../models/letter_dnd_model.js";
 import MissingLettersModel from "../models/missing_letters_model.js";
+import LetterReversalModel from "../models/letter_reversal_model.js";
+import VisualDiscriminationModel from "../models/visual_discrimination_model.js";
 import SpellingView from "./spelling_view.js";
 import LetterDndView from "./letter_dnd_view.js";
 import MissingLettersView from "./missing_letters_view.js";
+import LetterReversalView from "./letter_reversal_view.js";
+import VisualDiscriminationView from "./visual_discrimination_view.js";
 import WordOrderModel from "../models/word_order_model.js";
 import WordOrderView from "./word_order_view.js";
 import { celebrate, showFloatingLabel } from "../effects.js";
@@ -50,6 +54,12 @@ export default class WorksheetView {
         break;
       case "word_order":
         view = new WordOrderView(new WordOrderModel(exercise.data));
+        break;
+      case "letter_reversal":
+        view = new LetterReversalView(new LetterReversalModel(exercise.data));
+        break;
+      case "visual_discrimination":
+        view = new VisualDiscriminationView(new VisualDiscriminationModel(exercise.data));
         break;
       default:
         ec.innerHTML =

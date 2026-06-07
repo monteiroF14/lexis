@@ -1,7 +1,7 @@
 import WorksheetModel from "./worksheet_model.js";
 import { WORDS, SENTENCES } from "../data.js";
 
-const EXERCISE_TYPES = ["spelling", "letter_dnd", "missing", "word_order"];
+const EXERCISE_TYPES = ["spelling", "letter_dnd", "missing", "word_order", "letter_reversal", "visual_discrimination"];
 
 function randomWord() {
   return WORDS[Math.floor(Math.random() * WORDS.length)];
@@ -18,6 +18,8 @@ function generateExercise() {
     case "letter_dnd": { const w = randomWord(); return { type, data: { word: w.word, hint: w.hint } }; }
     case "missing": { const w = randomWord(); return { type, data: { word: w.word, hint: w.hint } }; }
     case "word_order": { const s = randomSentence(); return { type, data: { sentence: s.sentence, hint: s.hint } }; }
+    case "letter_reversal": { const w = randomWord(); return { type, data: { word: w.word, hint: w.hint } }; }
+    case "visual_discrimination": { const w = randomWord(); return { type, data: { word: w.word, hint: w.hint } }; }
   }
 }
 
