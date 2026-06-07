@@ -51,7 +51,7 @@ export default class WorksheetModel {
     const user = session;
     if (!user || user.isAnonymous) return;
 
-    if (!user.solvedSheets.includes(this.worksheetId)) {
+    if (!user.solvedSheets.includes(this.worksheetId) && this.correctAnswers / this.totalAnswers >= 0.5) {
       user.solvedSheets.push(this.worksheetId);
     }
 

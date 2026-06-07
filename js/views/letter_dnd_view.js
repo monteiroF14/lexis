@@ -103,7 +103,7 @@ export default class LetterDndView {
     } else {
       playIncorrect();
       const zone = c.querySelector("#construction-zone");
-      zone.classList.add("lexis-shake");
+      zone.classList.add("lexis-shake", "lexis-flash-incorrect");
       slots.forEach((s, i) => {
         const correctLetter = this.model.word[i];
         if (!s.querySelector("div") || s.querySelector("div").textContent.trim() !== correctLetter) {

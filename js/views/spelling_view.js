@@ -33,7 +33,7 @@ export default class SpellingView {
       }, 600);
     } else {
       playIncorrect();
-      btn.classList.add("lexis-shake");
+      btn.classList.add("lexis-shake", "lexis-flash-incorrect");
       allBtns.forEach(b => {
         if (b.getAttribute("data-opt") === correct) b.classList.add("lexis-flash-correct");
       });

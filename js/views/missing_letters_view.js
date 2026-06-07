@@ -41,7 +41,7 @@ export default class MissingLettersView {
       const chars = this.model.word.split("");
       inputs.forEach((inp, i) => {
         const correctChar = chars[this.model.blanks[i]];
-        inp.classList.add("lexis-shake");
+        inp.classList.add("lexis-shake", "lexis-flash-incorrect");
         inp.value = correctChar;
         inp.classList.add("lexis-flash-correct");
       });

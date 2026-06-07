@@ -65,7 +65,7 @@ export default class WordOrderView {
       }, 600);
     } else {
       playIncorrect();
-      zone.classList.add("lexis-shake");
+      zone.classList.add("lexis-shake", "lexis-flash-incorrect");
       const correctWords = this.model.original.split(/\s+/);
       zone.innerHTML = correctWords.map(w =>
         `<button class="btn rounded-pill me-2 mb-2 shadow-sm lexis-word-chip lexis-flash-correct">${w}</button>`

@@ -16,6 +16,21 @@ const session = sessionModel.getSession();
 const savedTheme = (session && session.theme) || "light";
 document.documentElement.setAttribute("data-bs-theme", savedTheme);
 
+function updateLogo() {
+  const logo = document.querySelector("#sidebar-logo");
+  if (!logo) return;
+  const theme = document.documentElement.getAttribute("data-bs-theme");
+  logo.src = theme === "dark"
+    ? import.meta.env.BASE_URL + "assets/img/LogoOrange.png"
+    : import.meta.env.BASE_URL + "assets/img/LogoBlue.png";
+}
+updateLogo();
+
+new MutationObserver(() => updateLogo()).observe(document.documentElement, {
+  attributes: true,
+  attributeFilter: ["data-bs-theme"]
+});
+
 const DEFAULT_AVATAR_OPTIONS = {
   eyes: ["cheery"],
   mouth: ["braces"],

@@ -613,6 +613,12 @@ body.dyslexic-mode {
   transition: background-color 0.2s, border-color 0.2s;
 }
 
+.lexis-flash-incorrect {
+  background-color: rgba(239, 68, 68, 0.25) !important;
+  border-color: #ef4444 !important;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
 /* Overrides */
 [data-bs-theme="dark"] .form-control {
 	background-color: var(--lexis-input-bg) !important;
