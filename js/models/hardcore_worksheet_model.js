@@ -60,5 +60,10 @@ export default class HardcoreWorksheetModel extends WorksheetModel {
     if (!user) return;
     user.coins += 3;
     this.sessionModel.updateUser(user);
+
+    const streakResult = this.sessionModel?.recordDailyActivity();
+    if (streakResult) {
+      document.body.dispatchEvent(new CustomEvent("streak:updated", { detail: streakResult }));
+    }
   }
 }

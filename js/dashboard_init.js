@@ -1,4 +1,5 @@
 import { SessionModel } from "./models/session_model.js";
+import { celebrate } from "./effects.js";
 import { createAvatar } from "@dicebear/core";
 import { bigSmile } from "@dicebear/collection";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -100,6 +101,14 @@ function refreshSidebar() {
   const dailyCoinsText = document.querySelector("#daily-coins-text");
   if (dailyCoinsBar) dailyCoinsBar.style.width = `${dailyCoinsPct}%`;
   if (dailyCoinsText) dailyCoinsText.textContent = `${dailyCoinsPct}%`;
+
+  // Streak display
+  const flame = document.querySelector("#streak-flame");
+  const count = document.querySelector("#streak-count");
+  const best = document.querySelector("#streak-best");
+  if (flame) flame.style.opacity = user.streak > 0 ? "1" : "0.4";
+  if (count) count.textContent = user.streak;
+  if (best) best.textContent = user.longestStreak;
 }
 
 // Apply adapt text on page load
@@ -165,4 +174,13 @@ mainContainer.addEventListener("worksheet:cancel", () => {
 
 mainContainer.addEventListener("avatar:updated", () => {
   refreshSidebar();
+});
+
+const STREAK_MILESTONES = [7, 14, 21, 30, 60, 100];
+document.body.addEventListener("streak:updated", (e) => {
+  refreshSidebar();
+  const { streak, isNewRecord } = e.detail;
+  if (streak > 0 && STREAK_MILESTONES.includes(streak)) {
+    setTimeout(() => celebrate(), 300);
+  }
 });

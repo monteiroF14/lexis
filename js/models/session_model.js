@@ -76,4 +76,31 @@ export class SessionModel {
       }
     }
   }
+
+  recordDailyActivity() {
+    const user = this.getSession();
+    if (!user) return false;
+
+    const today = new Date().toISOString().slice(0, 10);
+
+    if (user.lastActiveDate === today) return false;
+
+    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+    let isNewRecord = false;
+
+    if (user.lastActiveDate === yesterday) {
+      user.streak += 1;
+      if (user.streak > (user.longestStreak || 0)) {
+        user.longestStreak = user.streak;
+        isNewRecord = true;
+      }
+    } else {
+      user.streak = 1;
+    }
+
+    user.lastActiveDate = today;
+    this.updateUser(user);
+
+    return { streak: user.streak, isNewRecord, isMilestone: user.streak > 0 && user.streak % 7 === 0 };
+  }
 }
