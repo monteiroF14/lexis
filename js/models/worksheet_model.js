@@ -44,7 +44,7 @@ export default class WorksheetModel {
 
   _persistProgress() {
     const user = this.sessionModel.getSession();
-    if (!user || user.isAnonymous) return;
+    if (!user) return;
 
     if (
       !user.solvedSheets.includes(this.worksheetId) &&
