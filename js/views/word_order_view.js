@@ -1,21 +1,12 @@
 import { playCorrect, playIncorrect } from "../sound.js";
-import { getExerciseContainer } from "../utils.js";
+import DragBaseView from "./drag_base_view.js";
 
-export default class WordOrderView {
+export default class WordOrderView extends DragBaseView {
   constructor(model, container) {
-    this.model = model;
-    this.container = container;
+    super(model, container);
     this.selected = [];
-    this.dragState = null;
-    this._onPointerDown = this._onPointerDown.bind(this);
-    this._onPointerMove = this._onPointerMove.bind(this);
-    this._onPointerUp = this._onPointerUp.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
     this._onHintWord = this._onHintWord.bind(this);
-  }
-
-  _getContainer() {
-    return getExerciseContainer(this);
   }
 
   render() {
@@ -38,7 +29,7 @@ export default class WordOrderView {
         </div>
         <div id="order-feedback"></div>
       </div>`;
-    c.querySelectorAll("#word-pool .word-chip").forEach(el => el.addEventListener("pointerdown", this._onPointerDown));
+    this._attachDrag(c, "#word-pool .word-chip");
     c.querySelector("#submit-btn").addEventListener("click", this._onSubmit);
     c.querySelector("#hint-btn").addEventListener("click", this._onHintWord);
     const hintToggle = c.querySelector(".lexis-hint-toggle");
@@ -54,57 +45,45 @@ export default class WordOrderView {
     }
   }
 
-  _onPointerDown(e) {
-    const chip = e.currentTarget;
-    const rect = chip.getBoundingClientRect();
-    const clone = chip.cloneNode(true);
-    clone.classList.add("lexis-drag-clone");
-    clone.style.cssText = `position:fixed;left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;margin:0;pointer-events:none;z-index:9999;transition:none;box-shadow:0 8px 24px rgba(0,0,0,0.15);transform:scale(1.08);white-space:nowrap;`;
-    document.body.appendChild(clone);
-    chip.classList.add("opacity-25");
-    this.dragState = { chip, clone, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top, startX: e.clientX, startY: e.clientY, moved: false };
-    document.addEventListener("pointermove", this._onPointerMove);
-    document.addEventListener("pointerup", this._onPointerUp);
+  _rebuildSelected() {
+    const c = this._getContainer();
+    const chips = c.querySelectorAll("#sentence-zone .word-chip");
+    this.selected = Array.from(chips).map(chip => ({
+      idx: chip.getAttribute("data-index"),
+      word: chip.textContent,
+    }));
   }
 
-  _onPointerMove(e) {
-    if (!this.dragState) return;
-    const ds = this.dragState;
-    ds.clone.style.left = (e.clientX - ds.offsetX) + "px";
-    ds.clone.style.top = (e.clientY - ds.offsetY) + "px";
-    if (!ds.moved && (Math.abs(e.clientX - ds.startX) > 5 || Math.abs(e.clientY - ds.startY) > 5)) ds.moved = true;
-  }
-
-  _onPointerUp(e) {
-    document.removeEventListener("pointermove", this._onPointerMove);
-    document.removeEventListener("pointerup", this._onPointerUp);
-    if (!this.dragState) return;
-    const ds = this.dragState;
-    ds.clone.remove();
-    ds.chip.classList.remove("opacity-25");
-    if (ds.moved) this._finalize(e);
-    this.dragState = null;
-  }
-
-  _finalize(e) {
+  _onDrop(el, e) {
     const c = this._getContainer();
     if (!c) return;
-    const chip = this.dragState.chip;
     const cx = e.clientX, cy = e.clientY;
     const zone = c.querySelector("#sentence-zone");
     const zoneRect = zone.getBoundingClientRect();
     const pool = c.querySelector("#word-pool");
 
     if (cx >= zoneRect.left && cx <= zoneRect.right && cy >= zoneRect.top && cy <= zoneRect.bottom) {
-      if (chip.parentNode === pool) {
-        chip.classList.add("lexis-chip-selected");
-        this.selected.push({ idx: chip.getAttribute("data-index"), word: chip.textContent });
+      if (el.parentNode === pool) {
+        el.classList.add("lexis-chip-selected");
       }
-      zone.appendChild(chip);
+      const chips = zone.querySelectorAll(".word-chip");
+      let inserted = false;
+      for (const chip of chips) {
+        if (chip === el) continue;
+        const r = chip.getBoundingClientRect();
+        if (cx < r.left + r.width / 2) {
+          zone.insertBefore(el, chip);
+          inserted = true;
+          break;
+        }
+      }
+      if (!inserted) zone.appendChild(el);
+      this._rebuildSelected();
       return;
     }
-    pool.appendChild(chip);
-    this.selected = this.selected.filter(s => s.idx !== chip.getAttribute("data-index"));
+    pool.appendChild(el);
+    el.classList.remove("lexis-chip-selected");
+    this._rebuildSelected();
   }
 
   _onHintWord() {
@@ -118,8 +97,8 @@ export default class WordOrderView {
         if (chip) {
           const zone = c.querySelector("#sentence-zone");
           chip.classList.add("lexis-chip-selected");
-          this.selected.push({ idx: chip.getAttribute("data-index"), word: chip.textContent });
           zone.appendChild(chip);
+          this._rebuildSelected();
         }
         return;
       }

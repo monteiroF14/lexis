@@ -1,18 +1,11 @@
 import { playCorrect, playIncorrect } from "../sound.js";
-import { getExerciseContainer } from "../utils.js";
+import DragBaseView from "./drag_base_view.js";
 
-export default class LetterDndView {
+export default class LetterDndView extends DragBaseView {
   constructor(model, container) {
-    this.model = model;
-    this.container = container;
-    this.dragState = null;
-    this._onPointerDown = this._onPointerDown.bind(this);
-    this._onPointerMove = this._onPointerMove.bind(this);
-    this._onPointerUp = this._onPointerUp.bind(this);
+    super(model, container);
     this._onCheck = this._onCheck.bind(this);
   }
-
-  _getContainer() { return getExerciseContainer(this); }
 
   render() {
     const c = this._getContainer();
@@ -33,7 +26,7 @@ export default class LetterDndView {
         <button class="btn text-white w-100 fw-bold rounded-4 py-2 lexis-btn-primary" id="check-btn">Check</button>
         <div id="dnd-feedback"></div>
       </div>`;
-    c.querySelectorAll("#letter-pool > div").forEach(el => el.addEventListener("pointerdown", this._onPointerDown));
+    this._attachDrag(c, "#letter-pool > div");
     c.querySelector("#check-btn").addEventListener("click", this._onCheck);
     const hintToggle = c.querySelector(".lexis-hint-toggle");
     const hintText = c.querySelector(".lexis-hint-text");
@@ -48,91 +41,37 @@ export default class LetterDndView {
     }
   }
 
-  _onPointerDown(e) {
-    const tile = e.currentTarget;
-    const rect = tile.getBoundingClientRect();
-    const clone = tile.cloneNode(true);
-    clone.classList.add("lexis-drag-clone");
-    clone.style.cssText = `position:fixed;left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;margin:0;pointer-events:none;z-index:9999;transition:none;box-shadow:0 8px 24px rgba(0,0,0,0.15);transform:scale(1.08);`;
-    document.body.appendChild(clone);
-    tile.classList.add("opacity-25");
-    this.dragState = {
-      tile,
-      clone,
-      offsetX: e.clientX - rect.left,
-      offsetY: e.clientY - rect.top,
-      startX: e.clientX,
-      startY: e.clientY,
-      originalParent: tile.parentNode,
-      originalRef: tile.nextSibling,
-      moved: false,
-    };
-    document.addEventListener("pointermove", this._onPointerMove);
-    document.addEventListener("pointerup", this._onPointerUp);
-  }
-
-  _onPointerMove(e) {
-    if (!this.dragState) return;
-    const ds = this.dragState;
-    ds.clone.style.left = e.clientX - ds.offsetX + "px";
-    ds.clone.style.top = e.clientY - ds.offsetY + "px";
-    if (
-      !ds.moved &&
-      (Math.abs(e.clientX - ds.startX) > 5 ||
-        Math.abs(e.clientY - ds.startY) > 5)
-    )
-      ds.moved = true;
-  }
-
-  _onPointerUp(e) {
-    document.removeEventListener("pointermove", this._onPointerMove);
-    document.removeEventListener("pointerup", this._onPointerUp);
-    if (!this.dragState) return;
-    const ds = this.dragState;
-    ds.clone.remove();
-    ds.tile.classList.remove("opacity-25");
-    if (ds.moved) this._finalize(e);
-    this.dragState = null;
-  }
-
-  _finalize(e) {
+  _onDrop(el, e) {
     const c = this._getContainer();
     if (!c) return;
-    const tile = this.dragState.tile,
-      pool = c.querySelector("#letter-pool"),
-      slots = c.querySelectorAll("#construction-zone > div"),
-      poolTiles = c.querySelectorAll("#letter-pool > div");
-    const cx = e.clientX,
-      cy = e.clientY;
+    const cx = e.clientX, cy = e.clientY;
+    const pool = c.querySelector("#letter-pool");
+    const slots = c.querySelectorAll("#construction-zone > div");
+    const poolTiles = c.querySelectorAll("#letter-pool > div");
+
     for (const s of slots) {
       const r = s.getBoundingClientRect();
       if (cx >= r.left && cx <= r.right && cy >= r.top && cy <= r.bottom) {
         const occ = s.firstElementChild;
-        if (occ && occ !== tile)
-          this.dragState.originalParent.insertBefore(
-            occ,
-            this.dragState.originalRef,
-          );
-        s.appendChild(tile);
+        if (occ && occ !== el)
+          this.dragState.originalParent.insertBefore(occ, this.dragState.originalRef);
+        s.appendChild(el);
         return;
       }
     }
     for (const o of poolTiles) {
-      if (o === tile) continue;
+      if (o === el) continue;
       const r = o.getBoundingClientRect();
       if (cx >= r.left && cx <= r.right && cy >= r.top && cy <= r.bottom) {
-        const pa = tile.parentNode,
-          pb = o.parentNode,
-          ra = tile.nextSibling,
-          rb = o.nextSibling;
+        const pa = el.parentNode, pb = o.parentNode, ra = el.nextSibling, rb = o.nextSibling;
         pa.insertBefore(o, ra);
-        pb.insertBefore(tile, rb);
+        pb.insertBefore(el, rb);
         return;
       }
     }
     const pr = pool.getBoundingClientRect();
     if (cx >= pr.left && cx <= pr.right && cy >= pr.top && cy <= pr.bottom)
-      pool.appendChild(tile);
+      pool.appendChild(el);
   }
 
   _onCheck() {
@@ -160,7 +99,6 @@ export default class LetterDndView {
     } else {
       playIncorrect();
       const zone = c.querySelector("#construction-zone");
-      // zone.classList.add("lexis-shake", "lexis-flash-incorrect");
       zone.classList.add("lexis-shake");
       slots.forEach((s, i) => {
         const correctLetter = this.model.word[i];
@@ -168,10 +106,8 @@ export default class LetterDndView {
           !s.querySelector("div") ||
           s.querySelector("div").textContent.trim() !== correctLetter
         ) {
-          // faltavam
           s.innerHTML = `<div class="rounded-3 shadow-sm fw-bold fs-5 d-flex align-items-center justify-content-center user-select-none lexis-tile lexis-flash-incorrect">${correctLetter}</div>`;
         } else {
-          // estavam bem
           s.querySelector("div").classList.add("lexis-flash-correct");
         }
       });
