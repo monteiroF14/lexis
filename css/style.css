@@ -395,7 +395,7 @@ body {
 }
 
 .lexis-ex-option {
-	background-color: var(--lexis-bg-card);
+	background-color: var(--lexis-bg-card) !important;
 	color: var(--lexis-text-primary);
 	border: none;
 	font-size: 1.1rem;
@@ -458,7 +458,7 @@ body {
 
 /* Word order */
 .lexis-word-chip {
-	background-color: var(--lexis-bg-card);
+	background-color: var(--lexis-bg-card) !important;
 	color: var(--lexis-text-primary);
 	border: none;
 	font-weight: 500;
@@ -468,6 +468,9 @@ body {
 .lexis-chip-selected {
 	background-color: var(--lexis-primary) !important;
 	color: white !important;
+}
+.lexis-chip-selected:disabled {
+	opacity: 1 !important;
 }
 
 .lexis-sentence-zone {
