@@ -582,6 +582,37 @@ body.dyslexic-mode {
   to   { opacity: 1; transform: scale(1); }
 }
 
+/* Feedback animations */
+.lexis-correct-pulse {
+  animation: lexis-pulse-green 0.5s ease-out;
+}
+
+@keyframes lexis-pulse-green {
+  0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
+  50%  { box-shadow: 0 0 0 12px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+.lexis-shake {
+  animation: lexis-shake 0.4s ease-out;
+}
+
+@keyframes lexis-shake {
+  0%, 100% { transform: translateX(0); }
+  15%      { transform: translateX(-6px); }
+  30%      { transform: translateX(6px); }
+  45%      { transform: translateX(-4px); }
+  60%      { transform: translateX(4px); }
+  75%      { transform: translateX(-2px); }
+  90%      { transform: translateX(2px); }
+}
+
+.lexis-flash-correct {
+  background-color: rgba(34, 197, 94, 0.25) !important;
+  border-color: #22c55e !important;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
 /* Overrides */
 [data-bs-theme="dark"] .form-control {
 	background-color: var(--lexis-input-bg) !important;

@@ -25,15 +25,25 @@ export default class MissingLettersView {
     const c = this._getContainer();
     if (!c) return;
     const inputs = Array.from(c.querySelectorAll("input[data-index]"));
-    inputs.forEach(inp => { inp.disabled = false; inp.classList.remove("is-invalid"); });
-    const fb = c.querySelector("#missing-feedback");
+    inputs.forEach(inp => { inp.disabled = true; inp.classList.remove("is-invalid"); });
+    c.querySelector("#missing-submit").disabled = true;
+
     if (this.model.checkAnswers(inputs.map(i => i.value.trim()))) {
-      fb.innerHTML = '<div class="alert alert-success rounded-4 py-2">All correct!</div>';
-      c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: true }, bubbles: true }));
+      inputs.forEach(inp => inp.classList.add("lexis-correct-pulse"));
+      setTimeout(() => {
+        c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: true }, bubbles: true }));
+      }, 600);
     } else {
-      fb.innerHTML = '<div class="alert alert-danger rounded-4 py-2">Some letters are wrong. Try again.</div>';
       const chars = this.model.word.split("");
-      inputs.forEach((inp, i) => inp.value.toLowerCase() !== chars[this.model.blanks[i]].toLowerCase() ? inp.classList.add("is-invalid") : inp.classList.remove("is-invalid"));
+      inputs.forEach((inp, i) => {
+        const correctChar = chars[this.model.blanks[i]];
+        inp.classList.add("lexis-shake");
+        inp.value = correctChar;
+        inp.classList.add("lexis-flash-correct");
+      });
+      setTimeout(() => {
+        c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: false }, bubbles: true }));
+      }, 800);
     }
   }
 }

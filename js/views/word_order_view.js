@@ -51,12 +51,24 @@ export default class WordOrderView {
   _onSubmit() {
     const c = this._getContainer();
     if (!c) return;
-    const fb = c.querySelector("#order-feedback");
+    c.querySelector("#submit-btn").disabled = true;
+    c.querySelector("#undo-btn").disabled = true;
+    const zone = c.querySelector("#sentence-zone");
+
     if (this.model.checkAnswer(this.selected.map(s => s.word))) {
-      fb.innerHTML = '<div class="alert alert-success rounded-4 py-2">Correct sentence!</div>';
-      c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: true }, bubbles: true }));
+      zone.classList.add("lexis-correct-pulse");
+      setTimeout(() => {
+        c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: true }, bubbles: true }));
+      }, 600);
     } else {
-      fb.innerHTML = '<div class="alert alert-danger rounded-4 py-2">Incorrect order. Try again.</div>';
+      zone.classList.add("lexis-shake");
+      const correctWords = this.model.original.split(/\s+/);
+      zone.innerHTML = correctWords.map(w =>
+        `<button class="btn rounded-pill me-2 mb-2 shadow-sm lexis-word-chip lexis-flash-correct">${w}</button>`
+      ).join("");
+      setTimeout(() => {
+        c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: false }, bubbles: true }));
+      }, 800);
     }
   }
 }

@@ -16,19 +16,27 @@ export default class SpellingView {
   }
 
   _onOptionClick(e) {
-    const fb = document.getElementById("spelling-feedback");
-    if (this.model.checkAnswer(e.currentTarget.getAttribute("data-opt"))) {
-      fb.innerHTML = '<div class="alert alert-success rounded-4 py-2">Correct!</div>';
-      this._disableButtons();
-      (document.getElementById("exercise-container") || document.getElementById("main-container"))
-        ?.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: true }, bubbles: true }));
-    } else {
-      fb.innerHTML = '<div class="alert alert-danger rounded-4 py-2">Try again</div>';
-    }
-  }
+    const c = document.getElementById("exercise-container") || document.getElementById("main-container");
+    if (!c) return;
+    const btn = e.currentTarget;
+    const chosen = btn.getAttribute("data-opt");
+    const correct = this.model.word;
+    const allBtns = c.querySelectorAll("button[data-opt]");
+    allBtns.forEach(b => b.disabled = true);
 
-  _disableButtons() {
-    (document.getElementById("exercise-container") || document.getElementById("main-container"))
-      ?.querySelectorAll("button[data-opt]").forEach(b => b.disabled = true);
+    if (this.model.checkAnswer(chosen)) {
+      btn.classList.add("lexis-correct-pulse");
+      setTimeout(() => {
+        c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: true }, bubbles: true }));
+      }, 600);
+    } else {
+      btn.classList.add("lexis-shake");
+      allBtns.forEach(b => {
+        if (b.getAttribute("data-opt") === correct) b.classList.add("lexis-flash-correct");
+      });
+      setTimeout(() => {
+        c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: false }, bubbles: true }));
+      }, 800);
+    }
   }
 }

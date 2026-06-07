@@ -89,14 +89,28 @@ export default class LetterDndView {
     const c = this._getContainer();
     if (!c) return;
     const ans = Array.from(c.querySelectorAll("#construction-zone > div > div")).map(el => el.textContent.trim());
-    const fb = c.querySelector("#dnd-feedback");
+    c.querySelector("#check-btn").disabled = true;
+    const slots = c.querySelectorAll("#construction-zone > div");
+
     if (this.model.checkAnswer(ans)) {
-      fb.innerHTML = '<div class="alert alert-success text-center fw-semibold rounded-4 py-2">Correct!</div>';
-      c.querySelector("#check-btn").disabled = true;
-      c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: true }, bubbles: true }));
+      slots.forEach(s => s.classList.add("lexis-correct-pulse"));
+      setTimeout(() => {
+        c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: true }, bubbles: true }));
+      }, 600);
     } else {
-      fb.innerHTML = '<div class="alert alert-danger text-center fw-semibold rounded-4 py-2">Incorrect – try again</div>';
-      setTimeout(() => fb.innerHTML = "", 1200);
+      const zone = c.querySelector("#construction-zone");
+      zone.classList.add("lexis-shake");
+      slots.forEach((s, i) => {
+        const correctLetter = this.model.word[i];
+        if (!s.querySelector("div") || s.querySelector("div").textContent.trim() !== correctLetter) {
+          s.innerHTML = `<div class="rounded-3 shadow-sm fw-bold fs-5 d-flex align-items-center justify-content-center user-select-none lexis-tile lexis-flash-correct">${correctLetter}</div>`;
+        } else {
+          s.querySelector("div").classList.add("lexis-flash-correct");
+        }
+      });
+      setTimeout(() => {
+        c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: false }, bubbles: true }));
+      }, 800);
     }
   }
 }
