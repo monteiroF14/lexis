@@ -402,7 +402,7 @@ body {
 .lexis-tile {
 	width: 52px;
 	height: 52px;
-	background-color: var(--lexis-bg-card);
+	background-color: var(--lexis-bg-main) !important;
 	color: var(--lexis-text-primary);
 	border-radius: 0.75rem;
 }
