@@ -1,5 +1,6 @@
 import { SessionModel } from "./models/session_model.js";
 import { celebrate, showLevelUp } from "./effects.js";
+import { ensureAudioContext, playLevelUp } from "./sound.js";
 import { createAvatar } from "@dicebear/core";
 import { bigSmile } from "@dicebear/collection";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -188,4 +189,7 @@ document.body.addEventListener("streak:updated", (e) => {
 document.body.addEventListener("level:up", (e) => {
   const { level, title } = e.detail;
   showLevelUp(level, title);
+  playLevelUp();
 });
+
+document.addEventListener("click", () => ensureAudioContext(), { once: true });

@@ -1,3 +1,5 @@
+import { playCorrect, playIncorrect } from "../sound.js";
+
 export default class LetterDndView {
   constructor(model) {
     this.model = model;
@@ -93,11 +95,13 @@ export default class LetterDndView {
     const slots = c.querySelectorAll("#construction-zone > div");
 
     if (this.model.checkAnswer(ans)) {
+      playCorrect();
       slots.forEach(s => s.classList.add("lexis-correct-pulse"));
       setTimeout(() => {
         c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: true }, bubbles: true }));
       }, 600);
     } else {
+      playIncorrect();
       const zone = c.querySelector("#construction-zone");
       zone.classList.add("lexis-shake");
       slots.forEach((s, i) => {

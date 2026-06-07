@@ -1,3 +1,5 @@
+import { isMuted, setMuted } from "../sound.js";
+
 export class SettingsView {
   constructor(sessionModel) {
     this.sessionModel = sessionModel;
@@ -11,6 +13,7 @@ export class SettingsView {
     const user = this.sessionModel.getSession() || {};
     const currentTheme = user.theme || "light";
     const adaptText = user.adaptText || false;
+    const soundMuted = isMuted();
 
     const mainContainer = document.querySelector("#main-container");
     mainContainer.innerHTML = `
@@ -22,6 +25,13 @@ export class SettingsView {
               <label class="form-check form-switch mb-0" style="min-height: 1.5rem; padding-left: 2.5rem;">
                 <input class="form-check-input lexis-toggle" type="checkbox" id="adapt-text-toggle"
                   ${adaptText ? "checked" : ""}>
+              </label>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="fw-medium">Sound</span>
+              <label class="form-check form-switch mb-0" style="min-height: 1.5rem; padding-left: 2.5rem;">
+                <input class="form-check-input lexis-toggle" type="checkbox" id="sound-toggle"
+                  ${!soundMuted ? "checked" : ""}>
               </label>
             </div>
             <div class="d-flex align-items-center gap-2">
@@ -63,6 +73,13 @@ export class SettingsView {
       this.sessionModel.updateUser(user);
       document.body.classList.toggle("dyslexic-mode", adaptToggle.checked);
     });
+
+    const soundToggle = mainContainer.querySelector("#sound-toggle");
+    if (soundToggle) {
+      soundToggle.addEventListener("change", () => {
+        setMuted(!soundToggle.checked);
+      });
+    }
 
     const themeToggle = mainContainer.querySelector("#dark-mode-toggle");
     themeToggle.addEventListener("change", () => {

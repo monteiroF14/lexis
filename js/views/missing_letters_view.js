@@ -1,3 +1,5 @@
+import { playCorrect, playIncorrect } from "../sound.js";
+
 export default class MissingLettersView {
   constructor(model) { this.model = model; this._onSubmit = this._onSubmit.bind(this); }
   _getContainer() { return document.getElementById("exercise-container") || document.getElementById("main-container"); }
@@ -29,11 +31,13 @@ export default class MissingLettersView {
     c.querySelector("#missing-submit").disabled = true;
 
     if (this.model.checkAnswers(inputs.map(i => i.value.trim()))) {
+      playCorrect();
       inputs.forEach(inp => inp.classList.add("lexis-correct-pulse"));
       setTimeout(() => {
         c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: true }, bubbles: true }));
       }, 600);
     } else {
+      playIncorrect();
       const chars = this.model.word.split("");
       inputs.forEach((inp, i) => {
         const correctChar = chars[this.model.blanks[i]];

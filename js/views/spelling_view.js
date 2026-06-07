@@ -1,4 +1,5 @@
 import SpellingModel from "../models/spelling_model.js";
+import { playCorrect, playIncorrect } from "../sound.js";
 
 export default class SpellingView {
   constructor(model) { this.model = model; this._onOptionClick = this._onOptionClick.bind(this); }
@@ -25,11 +26,13 @@ export default class SpellingView {
     allBtns.forEach(b => b.disabled = true);
 
     if (this.model.checkAnswer(chosen)) {
+      playCorrect();
       btn.classList.add("lexis-correct-pulse");
       setTimeout(() => {
         c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: true }, bubbles: true }));
       }, 600);
     } else {
+      playIncorrect();
       btn.classList.add("lexis-shake");
       allBtns.forEach(b => {
         if (b.getAttribute("data-opt") === correct) b.classList.add("lexis-flash-correct");

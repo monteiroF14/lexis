@@ -1,3 +1,5 @@
+import { playCorrect, playIncorrect } from "../sound.js";
+
 export default class WordOrderView {
   constructor(model) {
     this.model = model;
@@ -56,11 +58,13 @@ export default class WordOrderView {
     const zone = c.querySelector("#sentence-zone");
 
     if (this.model.checkAnswer(this.selected.map(s => s.word))) {
+      playCorrect();
       zone.classList.add("lexis-correct-pulse");
       setTimeout(() => {
         c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: true }, bubbles: true }));
       }, 600);
     } else {
+      playIncorrect();
       zone.classList.add("lexis-shake");
       const correctWords = this.model.original.split(/\s+/);
       zone.innerHTML = correctWords.map(w =>
