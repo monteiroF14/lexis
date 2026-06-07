@@ -16,222 +16,220 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-      <nav
-        class="navbar navbar-expand-md sticky-top border-bottom lexis-navbar"
-      >
-        <div class="container">
-          <a class="navbar-brand" href="#">
-            <img
-              id="navbar-logo"
-              src="assets/img/LogoBlue.png"
-              height="36"
-              alt="Lexis"
-            />
-          </a>
+    <nav class="navbar navbar-expand-md sticky-top border-bottom lexis-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img
+            id="navbar-logo"
+            src="assets/img/LogoBlue.png"
+            height="36"
+            alt="Lexis"
+          />
+        </a>
 
-          <div class="d-flex d-md-none align-items-center gap-1 ms-auto">
-            <span class="small lexis-text-p theme-icon">☀️</span>
-            <label
-              class="form-check form-switch mb-0"
-              style="padding-left: 2.5rem; min-height: 1rem"
-            >
-              <input
-                class="form-check-input lexis-toggle theme-toggle-input"
-                type="checkbox"
-                id="theme-toggle"
-              />
-            </label>
-          </div>
-
-          <button
-            class="navbar-toggler border-0"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
+        <div class="d-flex d-md-none align-items-center gap-2 ms-auto">
+          <span class="small lexis-text-p theme-icon">☀️</span>
+          <label
+            class="form-check form-switch mb-0"
+            style="padding-left: 2.5rem; min-height: 1rem"
           >
-            <span class="navbar-toggler-icon"></span>
-          </button>
+            <input
+              class="form-check-input lexis-toggle theme-toggle-input"
+              type="checkbox"
+              id="theme-toggle"
+            />
+          </label>
+        </div>
 
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <div
-              class="d-flex gap-2 justify-content-center justify-content-md-end mt-3 mt-md-0 w-100 align-items-center"
+        <button
+          class="navbar-toggler border-0"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <div
+            class="d-flex gap-2 justify-content-center justify-content-md-end mt-3 mt-md-0 w-100 align-items-center"
+          >
+            <div class="d-md-flex d-none align-items-center gap-2">
+              <span class="small lexis-text-p theme-icon">☀️</span>
+              <label
+                class="form-check form-switch mb-0"
+                style="padding-left: 2.5rem; min-height: 1rem"
+              >
+                <input
+                  class="form-check-input lexis-toggle theme-toggle-input"
+                  type="checkbox"
+                  id="theme-toggle-mob"
+                />
+              </label>
+            </div>
+            <button
+              class="btn btn-sm btn-outline-secondary rounded-pill px-3"
+              data-trigger="login"
             >
-              <div class="d-md-flex d-none">
-                <span class="small lexis-text-p theme-icon">☀️</span>
-                <label
-                  class="form-check form-switch mb-0"
-                  style="padding-left: 2.5rem; min-height: 1rem"
-                >
-                  <input
-                    class="form-check-input lexis-toggle theme-toggle-input"
-                    type="checkbox"
-                id="theme-toggle-mob"
-                  />
-                </label>
+              Login
+            </button>
+            <button
+              class="btn btn-sm lexis-btn-primary rounded-pill px-3"
+              data-trigger="register"
+            >
+              Get Started
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main id="main-container">
+      <section class="lexis-landing-hero">
+        <div class="container hero-wrapper">
+          <div id="hero-text" class="hero-text">
+            <h1 class="display-3 fw-bold lexis-landing-hero-title">
+              Learn at your own pace
+            </h1>
+            <p class="fs-4 text-secondary mb-4">
+              Interactive exercises designed for dyslexic learners. Improve your
+              reading, spelling, and comprehension through game-like challenges
+              that adapt to your rhythm.
+            </p>
+            <button
+              class="btn lexis-btn-primary btn-lg rounded-pill px-4 py-2 fs-5"
+              id="get-started-btn"
+              data-trigger="register"
+            >
+              Start Learning
+            </button>
+          </div>
+          <div class="hero-image text-center">
+            <img
+              id="hero-image"
+              src="assets/img/genius.svg"
+              class="img-fluid"
+              style="max-height: 400px"
+              alt="Learning"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="lexis-landing-section">
+        <div class="container">
+          <h2 class="text-center fw-bold mb-5 lexis-landing-hero-title">
+            How it works
+          </h2>
+          <div class="row g-4 text-center">
+            <div class="col-md-4">
+              <div class="lexis-landing-card h-100">
+                <div class="lexis-landing-step fw-bold mb-2">1</div>
+                <h5 class="fw-semibold">Pick a mode</h5>
+                <p class="text-secondary mb-0">
+                  Normal mode for progression through levels, or Hard mode for a
+                  challenge with coins.
+                </p>
               </div>
-              <button
-                class="btn btn-sm btn-outline-secondary rounded-pill px-3"
-                data-trigger="login"
-              >
-                Login
-              </button>
-              <button
-                class="btn btn-sm lexis-btn-primary rounded-pill px-3"
-                data-trigger="register"
-              >
-                Get Started
-              </button>
+            </div>
+            <div class="col-md-4">
+              <div class="lexis-landing-card h-100">
+                <div class="lexis-landing-step fw-bold mb-2">2</div>
+                <h5 class="fw-semibold">Solve exercises</h5>
+                <p class="text-secondary mb-0">
+                  Spelling, letter drag &amp; drop, fill in the blanks, and word
+                  ordering puzzles.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="lexis-landing-card h-100">
+                <div class="lexis-landing-step fw-bold mb-2">3</div>
+                <h5 class="fw-semibold">Earn rewards</h5>
+                <p class="text-secondary mb-0">
+                  Gain XP and coins, build daily streaks, and customize your
+                  avatar.
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </nav>
+      </section>
 
-      <main id="main-container">
-        <section class="lexis-landing-hero">
-          <div class="container hero-wrapper">
-            <div id="hero-text" class="hero-text">
-              <h1 class="display-3 fw-bold lexis-landing-hero-title">
-                Learn at your own pace
-              </h1>
-              <p class="fs-4 text-secondary mb-4">
-                Interactive exercises designed for dyslexic learners. Improve
-                your reading, spelling, and comprehension through game-like
-                challenges that adapt to your rhythm.
-              </p>
-              <button
-                class="btn lexis-btn-primary btn-lg rounded-pill px-4 py-2 fs-5"
-                id="get-started-btn"
-                data-trigger="register"
-              >
-                Start Learning
-              </button>
-            </div>
-            <div class="hero-image text-center">
-              <img
-                id="hero-image"
-                src="assets/img/genius.svg"
-                class="img-fluid"
-                style="max-height: 400px"
-                alt="Learning"
-              />
-            </div>
-          </div>
-        </section>
+      <section class="lexis-landing-section lexis-landing-section-alt">
+        <div class="container">
+          <h2 class="text-center fw-bold mb-5 lexis-landing-hero-title">
+            Try it out
+          </h2>
+          <div id="demo-container" class="lexis-contained mx-auto"></div>
+        </div>
+      </section>
 
-        <section class="lexis-landing-section">
-          <div class="container">
-            <h2 class="text-center fw-bold mb-5 lexis-landing-hero-title">
-              How it works
-            </h2>
-            <div class="row g-4 text-center">
-              <div class="col-md-4">
-                <div class="lexis-landing-card h-100">
-                  <div class="lexis-landing-step fw-bold mb-2">1</div>
-                  <h5 class="fw-semibold">Pick a mode</h5>
-                  <p class="text-secondary mb-0">
-                    Normal mode for progression through levels, or Hard mode for
-                    a challenge with coins.
-                  </p>
-                </div>
+      <section class="lexis-landing-section">
+        <div class="container">
+          <h2 class="text-center fw-bold mb-5 lexis-landing-hero-title">
+            Stay Motivated
+          </h2>
+          <div class="row g-4 text-center">
+            <div class="col-6 col-lg-3">
+              <div class="lexis-landing-card h-100">
+                <div class="display-5 mb-2">🔥</div>
+                <h6 class="fw-semibold">Daily Streaks</h6>
+                <p class="text-secondary small mb-0">
+                  Keep coming back to build your streak.
+                </p>
               </div>
-              <div class="col-md-4">
-                <div class="lexis-landing-card h-100">
-                  <div class="lexis-landing-step fw-bold mb-2">2</div>
-                  <h5 class="fw-semibold">Solve exercises</h5>
-                  <p class="text-secondary mb-0">
-                    Spelling, letter drag &amp; drop, fill in the blanks, and
-                    word ordering puzzles.
-                  </p>
-                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="lexis-landing-card h-100">
+                <div class="display-5 mb-2">⭐</div>
+                <h6 class="fw-semibold">Level System</h6>
+                <p class="text-secondary small mb-0">
+                  Earn XP and unlock new titles.
+                </p>
               </div>
-              <div class="col-md-4">
-                <div class="lexis-landing-card h-100">
-                  <div class="lexis-landing-step fw-bold mb-2">3</div>
-                  <h5 class="fw-semibold">Earn rewards</h5>
-                  <p class="text-secondary mb-0">
-                    Gain XP and coins, build daily streaks, and customize your
-                    avatar.
-                  </p>
-                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="lexis-landing-card h-100">
+                <div class="display-5 mb-2">🪙</div>
+                <h6 class="fw-semibold">In-game Coins</h6>
+                <p class="text-secondary small mb-0">
+                  Earn coins in Hard mode, spend in the store.
+                </p>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="lexis-landing-card h-100">
+                <div class="display-5 mb-2">🎨</div>
+                <h6 class="fw-semibold">Avatar Customization</h6>
+                <p class="text-secondary small mb-0">
+                  Unlock accessories and styles for your avatar.
+                </p>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section class="lexis-landing-section lexis-landing-section-alt">
-          <div class="container">
-            <h2 class="text-center fw-bold mb-5 lexis-landing-hero-title">
-              Try it out
-            </h2>
-            <div id="demo-container" class="lexis-contained mx-auto"></div>
-          </div>
-        </section>
+      <section class="lexis-landing-cta">
+        <div class="container text-center">
+          <h2 class="fw-bold lexis-landing-hero-title mb-3">
+            Ready to start learning?
+          </h2>
+          <button
+            class="btn lexis-btn-primary btn-lg rounded-pill px-5 py-2 fs-5"
+            data-trigger="register"
+          >
+            Start Learning Now
+          </button>
+        </div>
+      </section>
 
-        <section class="lexis-landing-section">
-          <div class="container">
-            <h2 class="text-center fw-bold mb-5 lexis-landing-hero-title">
-              Stay Motivated
-            </h2>
-            <div class="row g-4 text-center">
-              <div class="col-6 col-lg-3">
-                <div class="lexis-landing-card h-100">
-                  <div class="display-5 mb-2">🔥</div>
-                  <h6 class="fw-semibold">Daily Streaks</h6>
-                  <p class="text-secondary small mb-0">
-                    Keep coming back to build your streak.
-                  </p>
-                </div>
-              </div>
-              <div class="col-6 col-lg-3">
-                <div class="lexis-landing-card h-100">
-                  <div class="display-5 mb-2">⭐</div>
-                  <h6 class="fw-semibold">Level System</h6>
-                  <p class="text-secondary small mb-0">
-                    Earn XP and unlock new titles.
-                  </p>
-                </div>
-              </div>
-              <div class="col-6 col-lg-3">
-                <div class="lexis-landing-card h-100">
-                  <div class="display-5 mb-2">🪙</div>
-                  <h6 class="fw-semibold">In-game Coins</h6>
-                  <p class="text-secondary small mb-0">
-                    Earn coins in Hard mode, spend in the store.
-                  </p>
-                </div>
-              </div>
-              <div class="col-6 col-lg-3">
-                <div class="lexis-landing-card h-100">
-                  <div class="display-5 mb-2">🎨</div>
-                  <h6 class="fw-semibold">Avatar Customization</h6>
-                  <p class="text-secondary small mb-0">
-                    Unlock accessories and styles for your avatar.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="lexis-landing-cta">
-          <div class="container text-center">
-            <h2 class="fw-bold lexis-landing-hero-title mb-3">
-              Ready to start learning?
-            </h2>
-            <button
-              class="btn lexis-btn-primary btn-lg rounded-pill px-5 py-2 fs-5"
-              data-trigger="register"
-            >
-              Start Learning Now
-            </button>
-          </div>
-        </section>
-
-        <footer class="lexis-landing-footer text-center py-4">
-          <div class="container">
-            <p class="small text-secondary mb-0">Lexis © 2026</p>
-          </div>
-        </footer>
-      </main>
+      <footer class="lexis-landing-footer text-center py-4">
+        <div class="container">
+          <p class="small text-secondary mb-0">Lexis © 2026</p>
+        </div>
+      </footer>
+    </main>
   </body>
 </html>

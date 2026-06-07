@@ -8,10 +8,33 @@ import MissingLettersView from "./views/missing_letters_view.js";
 import WordOrderView from "./views/word_order_view.js";
 
 const TABS = [
-  { label: "Spelling",   Model: SpellingModel,   View: SpellingView,   data: { word: "orange", hint: "A citrus fruit" } },
-  { label: "Letter DnD", Model: LetterDndModel,  View: LetterDndView,  data: { word: "apple", hint: "A common fruit" } },
-  { label: "Missing",    Model: MissingLettersModel, View: MissingLettersView, data: { word: "banana", hint: "A long yellow fruit" } },
-  { label: "Word Order", Model: WordOrderModel,  View: WordOrderView,  data: { sentence: "the cat sat", hint: "A simple sentence with three words" } },
+  {
+    label: "Spelling",
+    Model: SpellingModel,
+    View: SpellingView,
+    data: { word: "orange", hint: "A citrus fruit" },
+  },
+  {
+    label: "Letter DnD",
+    Model: LetterDndModel,
+    View: LetterDndView,
+    data: { word: "apple", hint: "A common fruit" },
+  },
+  {
+    label: "Missing",
+    Model: MissingLettersModel,
+    View: MissingLettersView,
+    data: { word: "banana", hint: "A long yellow fruit" },
+  },
+  {
+    label: "Word Order",
+    Model: WordOrderModel,
+    View: WordOrderView,
+    data: {
+      sentence: "the cat sat",
+      hint: "A simple sentence with three words",
+    },
+  },
 ];
 
 let activeIndex = 0;
@@ -26,10 +49,12 @@ if (!container) {
   render(container);
 }
 
-document.getElementById("main-container")?.addEventListener("index:render", () => {
-  const fresh = document.getElementById("demo-container");
-  if (fresh) render(fresh);
-});
+document
+  .getElementById("main-container")
+  ?.addEventListener("index:render", () => {
+    const fresh = document.getElementById("demo-container");
+    if (fresh) render(fresh);
+  });
 
 function renderTabs() {
   return TABS.map((t, i) => {
@@ -52,11 +77,11 @@ function render(container) {
     <div class="lexis-demo-tabs">${renderTabs()}</div>
     <div class="lexis-demo-stage rounded-4 d-flex align-items-center justify-content-center"></div>
   `;
-  container.querySelectorAll(".lexis-demo-tabs button").forEach(btn =>
+  container.querySelectorAll(".lexis-demo-tabs button").forEach((btn) =>
     btn.addEventListener("click", (e) => {
       activeIndex = parseInt(e.target.dataset.index);
       render(container);
-    })
+    }),
   );
   const stage = container.querySelector(".lexis-demo-stage");
   renderDemo(stage);
