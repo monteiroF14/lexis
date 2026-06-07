@@ -14,8 +14,8 @@ export class LoginView {
             <div class="mb-3"><label for="login-identifier" class="form-label mb-1">Username / Email</label><input type="text" id="login-identifier" class="form-control rounded-4 py-2" required /></div>
             <div class="mb-4"><label for="login-password" class="form-label mb-1">Password</label><input type="password" id="login-password" class="form-control rounded-4 py-2" required /></div>
             <p id="login-error" class="alert alert-danger py-2" style="display: none;"></p>
-            <button type="submit" class="btn w-100 rounded-4 py-2 mb-2 text-white lexis-btn-primary lexis-fw-500">Confirm</button>
-            <button type="button" id="return-btn" class="btn w-100 rounded-4 py-2 lexis-btn-undo lexis-fw-500">Back</button>
+            <button type="submit" class="btn w-100 rounded-4 py-2 mb-2 text-white lexis-btn-primary fw-medium">Confirm</button>
+            <button type="button" id="return-btn" class="btn w-100 rounded-4 py-2 lexis-btn-undo fw-medium">Back</button>
           </form>
         </div>
       </div>`;

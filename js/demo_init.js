@@ -20,14 +20,10 @@ const container = document.getElementById("demo-container");
 if (!container) {
   document.addEventListener("DOMContentLoaded", () => {
     const retry = document.getElementById("demo-container");
-    if (retry) init(retry);
+    if (retry) render(retry);
   });
 } else {
-  init(container);
-}
-
-function init(el) {
-  render(el);
+  render(container);
 }
 
 function renderTabs() {

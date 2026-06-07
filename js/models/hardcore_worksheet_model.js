@@ -38,8 +38,6 @@ function generateExercise() {
       return { type, data: { word: randomWord() } };
     case "word_order":
       return { type, data: { sentence: randomSentence() } };
-    default:
-      return { type: "spelling", data: { word: randomWord() } };
   }
 }
 
@@ -62,12 +60,6 @@ export default class HardcoreWorksheetModel extends WorksheetModel {
     if (!user) return;
     user.coins += HardcoreWorksheetModel.COIN_REWARD;
     this.sessionModel.updateUser(user);
-
-    const streakResult = this.sessionModel?.recordDailyActivity();
-    if (streakResult) {
-      document.body.dispatchEvent(
-        new CustomEvent("streak:updated", { detail: streakResult }),
-      );
-    }
+    this._dispatchStreak();
   }
 }

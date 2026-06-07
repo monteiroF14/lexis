@@ -1,4 +1,5 @@
 import { playCorrect, playIncorrect } from "../sound.js";
+import { getExerciseContainer } from "../utils.js";
 
 export default class WordOrderView {
   constructor(model, container) {

@@ -33,10 +33,17 @@ export default class WorksheetModel {
     return { correct: this.correctAnswers, total: this.totalAnswers };
   }
 
+  _dispatchStreak() {
+    const streakResult = this.sessionModel?.recordDailyActivity();
+    if (streakResult) {
+      document.body.dispatchEvent(
+        new CustomEvent("streak:updated", { detail: streakResult }),
+      );
+    }
+  }
+
   _persistProgress() {
-    const session = this.sessionModel.getSession();
-    if (!session) return;
-    const user = session;
+    const user = this.sessionModel.getSession();
     if (!user || user.isAnonymous) return;
 
     if (
@@ -75,11 +82,6 @@ export default class WorksheetModel {
 
     this.sessionModel?.updateUser(user);
 
-    const streakResult = this.sessionModel?.recordDailyActivity();
-    if (streakResult) {
-      document.body.dispatchEvent(
-        new CustomEvent("streak:updated", { detail: streakResult }),
-      );
-    }
+    this._dispatchStreak();
   }
 }

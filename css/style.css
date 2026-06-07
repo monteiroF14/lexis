@@ -70,10 +70,6 @@ body {
 	min-height: 100%;
 }
 
-.lexis-min-h-300 {
-	min-height: 300px;
-}
-
 .lexis-dashboard-wrapper {
 	background-color: var(--lexis-bg-main) !important;
 }
@@ -116,10 +112,6 @@ body {
 	padding-bottom: env(safe-area-inset-bottom);
 }
 
-.lexis-gap-sm {
-	gap: 0.5rem;
-}
-
 .lexis-avatar-sm {
 	width: 32px;
 	height: 32px;
@@ -153,7 +145,7 @@ body {
 .lexis-nav-btn {
 	background-color: var(--lexis-bg-nav-btn) !important;
 	color: var(--lexis-text-nav-btn);
-	width: 100%
+	width: 100%;
 }
 
 .lexis-nav-btn-active {
@@ -232,18 +224,6 @@ body {
 
 .lexis-heading-sm {
 	font-size: 1.75rem;
-}
-
-.lexis-fw-500 {
-	font-weight: 500;
-}
-
-.lexis-clickable {
-	cursor: pointer;
-}
-
-.lexis-hidden-input {
-	display: none;
 }
 
 .lexis-sun-icon {
@@ -793,9 +773,6 @@ body {
 
 .lexis-landing-section {
 	padding: 4rem 0;
-}
-
-.lexis-landing-section-alt {
 }
 
 .lexis-landing-step {

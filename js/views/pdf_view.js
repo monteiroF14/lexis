@@ -30,7 +30,7 @@ export class PdfView {
         <div class="rounded-4 shadow-sm px-4 py-3 text-center mb-4 w-100 lexis-prompt-bar lexis-contained">
           You can adapt the font of your files for better comprehension here!
         </div>
-        <input type="file" id="pdf-input" accept="application/pdf" class="lexis-hidden-input" />
+        <input type="file" id="pdf-input" accept="application/pdf" class="d-none" />
         <button id="upload-btn" class="btn text-white rounded-4 px-5 py-2 lexis-btn-upload">Click here to upload your file</button>
         <div id="pdf-status" class="mt-3"></div>
       </div>`;

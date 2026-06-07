@@ -133,18 +133,14 @@ export class StoreModel {
   }
 
   getItemById(itemId) {
-    for (const items of Object.values(CATALOG)) {
-      const item = items.find((i) => i.id === itemId);
-      if (item) return item;
-    }
-    return null;
+    return Object.values(CATALOG).flat().find(i => i.id === itemId) ?? null;
   }
 
   getItemCategory(itemId) {
-    for (const [category, items] of Object.entries(CATALOG)) {
-      if (items.find((i) => i.id === itemId)) return category;
-    }
-    return null;
+    const entry = Object.entries(CATALOG).find(([_, items]) =>
+      items.some(i => i.id === itemId)
+    );
+    return entry ? entry[0] : null;
   }
 
   purchase(itemId) {

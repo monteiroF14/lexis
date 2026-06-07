@@ -9,6 +9,7 @@ import { LevelsView } from "./views/levels_view.js";
 import { PdfView } from "./views/pdf_view.js";
 import { ShopView } from "./views/shop_view.js";
 import { SettingsView } from "./views/settings_view.js";
+import { onThemeChange, assetUrl } from "./theme.js";
 
 const sessionModel = new SessionModel();
 const session = sessionModel.getSession();
@@ -19,17 +20,12 @@ document.documentElement.setAttribute("data-bs-theme", savedTheme);
 function updateLogo() {
   const logo = document.querySelector("#sidebar-logo");
   if (!logo) return;
-  const theme = document.documentElement.getAttribute("data-bs-theme");
-  logo.src = theme === "dark"
-    ? import.meta.env.BASE_URL + "assets/img/LogoOrange.png"
-    : import.meta.env.BASE_URL + "assets/img/LogoBlue.png";
+  logo.src = document.documentElement.getAttribute("data-bs-theme") === "dark"
+    ? assetUrl("assets/img/LogoOrange.png")
+    : assetUrl("assets/img/LogoBlue.png");
 }
 updateLogo();
-
-new MutationObserver(() => updateLogo()).observe(document.documentElement, {
-  attributes: true,
-  attributeFilter: ["data-bs-theme"]
-});
+onThemeChange(updateLogo);
 
 const DEFAULT_AVATAR_OPTIONS = {
   eyes: ["cheery"],
@@ -47,11 +43,12 @@ function getAvatarOptions(user) {
   if (user && user.avatar && Object.keys(user.avatar).length > 0) {
     const opts = { ...DEFAULT_AVATAR_OPTIONS };
     for (const [key, val] of Object.entries(user.avatar)) {
+      const arr = Array.isArray(val) ? val : [val];
       if (key === "accessories") {
-        opts.accessories = Array.isArray(val) ? val : [val];
-        opts.accessoriesProbability = opts.accessories.length > 0 ? 100 : 0;
+        opts.accessories = arr;
+        opts.accessoriesProbability = arr.length > 0 ? 100 : 0;
       } else {
-        opts[key] = Array.isArray(val) ? val : [val];
+        opts[key] = arr;
       }
     }
     return opts;
@@ -59,75 +56,59 @@ function getAvatarOptions(user) {
   return DEFAULT_AVATAR_OPTIONS;
 }
 
+function setImg(id, src) {
+  const el = document.querySelector(id);
+  if (el) el.src = src;
+}
+
+function setText(id, val) {
+  const el = document.querySelector(id);
+  if (el) el.textContent = val;
+}
+
+function setBar(id, pct) {
+  const el = document.querySelector(id);
+  if (el) el.style.width = `${pct}%`;
+}
+
 function refreshSidebar() {
   const user = sessionModel.getSession();
   if (!user) return;
 
-  // Avatar
-  const avatarEl = document.querySelector("#user-avatar");
-  if (avatarEl) {
-    avatarEl.src = createAvatar(bigSmile, getAvatarOptions(user)).toDataUri();
-  }
-  const avatarMob = document.querySelector("#user-avatar-mobile");
-  if (avatarMob) {
-    avatarMob.src = createAvatar(bigSmile, getAvatarOptions(user)).toDataUri();
-  }
+  const avatarSrc = createAvatar(bigSmile, getAvatarOptions(user)).toDataUri();
+  setImg("#user-avatar", avatarSrc);
+  setImg("#user-avatar-mobile", avatarSrc);
 
-  // Name
-  const nameEl = document.querySelector("#user-name");
-  if (nameEl) nameEl.textContent = user.name;
-  const nameMob = document.querySelector("#user-name-mobile");
-  if (nameMob) nameMob.textContent = user.name;
+  setText("#user-name", user.name);
+  setText("#user-name-mobile", user.name);
 
-  // Level
-  const levelEl = document.querySelector("#user-level");
-  if (levelEl) levelEl.textContent = `Level ${user.level} ${user.currentTitle}`;
-  const levelMob = document.querySelector("#user-level-mobile");
-  if (levelMob) levelMob.textContent = `Lv.${user.level}`;
+  setText("#user-level", `Level ${user.level} ${user.currentTitle}`);
+  setText("#user-level-mobile", `Lv.${user.level}`);
 
-  // Stats
-  const statsLevel = document.querySelector("#user-stats-level");
-  if (statsLevel) statsLevel.textContent = user.level;
-  const statsXp = document.querySelector("#user-stats-xp");
-  if (statsXp) statsXp.textContent = user.xp;
-  const statsCoins = document.querySelector("#user-stats-coins");
-  if (statsCoins) statsCoins.textContent = user.coins;
+  setText("#user-stats-level", user.level);
+  setText("#user-stats-xp", user.xp);
+  setText("#user-stats-coins", user.coins);
+  setText("#user-xp-mobile", user.xp);
+  setText("#user-coins-mobile", user.coins);
 
-  const xpMob = document.querySelector("#user-xp-mobile");
-  if (xpMob) xpMob.textContent = user.xp;
-  const coinsMob = document.querySelector("#user-coins-mobile");
-  if (coinsMob) coinsMob.textContent = user.coins;
+  const xpPct = Math.min(Math.round((user.xp % 200) / 200 * 100), 100);
+  setBar("#daily-xp-bar", xpPct);
+  setText("#daily-xp-text", `${xpPct}%`);
 
-  // Daily progress
-  const dailyXpCap = 200;
-  const dailyXpPct = Math.min(Math.round((user.xp % dailyXpCap) / dailyXpCap * 100), 100);
-  const dailyXpBar = document.querySelector("#daily-xp-bar");
-  const dailyXpText = document.querySelector("#daily-xp-text");
-  if (dailyXpBar) dailyXpBar.style.width = `${dailyXpPct}%`;
-  if (dailyXpText) dailyXpText.textContent = `${dailyXpPct}%`;
+  const coinPct = Math.min(Math.round(user.coins / 100 * 100), 100);
+  setBar("#daily-coins-bar", coinPct);
+  setText("#daily-coins-text", `${coinPct}%`);
 
-  const dailyCoinsCap = 100;
-  const dailyCoinsPct = Math.min(Math.round((user.coins / dailyCoinsCap) * 100), 100);
-  const dailyCoinsBar = document.querySelector("#daily-coins-bar");
-  const dailyCoinsText = document.querySelector("#daily-coins-text");
-  if (dailyCoinsBar) dailyCoinsBar.style.width = `${dailyCoinsPct}%`;
-  if (dailyCoinsText) dailyCoinsText.textContent = `${dailyCoinsPct}%`;
-
-  // Streak
   const flame = document.querySelector("#streak-flame");
-  const count = document.querySelector("#streak-count");
-  const best = document.querySelector("#streak-best");
   if (flame) flame.style.opacity = user.streak > 0 ? "1" : "0.4";
-  if (count) count.textContent = user.streak;
-  if (best) best.textContent = user.longestStreak;
+  setText("#streak-count", user.streak);
+  setText("#streak-best", user.longestStreak);
 }
 
-// Apply adapt text on page load
 if (session?.adaptText) {
   document.body.classList.add("dyslexic-mode");
 }
 
-// Tab highlighter – uses data-tab attributes on both desktop and mobile nav buttons
 window.setActiveTab = (tab) => {
   document.querySelectorAll("[data-tab]").forEach((btn) => {
     btn.classList.remove("lexis-nav-btn-active");
@@ -150,7 +131,6 @@ const shopView = new ShopView(sessionModel);
 const settingsView = new SettingsView(sessionModel);
 levelsView.render();
 
-// Logo click → home / levels
 const logo = document.querySelector("#sidebar-logo");
 if (logo) {
   logo.addEventListener("click", () => {
@@ -159,7 +139,6 @@ if (logo) {
   });
 }
 
-// Mobile home button → levels
 const homeBtn = document.querySelector("#btn-levels-mobile");
 if (homeBtn) {
   homeBtn.addEventListener("click", () => {
@@ -168,7 +147,6 @@ if (homeBtn) {
   });
 }
 
-// Logout
 const logoutBtn = document.querySelector("#btn-logout");
 if (logoutBtn) {
   logoutBtn.addEventListener("click", () => {

@@ -3,6 +3,7 @@ import { CreateAccountView } from "./views/create_account_view.js";
 import { SessionModel } from "./models/session_model.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
+import { onThemeChange, setTheme, getTheme, assetUrl } from "./theme.js";
 
 const sessionModel = new SessionModel();
 sessionModel.initSession();
@@ -14,40 +15,33 @@ document.documentElement.setAttribute("data-bs-theme", savedTheme);
 function updateNavLogo() {
   const logo = document.querySelector("#navbar-logo");
   if (!logo) return;
-  const theme = document.documentElement.getAttribute("data-bs-theme");
-  const base = import.meta.env.BASE_URL || "";
-  logo.src = theme === "dark" ? base + "assets/img/LogoOrange.png" : base + "assets/img/LogoBlue.png";
+  logo.src = getTheme() === "dark" ? assetUrl("assets/img/LogoOrange.png") : assetUrl("assets/img/LogoBlue.png");
 }
 
 function updateThemeIcon() {
-  const theme = document.documentElement.getAttribute("data-bs-theme");
-  document.querySelectorAll(".theme-icon").forEach(el => el.textContent = theme === "dark" ? "🌙" : "☀️");
+  document.querySelectorAll(".theme-icon").forEach(el =>
+    el.textContent = getTheme() === "dark" ? "🌙" : "☀️");
 }
 
-function applyThemeUI() {
-  const theme = document.documentElement.getAttribute("data-bs-theme");
-  document.querySelectorAll(".theme-toggle-input").forEach(el => el.checked = theme === "dark");
-  updateNavLogo();
-  updateThemeIcon();
+function syncToggleState() {
+  document.querySelectorAll(".theme-toggle-input").forEach(el =>
+    el.checked = getTheme() === "dark");
 }
 
-applyThemeUI();
+updateNavLogo();
+updateThemeIcon();
+syncToggleState();
 
-new MutationObserver(() => {
-  updateNavLogo();
-  updateThemeIcon();
-}).observe(document.documentElement, {
-  attributes: true,
-  attributeFilter: ["data-bs-theme"]
-});
+onThemeChange(updateNavLogo);
+onThemeChange(updateThemeIcon);
+onThemeChange(syncToggleState);
 
 document.querySelectorAll(".theme-toggle-input").forEach(el => {
   el.addEventListener("change", () => {
-    const theme = el.checked ? "dark" : "light";
-    document.documentElement.setAttribute("data-bs-theme", theme);
+    setTheme(el.checked ? "dark" : "light");
     const user = sessionModel.getSession();
     if (user) {
-      user.theme = theme;
+      user.theme = getTheme();
       sessionModel.updateUser(user);
     }
   });

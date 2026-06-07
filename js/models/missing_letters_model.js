@@ -24,11 +24,9 @@ export default class MissingLettersModel {
   }
 
   checkAnswers(inputs) {
-    // inputs: array of typed characters matching blanks order
-    let correct = true;
-    this.blanks.forEach((idx, i) => {
-      if (inputs[i].toLowerCase() !== this.word[idx].toLowerCase()) correct = false;
-    });
+    const correct = this.blanks.every((idx, i) =>
+      inputs[i].toLowerCase() === this.word[idx].toLowerCase()
+    );
     this.completed = correct;
     return correct;
   }

@@ -1,4 +1,5 @@
 import { playCorrect, playIncorrect } from "../sound.js";
+import { getExerciseContainer } from "../utils.js";
 
 export default class LetterDndView {
   constructor(model, container) {
@@ -11,13 +12,7 @@ export default class LetterDndView {
     this._onCheck = this._onCheck.bind(this);
   }
 
-  _getContainer() {
-    return (
-      this.container ||
-      document.getElementById("exercise-container") ||
-      document.getElementById("main-container")
-    );
-  }
+  _getContainer() { return getExerciseContainer(this); }
 
   render() {
     const c = this._getContainer();
