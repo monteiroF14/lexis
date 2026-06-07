@@ -402,7 +402,7 @@ body {
 .lexis-tile {
 	width: 52px;
 	height: 52px;
-	background-color: var(--lexis-bg-main) !important;
+	background-color: var(--lexis-bg-card) !important;
 	color: var(--lexis-text-primary);
 	border-radius: 0.75rem;
 }
@@ -568,6 +568,34 @@ body {
 @keyframes lexis-pop-in {
 	from { opacity: 0; transform: scale(0.7); }
 	to   { opacity: 1; transform: scale(1); }
+}
+
+/* Letter Reversal */
+.lexis-reversal-wrong {
+	background-color: rgba(239, 68, 68, 0.15);
+	border: 2px solid #ef4444;
+	color: #ef4444;
+	cursor: pointer;
+	transition: transform 0.15s, background-color 0.2s, border-color 0.2s;
+}
+
+.lexis-reversal-letter {
+	background-color: var(--lexis-bg-card) !important;
+	border: 2px solid var(--lexis-border);
+	color: var(--lexis-text-primary);
+	cursor: pointer;
+	transition: transform 0.15s, background-color 0.2s, border-color 0.2s;
+}
+
+.lexis-reversal-selected {
+	border-color: var(--lexis-primary) !important;
+	box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+}
+
+/* Visual Discrimination */
+.lexis-target-word {
+	background-color: var(--lexis-bg-card);
+	border: 2px solid var(--lexis-border);
 }
 
 /* Feedback animations */
