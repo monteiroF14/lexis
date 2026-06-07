@@ -704,3 +704,67 @@ body.dyslexic-mode {
 [data-bs-theme="dark"] ::-webkit-scrollbar-thumb:hover {
 	background: #5a5a5a;
 }
+
+/* Landing page */
+.lexis-navbar {
+	background: var(--lexis-bg-sidebar-left);
+}
+
+.lexis-landing-hero {
+	padding: 4rem 0;
+}
+
+.lexis-landing-hero-title {
+	color: var(--lexis-text-primary);
+}
+
+.lexis-landing-section {
+	padding: 4rem 0;
+}
+
+.lexis-landing-section-alt {
+	background: var(--lexis-bg-card);
+}
+
+.lexis-landing-step {
+	font-size: 2.2rem;
+	font-weight: 700;
+	color: var(--lexis-primary);
+	width: 3rem;
+	height: 3rem;
+	line-height: 3rem;
+	border-radius: 50%;
+	background: color-mix(in srgb, var(--lexis-primary) 15%, transparent);
+	display: inline-block;
+}
+
+.lexis-landing-card {
+	padding: 1.5rem;
+	border-radius: 1rem;
+	background: var(--lexis-bg-main);
+	color: var(--lexis-text-primary);
+	border: 1px solid var(--lexis-border-light);
+	transition: transform 0.15s;
+}
+
+.lexis-landing-card:hover {
+	transform: translateY(-2px);
+}
+
+.lexis-landing-cta {
+	padding: 4rem 0;
+	text-align: center;
+	background: var(--lexis-bg-sidebar-inner);
+}
+
+.lexis-landing-footer {
+	border-top: 1px solid var(--lexis-border-light);
+}
+
+/* Auth form backdrop when overlaying landing page */
+#main-container .min-vh-100 {
+	background: rgba(0,0,0,0.4);
+	position: fixed;
+	inset: 0;
+	z-index: 1050;
+}

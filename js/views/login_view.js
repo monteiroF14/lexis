@@ -28,6 +28,6 @@ export class LoginView {
     };
   };
 
-  attachTrigger() { document.getElementById("login-btn")?.addEventListener("click", this.#render); }
+  attachTrigger() { document.querySelectorAll("[data-trigger='login']").forEach(el => el.addEventListener("click", this.#render)); }
   constructor(sessionModel) { this.#sessionModel = sessionModel; this.attachTrigger(); }
 }

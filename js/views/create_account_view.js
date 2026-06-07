@@ -32,6 +32,6 @@ export class CreateAccountView {
     };
   };
 
-  attachTrigger() { document.getElementById("get-started-btn")?.addEventListener("click", this.#render); }
+  attachTrigger() { document.querySelectorAll("[data-trigger='register']").forEach(el => el.addEventListener("click", this.#render)); }
   constructor(sessionModel) { this.#sessionModel = sessionModel; this.attachTrigger(); }
 }
