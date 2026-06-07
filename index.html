@@ -17,7 +17,9 @@
   </head>
   <body>
     <div class="card-body">
-      <nav class="navbar navbar-expand sticky-top border-bottom lexis-navbar">
+      <nav
+        class="navbar navbar-expand-md sticky-top border-bottom lexis-navbar"
+      >
         <div class="container">
           <a class="navbar-brand" href="#">
             <img
@@ -27,63 +29,92 @@
               alt="Lexis"
             />
           </a>
-          <div class="d-flex align-items-center gap-2 ms-auto">
-            <span id="theme-icon" class="small lexis-text-p">☀️</span>
+
+          <div class="d-flex d-md-none align-items-center gap-1 ms-auto">
+            <span class="small lexis-text-p theme-icon">☀️</span>
             <label
               class="form-check form-switch mb-0"
               style="padding-left: 2.5rem; min-height: 1rem"
             >
               <input
-                class="form-check-input lexis-toggle"
+                class="form-check-input lexis-toggle theme-toggle-input"
                 type="checkbox"
-                id="theme-toggle"
+                id="theme-toggle-desk"
               />
             </label>
-            <button
-              class="btn btn-sm btn-outline-secondary rounded-pill px-3"
-              data-trigger="login"
+          </div>
+
+          <button
+            class="navbar-toggler border-0"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <div
+              class="d-flex gap-2 justify-content-center justify-content-md-end mt-3 mt-md-0 w-100 align-items-center"
             >
-              Login
-            </button>
-            <button
-              class="btn btn-sm lexis-btn-primary rounded-pill px-3"
-              data-trigger="register"
-            >
-              Get Started
-            </button>
+              <div class="d-md-flex d-none">
+                <span class="small lexis-text-p theme-icon">☀️</span>
+                <label
+                  class="form-check form-switch mb-0"
+                  style="padding-left: 2.5rem; min-height: 1rem"
+                >
+                  <input
+                    class="form-check-input lexis-toggle theme-toggle-input"
+                    type="checkbox"
+                    id="theme-toggle-desk"
+                  />
+                </label>
+              </div>
+              <button
+                class="btn btn-sm btn-outline-secondary rounded-pill px-3"
+                data-trigger="login"
+              >
+                Login
+              </button>
+              <button
+                class="btn btn-sm lexis-btn-primary rounded-pill px-3"
+                data-trigger="register"
+              >
+                Get Started
+              </button>
+            </div>
           </div>
         </div>
       </nav>
 
       <main id="main-container">
         <section class="lexis-landing-hero">
-          <div class="container">
-            <div class="row align-items-center g-5">
-              <div class="col-lg-6">
-                <h1 class="display-3 fw-bold lexis-landing-hero-title">
-                  Learn at your own pace
-                </h1>
-                <p class="fs-4 text-secondary mb-4">
-                  Interactive exercises designed for dyslexic learners. Improve
-                  your reading, spelling, and comprehension through game-like
-                  challenges that adapt to your rhythm.
-                </p>
-                <button
-                  class="btn lexis-btn-primary btn-lg rounded-pill px-4 py-2 fs-5"
-                  id="get-started-btn"
-                  data-trigger="register"
-                >
-                  Start Learning
-                </button>
-              </div>
-              <div class="col-lg-6 text-center">
-                <img
-                  src="assets/img/genius.svg"
-                  class="img-fluid"
-                  style="max-height: 400px"
-                  alt="Learning"
-                />
-              </div>
+          <div class="container hero-wrapper">
+            <div id="hero-text" class="hero-text">
+              <h1 class="display-3 fw-bold lexis-landing-hero-title">
+                Learn at your own pace
+              </h1>
+              <p class="fs-4 text-secondary mb-4">
+                Interactive exercises designed for dyslexic learners. Improve
+                your reading, spelling, and comprehension through game-like
+                challenges that adapt to your rhythm.
+              </p>
+              <button
+                class="btn lexis-btn-primary btn-lg rounded-pill px-4 py-2 fs-5"
+                id="get-started-btn"
+                data-trigger="register"
+              >
+                Start Learning
+              </button>
+            </div>
+            <div class="hero-image text-center">
+              <img
+                id="hero-image"
+                src="assets/img/genius.svg"
+                class="img-fluid"
+                style="max-height: 400px"
+                alt="Learning"
+              />
             </div>
           </div>
         </section>
@@ -199,9 +230,7 @@
 
         <footer class="lexis-landing-footer text-center py-4">
           <div class="container">
-            <p class="small text-secondary mb-0">
-              Lexis &copy; 2026 &mdash; Aprendizagem das palavras
-            </p>
+            <p class="small text-secondary mb-0">Lexis © 2026</p>
           </div>
         </footer>
       </main>

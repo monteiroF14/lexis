@@ -10,7 +10,13 @@ export default class WordOrderView {
     this._onSubmit = this._onSubmit.bind(this);
   }
 
-  _getContainer() { return this.container || document.getElementById("exercise-container") || document.getElementById("main-container"); }
+  _getContainer() {
+    return (
+      this.container ||
+      document.getElementById("exercise-container") ||
+      document.getElementById("main-container")
+    );
+  }
 
   render() {
     const c = this._getContainer();
@@ -28,7 +34,9 @@ export default class WordOrderView {
         </div>
         <div id="order-feedback"></div>
       </div>`;
-    c.querySelectorAll(".word-chip").forEach(b => b.addEventListener("click", this._onWordClick));
+    c.querySelectorAll(".word-chip").forEach((b) =>
+      b.addEventListener("click", this._onWordClick),
+    );
     c.querySelector("#undo-btn").addEventListener("click", this._onUndo);
     c.querySelector("#submit-btn").addEventListener("click", this._onSubmit);
   }
@@ -37,7 +45,10 @@ export default class WordOrderView {
     const c = this._getContainer();
     if (!c) return;
     const btn = e.currentTarget;
-    this.selected.push({ idx: btn.getAttribute("data-index"), word: btn.textContent });
+    this.selected.push({
+      idx: btn.getAttribute("data-index"),
+      word: btn.textContent,
+    });
     btn.classList.add("lexis-chip-selected");
     btn.disabled = true;
     c.querySelector("#sentence-zone").appendChild(btn);
@@ -47,8 +58,14 @@ export default class WordOrderView {
     const c = this._getContainer();
     if (!c || !this.selected.length) return;
     const last = this.selected.pop();
-    const btn = c.querySelector(`#sentence-zone button[data-index='${last.idx}']`);
-    if (btn) { btn.classList.remove("lexis-chip-selected"); btn.disabled = false; c.querySelector("#word-pool").appendChild(btn); }
+    const btn = c.querySelector(
+      `#sentence-zone button[data-index='${last.idx}']`,
+    );
+    if (btn) {
+      btn.classList.remove("lexis-chip-selected");
+      btn.disabled = false;
+      c.querySelector("#word-pool").appendChild(btn);
+    }
   }
 
   _onSubmit() {
@@ -58,21 +75,43 @@ export default class WordOrderView {
     c.querySelector("#undo-btn").disabled = true;
     const zone = c.querySelector("#sentence-zone");
 
-    if (this.model.checkAnswer(this.selected.map(s => s.word))) {
+    if (this.model.checkAnswer(this.selected.map((s) => s.word))) {
       playCorrect();
-      zone.classList.add("lexis-correct-pulse", "lexis-flash-correct");
+      // zone.classList.add("lexis-correct-pulse", "lexis-flash-correct");
+      zone.classList.add("lexis-correct-pulse");
+
+      [...zone.querySelectorAll("button")].map((el) =>
+        el.classList.add(
+          "lexis-flash-correct",
+          "lexis-flash-correct-word-order",
+        ),
+      );
       setTimeout(() => {
-        c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: true }, bubbles: true }));
+        c.dispatchEvent(
+          new CustomEvent("exerciseCompleted", {
+            detail: { correct: true },
+            bubbles: true,
+          }),
+        );
       }, 600);
     } else {
       playIncorrect();
-      zone.classList.add("lexis-shake", "lexis-flash-incorrect");
+      // zone.classList.add("lexis-shake", "lexis-flash-incorrect");
+      zone.classList.add("lexis-shake");
       const correctWords = this.model.original.split(/\s+/);
-      zone.innerHTML = correctWords.map(w =>
-        `<button class="btn rounded-pill me-2 mb-2 shadow-sm lexis-word-chip lexis-flash-correct">${w}</button>`
-      ).join("");
+      zone.innerHTML = correctWords
+        .map(
+          (w) =>
+            `<button class="btn rounded-pill me-2 mb-2 shadow-sm lexis-word-chip lexis-flash-incorrect">${w}</button>`,
+        )
+        .join("");
       setTimeout(() => {
-        c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: false }, bubbles: true }));
+        c.dispatchEvent(
+          new CustomEvent("exerciseCompleted", {
+            detail: { correct: false },
+            bubbles: true,
+          }),
+        );
       }, 800);
     }
   }

@@ -19,37 +19,38 @@ function updateNavLogo() {
   logo.src = theme === "dark" ? base + "assets/img/LogoOrange.png" : base + "assets/img/LogoBlue.png";
 }
 
-function updateThemeIcon(theme) {
-  const icon = document.getElementById("theme-icon");
-  if (icon) icon.textContent = theme === "dark" ? "🌙" : "☀️";
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute("data-bs-theme");
+  document.querySelectorAll(".theme-icon").forEach(el => el.textContent = theme === "dark" ? "🌙" : "☀️");
 }
 
 function applyThemeUI() {
   const theme = document.documentElement.getAttribute("data-bs-theme");
-  const toggle = document.getElementById("theme-toggle");
-  if (toggle) toggle.checked = theme === "dark";
+  document.querySelectorAll(".theme-toggle-input").forEach(el => el.checked = theme === "dark");
   updateNavLogo();
-  updateThemeIcon(theme);
+  updateThemeIcon();
 }
 
 applyThemeUI();
 
 new MutationObserver(() => {
   updateNavLogo();
-  updateThemeIcon(document.documentElement.getAttribute("data-bs-theme"));
+  updateThemeIcon();
 }).observe(document.documentElement, {
   attributes: true,
   attributeFilter: ["data-bs-theme"]
 });
 
-document.getElementById("theme-toggle")?.addEventListener("change", () => {
-  const theme = document.getElementById("theme-toggle").checked ? "dark" : "light";
-  document.documentElement.setAttribute("data-bs-theme", theme);
-  const user = sessionModel.getSession();
-  if (user) {
-    user.theme = theme;
-    sessionModel.updateUser(user);
-  }
+document.querySelectorAll(".theme-toggle-input").forEach(el => {
+  el.addEventListener("change", () => {
+    const theme = el.checked ? "dark" : "light";
+    document.documentElement.setAttribute("data-bs-theme", theme);
+    const user = sessionModel.getSession();
+    if (user) {
+      user.theme = theme;
+      sessionModel.updateUser(user);
+    }
+  });
 });
 
 const loginView = new LoginView(sessionModel);
@@ -60,3 +61,7 @@ document.getElementById("main-container")
     loginView.attachTrigger();
     createAccountView.attachTrigger();
   });
+
+setTimeout(() => {
+  document.querySelector(".lexis-landing-hero")?.classList.add("hero-loaded");
+}, 300);
