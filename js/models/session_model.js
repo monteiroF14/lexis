@@ -2,6 +2,8 @@ import { User } from "../user.js";
 
 const USERS_KEY = "lexis_users";
 const SESSION_KEY = "lexis_session";
+const ADMIN_NAME = "admin";
+const ADMIN_PASSWORD = "lexis123";
 
 export class SessionModel {
   #getUsers() {
@@ -37,6 +39,12 @@ export class SessionModel {
   login(identifier, password) {
     if (!identifier || !password)
       return { ok: false, error: "Fill in all fields." };
+    if (identifier === ADMIN_NAME && password === ADMIN_PASSWORD) {
+      const adminUser = new User({ id: "admin", name: ADMIN_NAME, isAnonymous: false });
+      adminUser.isAdmin = true;
+      this.#saveSession(adminUser);
+      return { ok: true, user: adminUser };
+    }
     const user = this.#getUsers().find(
       (u) =>
         (u.email === identifier || u.name === identifier) &&
@@ -63,6 +71,39 @@ export class SessionModel {
     this.#saveUsers(users);
     this.#saveSession(newUser);
     return { ok: true, user: newUser };
+  }
+
+  convertGuestToAccount({ name, email, password }) {
+    if (!name || !email || !password)
+      return { ok: false, error: "Fill in all fields." };
+    const users = this.#getUsers();
+    if (users.find(u => u.email === email))
+      return { ok: false, error: "Email already in use." };
+    const guest = this.getSession();
+    const newUser = new User({ id: crypto.randomUUID(), name, email, password });
+    if (guest) {
+      newUser.xp = guest.xp || 0;
+      newUser.coins = guest.coins || 0;
+      newUser.solvedSheets = guest.solvedSheets || [];
+      newUser.currentTitle = guest.currentTitle || "Explorer";
+      newUser.level = guest.level || 1;
+      newUser.streak = guest.streak || 0;
+      newUser.longestStreak = guest.longestStreak || 0;
+      newUser.lastActiveDate = guest.lastActiveDate || null;
+      newUser.hardcoreBest = guest.hardcoreBest || 0;
+      newUser.avatar = guest.avatar || {};
+      newUser.purchasedStoreItems = guest.purchasedStoreItems || [];
+      newUser.theme = guest.theme || "light";
+      newUser.adaptText = guest.adaptText;
+    }
+    users.push(newUser);
+    this.#saveUsers(users);
+    this.#saveSession(newUser);
+    return { ok: true, user: newUser };
+  }
+
+  getAllUsers() {
+    return this.#getUsers();
   }
 
   updateUser(user) {

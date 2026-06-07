@@ -17,5 +17,6 @@ export class User {
     this.level = 1;
     this.theme = "light";
     this.hardcoreBest = 0;
+    this.isAdmin = false;
   }
 }

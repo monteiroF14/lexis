@@ -9,6 +9,7 @@ import { LevelsView } from "./views/levels_view.js";
 import { PdfView } from "./views/pdf_view.js";
 import { ShopView } from "./views/shop_view.js";
 import { SettingsView } from "./views/settings_view.js";
+import { AdminView } from "./views/admin_view.js";
 import { onThemeChange, assetUrl } from "./theme.js";
 
 const sessionModel = new SessionModel();
@@ -103,6 +104,13 @@ function refreshSidebar() {
   if (flame) flame.style.opacity = user.streak > 0 ? "1" : "0.4";
   setText("#streak-count", user.streak);
   setText("#streak-best", user.longestStreak);
+
+  document.querySelectorAll("[data-tab='store'], [data-tab='customization'], [data-tab='pdf']").forEach(btn => {
+    btn.classList.toggle("d-none", user.isAnonymous);
+  });
+  document.querySelectorAll(".restricted-admin-tab").forEach(btn => {
+    btn.classList.toggle("d-none", !user.isAdmin);
+  });
 }
 
 if (session?.adaptText) {
@@ -129,6 +137,7 @@ const levelsView = new LevelsView(sessionModel);
 const pdfView = new PdfView(sessionModel);
 const shopView = new ShopView(sessionModel);
 const settingsView = new SettingsView(sessionModel);
+const adminView = new AdminView(sessionModel);
 levelsView.render();
 
 const logo = document.querySelector("#sidebar-logo");
