@@ -9,22 +9,28 @@ export default class SpellingModel {
 
   makeMistake(word) {
     const patterns = [
-      (w) => w.replace(/ie/g, "ei"),
-      (w) => w.replace(/ei/g, "ie"),
-      (w) => w.replace(/ou/g, "uo"),
-      (w) => w.replace(/er/g, "re"),
-      (w) => w.replace(/a/g, "e"),
+      (w) => w.slice(0, -1), // drop last letter: "orang"
+      (w) => w.replace(/^(.)(.)/, "$2$1"), // swap first two: "ornage"
+      (w) => w.replace(/a/g, "e"), // wrong vowel
       (w) => w.replace(/e/g, "a"),
-      (w) => w.slice(0, -1), // missing last letter
-      (w) => w + w[w.length - 1], // double last letter
+      (w) => w.replace(/ie/g, "ei"), // i/e swap
+      (w) => w.replace(/ei/g, "ie"),
+      (w) => w.replace(/ou/g, "uo"), // diphthong swap
+      (w) => w.replace(/er/g, "re"),
+      (w) => {
+        // random letter substitution
+        const i = Math.floor(Math.random() * w.length);
+        const c = "abcdefghijklmnopqrstuvwxyz"[Math.floor(Math.random() * 26)];
+        return c !== w[i] ? w.slice(0, i) + c + w.slice(i + 1) : w;
+      },
     ];
-
-    const pattern = patterns[Math.floor(Math.random() * patterns.length)];
-
-    const result = pattern(word);
-
-    // Ensure it's actually different
-    return result !== word ? result : word + "x";
+    const working = patterns.filter((p) => p(word) !== word);
+    if (working.length) {
+      return working[Math.floor(Math.random() * working.length)](word);
+    }
+    // Guaranteed: drop a random middle letter
+    const idx = Math.floor(Math.random() * word.length);
+    return word.slice(0, idx) + word.slice(idx + 1);
   }
 
   _generateOptions() {

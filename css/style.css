@@ -57,7 +57,7 @@ body.dyslexic-mode {
 }
 
 body {
-	background-color: var(--lexis-bg-card);
+	background-color: var(--lexis-bg-card) !important;
 }
 
 /* Layout */
@@ -613,9 +613,9 @@ body {
 
 /* Overrides */
 [data-bs-theme="dark"] .form-control {
-	background-color: var(--lexis-input-bg) !important;
-	color: var(--lexis-text-primary) !important;
-	border-color: var(--lexis-input-border) !important;
+	background-color: var(--lexis-input-bg);
+	color: var(--lexis-text-primary);
+	border-color: var(--lexis-input-border);
 }
 
 [data-bs-theme="dark"] .form-control:focus {
