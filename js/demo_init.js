@@ -26,6 +26,11 @@ if (!container) {
   render(container);
 }
 
+document.getElementById("main-container")?.addEventListener("index:render", () => {
+  const fresh = document.getElementById("demo-container");
+  if (fresh) render(fresh);
+});
+
 function renderTabs() {
   return TABS.map((t, i) => {
     const active = i === activeIndex;

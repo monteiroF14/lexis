@@ -48,7 +48,7 @@ export default class WordOrderView extends DragBaseView {
   _rebuildSelected() {
     const c = this._getContainer();
     const chips = c.querySelectorAll("#sentence-zone .word-chip");
-    this.selected = Array.from(chips).map(chip => ({
+    this.selected = Array.from(chips).map((chip) => ({
       idx: chip.getAttribute("data-index"),
       word: chip.textContent,
     }));
@@ -57,12 +57,18 @@ export default class WordOrderView extends DragBaseView {
   _onDrop(el, e) {
     const c = this._getContainer();
     if (!c) return;
-    const cx = e.clientX, cy = e.clientY;
+    const cx = e.clientX,
+      cy = e.clientY;
     const zone = c.querySelector("#sentence-zone");
     const zoneRect = zone.getBoundingClientRect();
     const pool = c.querySelector("#word-pool");
 
-    if (cx >= zoneRect.left && cx <= zoneRect.right && cy >= zoneRect.top && cy <= zoneRect.bottom) {
+    if (
+      cx >= zoneRect.left &&
+      cx <= zoneRect.right &&
+      cy >= zoneRect.top &&
+      cy <= zoneRect.bottom
+    ) {
       if (el.parentNode === pool) {
         el.classList.add("lexis-chip-selected");
       }
@@ -89,9 +95,11 @@ export default class WordOrderView extends DragBaseView {
   _onHintWord() {
     const c = this._getContainer();
     if (!c) return;
-    const usedIndices = new Set(this.selected.map(s => parseInt(s.idx)));
+    const usedIndices = new Set(this.selected.map((s) => parseInt(s.idx)));
     for (let i = 0; i < this.model.words.length; i++) {
-      const idx = this.model.shuffled.findIndex(w => w === this.model.words[i]);
+      const idx = this.model.shuffled.findIndex(
+        (w) => w === this.model.words[i],
+      );
       if (!usedIndices.has(idx)) {
         const chip = c.querySelector(`#word-pool button[data-index='${idx}']`);
         if (chip) {
@@ -116,9 +124,20 @@ export default class WordOrderView extends DragBaseView {
     if (this.model.checkAnswer(this.selected.map((s) => s.word))) {
       playCorrect();
       zone.classList.add("lexis-correct-pulse");
+      const correctWords = this.model.original.split(/\s+/);
+      zone.innerHTML = correctWords
+        .map(
+          (w) =>
+            `<button class="btn rounded-pill me-2 mb-2 shadow-sm lexis-word-chip lexis-flash-correct">${w}</button>`,
+        )
+        .join("");
+
       setTimeout(() => {
         c.dispatchEvent(
-          new CustomEvent("exerciseCompleted", { detail: { correct: true }, bubbles: true }),
+          new CustomEvent("exerciseCompleted", {
+            detail: { correct: true },
+            bubbles: true,
+          }),
         );
       }, 600);
     } else {
@@ -126,11 +145,17 @@ export default class WordOrderView extends DragBaseView {
       zone.classList.add("lexis-shake");
       const correctWords = this.model.original.split(/\s+/);
       zone.innerHTML = correctWords
-        .map(w => `<button class="btn rounded-pill me-2 mb-2 shadow-sm lexis-word-chip lexis-flash-correct">${w}</button>`)
+        .map(
+          (w) =>
+            `<button class="btn rounded-pill me-2 mb-2 shadow-sm lexis-word-chip lexis-flash-incorrect">${w}</button>`,
+        )
         .join("");
       setTimeout(() => {
         c.dispatchEvent(
-          new CustomEvent("exerciseCompleted", { detail: { correct: false }, bubbles: true }),
+          new CustomEvent("exerciseCompleted", {
+            detail: { correct: false },
+            bubbles: true,
+          }),
         );
       }, 800);
     }
