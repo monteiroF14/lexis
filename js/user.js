@@ -16,5 +16,6 @@ export class User {
     this.currentTitle = "Explorer";
     this.level = 1;
     this.theme = "light";
+    this.hardcoreBest = 0;
   }
 }

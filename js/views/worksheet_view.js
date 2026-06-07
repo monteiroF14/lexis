@@ -78,12 +78,18 @@ export default class WorksheetView {
       this._onExerciseCompleted,
     );
     if (this.model.hardcore && !e.detail.correct) {
-      const leaveBtn = this.container.querySelector("#leave-exercise");
-      if (leaveBtn) leaveBtn.disabled = true;
-      setTimeout(
-        () => this.container.dispatchEvent(new CustomEvent("worksheet:cancel")),
-        400,
-      );
+      const correctCount = this.model.correctAnswers;
+      const coinsEarned = correctCount * HardcoreWorksheetModel.COIN_REWARD;
+      const user = this.model.sessionModel?.getSession();
+      let isNewBest = false;
+      if (user) {
+        isNewBest = correctCount > (user.hardcoreBest || 0);
+        if (isNewBest) {
+          user.hardcoreBest = correctCount;
+          this.model.sessionModel.updateUser(user);
+        }
+      }
+      this._showHardcoreResult(correctCount, coinsEarned, isNewBest);
       return;
     }
     this.model.recordAnswer(e.detail.correct);
@@ -113,5 +119,21 @@ export default class WorksheetView {
         this.container.dispatchEvent(new CustomEvent("worksheet:cancel")),
       );
     setTimeout(() => celebrate(), 200);
+  }
+
+  _showHardcoreResult(correct, coins, isNewBest) {
+    this.container.innerHTML = `
+      <div class="lexis-levelup-overlay">
+        <div class="lexis-levelup-card">
+          <div style="font-size:2.5rem;font-weight:700;margin-bottom:0.5rem;">Game Over!</div>
+          <div class="fs-5 mb-2">Correct answers: <strong>${correct}</strong></div>
+          <div class="fs-5 mb-2 lexis-text-orange">Coins earned: <strong>${coins}</strong></div>
+          ${isNewBest ? '<div class="fs-6 lexis-text-green mt-2">New personal best!</div>' : ''}
+          <button id="hardcore-back-btn" class="btn text-white mt-3 rounded-3 px-4 lexis-btn-primary">Back to Levels</button>
+        </div>
+      </div>`;
+    this.container.querySelector("#hardcore-back-btn").addEventListener("click", () => {
+      this.container.dispatchEvent(new CustomEvent("worksheet:cancel"));
+    });
   }
 }
