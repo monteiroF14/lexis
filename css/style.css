@@ -56,6 +56,10 @@ body.dyslexic-mode {
 	--lexis-input-border: #555555;
 }
 
+body {
+	background-color: var(--lexis-bg-main);
+}
+
 /* Layout */
 .lexis-viewport {
 	height: 100vh;
@@ -707,7 +711,7 @@ body.dyslexic-mode {
 
 /* Landing page */
 .lexis-navbar {
-	background: var(--lexis-bg-sidebar-left);
+	background: var(--lexis-bg-main);
 }
 
 .lexis-landing-hero {
@@ -723,7 +727,6 @@ body.dyslexic-mode {
 }
 
 .lexis-landing-section-alt {
-	background: var(--lexis-bg-card);
 }
 
 .lexis-landing-step {
@@ -741,7 +744,7 @@ body.dyslexic-mode {
 .lexis-landing-card {
 	padding: 1.5rem;
 	border-radius: 1rem;
-	background: var(--lexis-bg-main);
+	background: var(--lexis-bg-card);
 	color: var(--lexis-text-primary);
 	border: 1px solid var(--lexis-border-light);
 	transition: transform 0.15s;
@@ -754,7 +757,6 @@ body.dyslexic-mode {
 .lexis-landing-cta {
 	padding: 4rem 0;
 	text-align: center;
-	background: var(--lexis-bg-sidebar-inner);
 }
 
 .lexis-landing-footer {
