@@ -44,12 +44,6 @@ function renderDemo(stage) {
   const model = new entry.Model(entry.data);
   const view = new entry.View(model, stage);
   view.render();
-  stage.addEventListener("exerciseCompleted", (e) => {
-    if (e.detail.correct) {
-      stage.classList.add("lexis-demo-correct");
-      setTimeout(() => stage.classList.remove("lexis-demo-correct"), 1500);
-    }
-  }, { once: true });
 }
 
 function render(container) {

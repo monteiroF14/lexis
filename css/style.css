@@ -777,16 +777,9 @@ body {
 	align-items: center;
 	justify-content: center;
 	padding: 1.5rem;
-	background: var(--lexis-bg-card);
-	border: 2px solid transparent;
+	background: var(--lexis-bg-main);
 	border-radius: 1rem;
 	box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-	transition: border-color 0.4s, box-shadow 0.4s;
-}
-
-.lexis-demo-correct {
-	border-color: #22c55e;
-	box-shadow: 0 0 24px rgba(34, 197, 94, 0.3);
 }
 
 /* Auth form backdrop when overlaying landing page */

@@ -27,7 +27,7 @@ export default class SpellingView {
 
     if (this.model.checkAnswer(chosen)) {
       playCorrect();
-      btn.classList.add("lexis-correct-pulse");
+      btn.classList.add("lexis-correct-pulse", "lexis-flash-correct");
       setTimeout(() => {
         c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: true }, bubbles: true }));
       }, 600);

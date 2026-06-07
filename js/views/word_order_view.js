@@ -60,7 +60,7 @@ export default class WordOrderView {
 
     if (this.model.checkAnswer(this.selected.map(s => s.word))) {
       playCorrect();
-      zone.classList.add("lexis-correct-pulse");
+      zone.classList.add("lexis-correct-pulse", "lexis-flash-correct");
       setTimeout(() => {
         c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: true }, bubbles: true }));
       }, 600);

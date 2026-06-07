@@ -32,7 +32,7 @@ export default class MissingLettersView {
 
     if (this.model.checkAnswers(inputs.map(i => i.value.trim()))) {
       playCorrect();
-      inputs.forEach(inp => inp.classList.add("lexis-correct-pulse"));
+      inputs.forEach(inp => inp.classList.add("lexis-correct-pulse", "lexis-flash-correct"));
       setTimeout(() => {
         c.dispatchEvent(new CustomEvent("exerciseCompleted", { detail: { correct: true }, bubbles: true }));
       }, 600);
