@@ -41,14 +41,21 @@ function renderTabs() {
 function renderDemo(stage) {
   const entry = TABS[activeIndex];
   stage.innerHTML = "";
-  const view = new entry.View(new entry.Model(entry.data), stage);
+  const model = new entry.Model(entry.data);
+  const view = new entry.View(model, stage);
   view.render();
+  stage.addEventListener("exerciseCompleted", (e) => {
+    if (e.detail.correct) {
+      stage.classList.add("lexis-demo-correct");
+      setTimeout(() => stage.classList.remove("lexis-demo-correct"), 1500);
+    }
+  }, { once: true });
 }
 
 function render(container) {
   container.innerHTML = `
     <div class="lexis-demo-tabs">${renderTabs()}</div>
-    <div class="lexis-demo-stage lexis-prompt-bar rounded-4 d-flex align-items-center justify-content-center"></div>
+    <div class="lexis-demo-stage rounded-4 d-flex align-items-center justify-content-center"></div>
   `;
   container.querySelectorAll(".lexis-demo-tabs button").forEach(btn =>
     btn.addEventListener("click", (e) => {
