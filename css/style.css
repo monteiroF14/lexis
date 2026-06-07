@@ -57,7 +57,7 @@ body.dyslexic-mode {
 }
 
 body {
-	background-color: var(--lexis-bg-main);
+	background-color: var(--lexis-bg-card);
 }
 
 /* Layout */
@@ -744,7 +744,7 @@ body {
 .lexis-landing-card {
 	padding: 1.5rem;
 	border-radius: 1rem;
-	background: var(--lexis-bg-card);
+	background: var(--lexis-bg-main);
 	color: var(--lexis-text-primary);
 	border: 1px solid var(--lexis-border-light);
 	transition: transform 0.15s;

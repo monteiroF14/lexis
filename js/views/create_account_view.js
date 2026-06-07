@@ -16,11 +16,13 @@ export class CreateAccountView {
             <div class="mb-4"><label for="ca-password" class="form-label mb-1">Password</label><input type="password" id="ca-password" class="form-control rounded-4 py-2" required /></div>
             <p id="ca-error" class="alert alert-danger py-2" style="display: none;"></p>
             <button type="submit" class="btn w-100 rounded-4 py-2 mb-2 text-white lexis-btn-primary lexis-fw-500">Confirm</button>
-            <button type="button" id="ca-skip" class="btn w-100 rounded-4 py-2 lexis-btn-undo lexis-fw-500">Continue without an account</button>
+            <button type="button" id="ca-skip" class="btn w-100 rounded-4 py-2 mb-2 lexis-btn-undo lexis-fw-500">Continue without an account</button>
+            <button type="button" id="ca-back-btn" class="btn w-100 rounded-4 py-2 lexis-btn-undo lexis-fw-500">Back</button>
           </form>
         </div>
       </div>`;
     document.getElementById("ca-skip").onclick = () => { window.location.href = import.meta.env.BASE_URL + "html/dashboard.html"; };
+    document.getElementById("ca-back-btn").onclick = () => { main.innerHTML = this.#savedHtml; main.dispatchEvent(new CustomEvent("index:render")); };
     document.getElementById("create-account-form").onsubmit = (e) => {
       e.preventDefault();
       const name = document.getElementById("ca-name").value.trim();
