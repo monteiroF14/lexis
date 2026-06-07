@@ -45,10 +45,19 @@ export default class WorksheetView {
   _onExerciseCompleted(e) {
     const ec = this.container.querySelector("#exercise-container");
     if (e.detail.correct && ec) {
-      showFloatingLabel(ec, "+10 XP", "lexis-text-green");
+      const isHardcore = this.model.hardcore;
+      const label = isHardcore ? "+3 Coins" : "+10 XP";
+      const cls = isHardcore ? "lexis-text-orange" : "lexis-text-green";
+      showFloatingLabel(ec, label, cls);
+    }
+    this.container.removeEventListener("exerciseCompleted", this._onExerciseCompleted);
+    if (this.model.hardcore && !e.detail.correct) {
+      const leaveBtn = this.container.querySelector("#leave-exercise");
+      if (leaveBtn) leaveBtn.disabled = true;
+      setTimeout(() => this.container.dispatchEvent(new CustomEvent("worksheet:cancel")), 400);
+      return;
     }
     this.model.recordAnswer(e.detail.correct);
-    this.container.removeEventListener("exerciseCompleted", this._onExerciseCompleted);
     if (!this.model.isCompleted()) this.model.nextExercise();
     this.container.classList.add("fade");
     setTimeout(() => { this.container.classList.remove("fade"); this.render(); }, 300);
