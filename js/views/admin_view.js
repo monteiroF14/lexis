@@ -28,6 +28,7 @@ export class AdminView {
                 <th>Streak</th>
                 <th>Sheets</th>
                 <th>HC Best</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -35,16 +36,48 @@ export class AdminView {
                 <td>${u.name}</td>
                 <td>${u.level}</td>
                 <td>${u.currentTitle}</td>
-                <td>${u.xp}</td>
-                <td>${u.coins}</td>
+                <td><span class="admin-editable cursor-pointer" data-user="${u.id}" data-field="xp">${u.xp}</span></td>
+                <td><span class="admin-editable cursor-pointer" data-user="${u.id}" data-field="coins">${u.coins}</span></td>
                 <td>${u.streak}</td>
                 <td>${u.solvedSheets?.length ?? 0}</td>
                 <td>${u.hardcoreBest ?? 0}</td>
+                <td><button class="btn btn-sm btn-outline-danger rounded-pill px-2 py-0 admin-delete-btn" data-user="${u.id}" data-name="${u.name}">✕</button></td>
               </tr>`).join("")}
             </tbody>
           </table>
           ${users.length === 0 ? '<p class="text-center text-secondary py-3">No registered users yet.</p>' : ''}
         </div>
       </div>`;
+
+    mc.querySelectorAll(".admin-editable").forEach(span => {
+      span.addEventListener("click", () => {
+        if (span.querySelector("input")) return;
+        const val = span.textContent;
+        span.innerHTML = `<input type="number" class="form-control form-control-sm d-inline-block" style="width:5rem" value="${val}" />`;
+        const input = span.querySelector("input");
+        input.focus();
+        input.select();
+        const save = () => {
+          const newVal = parseInt(input.value);
+          if (!isNaN(newVal)) {
+            this.sessionModel.updateUserStat(span.dataset.user, span.dataset.field, newVal);
+            span.textContent = newVal;
+          } else {
+            span.textContent = val;
+          }
+        };
+        input.addEventListener("blur", save);
+        input.addEventListener("keydown", (e) => { if (e.key === "Enter") { input.blur(); } });
+      });
+    });
+
+    mc.querySelectorAll(".admin-delete-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (confirm(`Delete user "${btn.dataset.name}"?`)) {
+          this.sessionModel.deleteUser(btn.dataset.user);
+          this.render();
+        }
+      });
+    });
   }
 }

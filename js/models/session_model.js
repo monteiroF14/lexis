@@ -106,6 +106,30 @@ export class SessionModel {
     return this.#getUsers();
   }
 
+  deleteUser(userId) {
+    const users = this.#getUsers();
+    const filtered = users.filter(u => u.id !== userId);
+    if (filtered.length < users.length) {
+      this.#saveUsers(filtered);
+      return true;
+    }
+    return false;
+  }
+
+  updateUserStat(userId, field, value) {
+    const users = this.#getUsers();
+    const user = users.find(u => u.id === userId);
+    if (!user) return false;
+    user[field] = parseInt(value) || 0;
+    if (field === "xp") {
+      user.level = Math.floor(user.xp / 200) + 1;
+      const titles = ["", "Explorer", "Adventurer", "Scholar", "Wizard", "Master", "Legend"];
+      user.currentTitle = titles[Math.min(user.level, titles.length - 1)] || "Legend";
+    }
+    this.#saveUsers(users);
+    return true;
+  }
+
   updateUser(user) {
     this.#saveSession(user);
     if (!user.isAnonymous) {
