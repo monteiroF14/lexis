@@ -14,6 +14,8 @@ const TABS = [
   { label: "Word Order", Model: WordOrderModel,  View: WordOrderView,  data: { sentence: "the cat sat" } },
 ];
 
+let activeIndex = 0;
+
 const container = document.getElementById("demo-container");
 if (!container) {
   document.addEventListener("DOMContentLoaded", () => {
@@ -23,8 +25,6 @@ if (!container) {
 } else {
   init(container);
 }
-
-let activeIndex = 0;
 
 function init(el) {
   render(el);
