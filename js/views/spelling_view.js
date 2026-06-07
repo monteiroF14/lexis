@@ -2,10 +2,10 @@ import SpellingModel from "../models/spelling_model.js";
 import { playCorrect, playIncorrect } from "../sound.js";
 
 export default class SpellingView {
-  constructor(model) { this.model = model; this._onOptionClick = this._onOptionClick.bind(this); }
+  constructor(model, container) { this.model = model; this.container = container; this._onOptionClick = this._onOptionClick.bind(this); }
 
   render() {
-    const c = document.getElementById("exercise-container") || document.getElementById("main-container");
+    const c = this.container || document.getElementById("exercise-container") || document.getElementById("main-container");
     if (!c) return;
     c.innerHTML = `
       <div class="w-100 d-flex flex-column align-items-center gap-4 lexis-contained-narrow">
@@ -17,7 +17,7 @@ export default class SpellingView {
   }
 
   _onOptionClick(e) {
-    const c = document.getElementById("exercise-container") || document.getElementById("main-container");
+    const c = this.container || document.getElementById("exercise-container") || document.getElementById("main-container");
     if (!c) return;
     const btn = e.currentTarget;
     const chosen = btn.getAttribute("data-opt");

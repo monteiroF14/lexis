@@ -763,6 +763,21 @@ body {
 	border-top: 1px solid var(--lexis-border-light);
 }
 
+.lexis-demo-tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	justify-content: center;
+	margin-bottom: 1.5rem;
+}
+
+.lexis-demo-stage {
+	min-height: 18rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 /* Auth form backdrop when overlaying landing page */
 #main-container .min-vh-100 {
 	background: rgba(0,0,0,0.4);

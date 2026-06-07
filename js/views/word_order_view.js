@@ -1,15 +1,16 @@
 import { playCorrect, playIncorrect } from "../sound.js";
 
 export default class WordOrderView {
-  constructor(model) {
+  constructor(model, container) {
     this.model = model;
+    this.container = container;
     this.selected = [];
     this._onWordClick = this._onWordClick.bind(this);
     this._onUndo = this._onUndo.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
   }
 
-  _getContainer() { return document.getElementById("exercise-container") || document.getElementById("main-container"); }
+  _getContainer() { return this.container || document.getElementById("exercise-container") || document.getElementById("main-container"); }
 
   render() {
     const c = this._getContainer();

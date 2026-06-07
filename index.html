@@ -12,6 +12,7 @@
       content="Lexis is a learning web application meant for people with dyslexia to improve their reading and vocal comprehension."
     />
     <script defer type="module" src="js/init.js"></script>
+    <script defer type="module" src="js/demo_init.js"></script>
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
@@ -130,66 +131,9 @@
         <section class="lexis-landing-section lexis-landing-section-alt">
           <div class="container">
             <h2 class="text-center fw-bold mb-5 lexis-landing-hero-title">
-              Exercise Types
+              Try it out
             </h2>
-            <div class="row g-4">
-              <div class="col-md-6 col-lg-3">
-                <div class="lexis-landing-card h-100">
-                  <img
-                    src="assets/img/studying.svg"
-                    class="img-fluid mb-3"
-                    style="max-height: 90px"
-                    alt=""
-                  />
-                  <h5 class="fw-semibold">Spelling</h5>
-                  <p class="text-secondary small mb-0">
-                    Choose the correct spelling from multiple options.
-                  </p>
-                </div>
-              </div>
-              <div class="col-md-6 col-lg-3">
-                <div class="lexis-landing-card h-100">
-                  <img
-                    src="assets/img/student-in-the-classroom.svg"
-                    class="img-fluid mb-3"
-                    style="max-height: 90px"
-                    alt=""
-                  />
-                  <h5 class="fw-semibold">Letter Drag &amp; Drop</h5>
-                  <p class="text-secondary small mb-0">
-                    Drag letters into the correct order to form words.
-                  </p>
-                </div>
-              </div>
-              <div class="col-md-6 col-lg-3">
-                <div class="lexis-landing-card h-100">
-                  <img
-                    src="assets/img/student-with-diploma.svg"
-                    class="img-fluid mb-3"
-                    style="max-height: 90px"
-                    alt=""
-                  />
-                  <h5 class="fw-semibold">Missing Letters</h5>
-                  <p class="text-secondary small mb-0">
-                    Fill in the blanks to complete the word.
-                  </p>
-                </div>
-              </div>
-              <div class="col-md-6 col-lg-3">
-                <div class="lexis-landing-card h-100">
-                  <img
-                    src="assets/img/student-going-to-school.svg"
-                    class="img-fluid mb-3"
-                    style="max-height: 90px"
-                    alt=""
-                  />
-                  <h5 class="fw-semibold">Word Order</h5>
-                  <p class="text-secondary small mb-0">
-                    Arrange scrambled words into the correct sentence.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <div id="demo-container" class="lexis-contained mx-auto"></div>
           </div>
         </section>
 

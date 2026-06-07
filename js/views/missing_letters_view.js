@@ -1,8 +1,8 @@
 import { playCorrect, playIncorrect } from "../sound.js";
 
 export default class MissingLettersView {
-  constructor(model) { this.model = model; this._onSubmit = this._onSubmit.bind(this); }
-  _getContainer() { return document.getElementById("exercise-container") || document.getElementById("main-container"); }
+  constructor(model, container) { this.model = model; this.container = container; this._onSubmit = this._onSubmit.bind(this); }
+  _getContainer() { return this.container || document.getElementById("exercise-container") || document.getElementById("main-container"); }
 
   render() {
     const c = this._getContainer();

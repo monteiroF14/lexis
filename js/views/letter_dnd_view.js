@@ -1,8 +1,9 @@
 import { playCorrect, playIncorrect } from "../sound.js";
 
 export default class LetterDndView {
-  constructor(model) {
+  constructor(model, container) {
     this.model = model;
+    this.container = container;
     this.dragState = null;
     this._onPointerDown = this._onPointerDown.bind(this);
     this._onPointerMove = this._onPointerMove.bind(this);
@@ -10,7 +11,7 @@ export default class LetterDndView {
     this._onCheck = this._onCheck.bind(this);
   }
 
-  _getContainer() { return document.getElementById("exercise-container") || document.getElementById("main-container"); }
+  _getContainer() { return this.container || document.getElementById("exercise-container") || document.getElementById("main-container"); }
 
   render() {
     const c = this._getContainer();
