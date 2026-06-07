@@ -535,6 +535,53 @@ body.dyslexic-mode {
 	border-bottom: 1px solid var(--lexis-border-light) !important;
 }
 
+/* Effects */
+.lexis-float-label {
+  position: fixed;
+  pointer-events: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  z-index: 1000;
+  animation: lexis-float-up 1s ease-out forwards;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes lexis-float-up {
+  0%   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  50%  { opacity: 1; transform: translate(-50%, calc(-50% - 20px)) scale(1.1); }
+  100% { opacity: 0; transform: translate(-50%, calc(-50% - 50px)) scale(0.9); }
+}
+
+.lexis-levelup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.6);
+  animation: lexis-fade-in 0.3s ease-out;
+}
+
+.lexis-levelup-card {
+  background: var(--lexis-bg-card);
+  color: var(--lexis-text-primary);
+  border-radius: 1.5rem;
+  padding: 2.5rem 3rem;
+  text-align: center;
+  animation: lexis-pop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes lexis-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes lexis-pop-in {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
 /* Overrides */
 [data-bs-theme="dark"] .form-control {
 	background-color: var(--lexis-input-bg) !important;
