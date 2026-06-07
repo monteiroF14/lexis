@@ -11,3 +11,4 @@ O Lexis vai ser uma aplicação onde pessoas com dislexia podem fazer fichas par
 A aplicação vai se focar muito na gamificação para conseguir a retenção dos usuários. Essencialmente, irão existir dois modos de jogo: o modo normal - onde cada ficha dá XP para desbloquear a próxima; o modo "hardcore" onde o usuário ganha moedas para customizar o seu avatar.
 
 
+opencode -s ses_167ca824fffeGwZ7fF7zxnvzMX

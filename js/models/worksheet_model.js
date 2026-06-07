@@ -60,9 +60,15 @@ export default class WorksheetModel {
 
     const newLevel = Math.floor(user.xp / 200) + 1;
     if (newLevel !== user.level) {
+      const oldTitle = user.currentTitle;
       user.level = newLevel;
       const titles = ['', 'Explorer', 'Adventurer', 'Scholar', 'Wizard', 'Master', 'Legend'];
       user.currentTitle = titles[Math.min(newLevel, titles.length - 1)] || 'Legend';
+      if (user.currentTitle !== oldTitle) {
+        document.body.dispatchEvent(new CustomEvent("level:up", {
+          detail: { level: newLevel, title: user.currentTitle, xp: user.xp }
+        }));
+      }
     }
 
     this.sessionModel?.updateUser(user);

@@ -6,6 +6,7 @@ import LetterDndView from "./letter_dnd_view.js";
 import MissingLettersView from "./missing_letters_view.js";
 import WordOrderModel from "../models/word_order_model.js";
 import WordOrderView from "./word_order_view.js";
+import { celebrate, showFloatingLabel } from "../effects.js";
 
 export default class WorksheetView {
   constructor(model) {
@@ -42,6 +43,10 @@ export default class WorksheetView {
   }
 
   _onExerciseCompleted(e) {
+    const ec = this.container.querySelector("#exercise-container");
+    if (e.detail.correct && ec) {
+      showFloatingLabel(ec, "+10 XP", "lexis-text-green");
+    }
     this.model.recordAnswer(e.detail.correct);
     this.container.removeEventListener("exerciseCompleted", this._onExerciseCompleted);
     if (!this.model.isCompleted()) this.model.nextExercise();
@@ -62,5 +67,6 @@ export default class WorksheetView {
         </div>
       </div>`;
     this.container.querySelector("#back-btn").addEventListener("click", () => this.container.dispatchEvent(new CustomEvent("worksheet:cancel")));
+    setTimeout(() => celebrate(), 200);
   }
 }

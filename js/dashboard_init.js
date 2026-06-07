@@ -1,5 +1,5 @@
 import { SessionModel } from "./models/session_model.js";
-import { celebrate } from "./effects.js";
+import { celebrate, showLevelUp } from "./effects.js";
 import { createAvatar } from "@dicebear/core";
 import { bigSmile } from "@dicebear/collection";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -183,4 +183,9 @@ document.body.addEventListener("streak:updated", (e) => {
   if (streak > 0 && STREAK_MILESTONES.includes(streak)) {
     setTimeout(() => celebrate(), 300);
   }
+});
+
+document.body.addEventListener("level:up", (e) => {
+  const { level, title } = e.detail;
+  showLevelUp(level, title);
 });
