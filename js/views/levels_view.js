@@ -1,137 +1,181 @@
+import WorksheetModel from "../models/worksheet_model.js";
+import HardcoreWorksheetModel from "../models/hardcore_worksheet_model.js";
+import WorksheetView from "./worksheet_view.js";
+import { WORDS, SENTENCES } from "../data.js";
+
+const TYPES = ["spelling", "letter_dnd", "missing", "word_order", "letter_reversal", "visual_discrimination"];
+
+function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function generateExercises(count) {
+  const out = [];
+  for (let i = 0; i < count; i++) {
+    const type = rand(TYPES);
+    let data;
+    switch (type) {
+      case "spelling": { const w = rand(WORDS); data = { word: w.word, hint: w.hint }; break; }
+      case "letter_dnd": { const w = rand(WORDS); data = { word: w.word, hint: w.hint }; break; }
+      case "missing": { const w = rand(WORDS); data = { word: w.word, hint: w.hint }; break; }
+      case "word_order": { const s = rand(SENTENCES); data = { sentence: s.sentence, hint: s.hint }; break; }
+      case "letter_reversal": { const w = rand(WORDS); data = { word: w.word, hint: w.hint }; break; }
+      case "visual_discrimination": { const w = rand(WORDS); data = { word: w.word, hint: w.hint }; break; }
+    }
+    out.push({ type, data });
+  }
+  return out;
+}
+
+const TOTAL_STEPS = 10;
+
 export class LevelsView {
-  constructor(model) {
-    this.model = model;
+  constructor(sessionModel) {
+    this.sessionModel = sessionModel;
+    this.currentMode = "normal";
     const btn = document.querySelector("#btn-levels");
-    btn.onclick = () => {
-      this.render();
-    };
+    if (btn) btn.onclick = () => this.render();
+  }
+
+  _getProgress() {
+    const user = this.sessionModel.getSession();
+    return Math.min(user?.solvedSheets?.length ?? 0, TOTAL_STEPS);
   }
 
   render() {
-    const mainContainer = document.querySelector("#main-container");
-    mainContainer.innerHTML = `
-          <div class="card border-0 shadow-sm rounded-4 mb-4">
-            <div class="card-body p-4">
-              <h2 class="fw-bold mb-2">Level Pathway</h2>
-              <p class="text-secondary mb-4">
-                Continue your learning journey step by step.
-              </p>
+    if (window.setActiveTab) window.setActiveTab(null);
+    const user = this.sessionModel.getSession();
+    const isGuest = user?.isAnonymous ?? false;
+    const guestCapped = isGuest && (user?.solvedSheets?.length ?? 0) >= 2;
+    const progress = this._getProgress();
+    const mc = document.querySelector("#main-container");
+    const isNormal = this.currentMode === "normal";
 
-              <div class="d-flex flex-column gap-3">
-                <div class="card border-0 bg-primary-subtle rounded-4">
-                  <div
-                    class="card-body d-flex justify-content-between align-items-center"
-                  >
-                    <div>
-                      <h5 class="fw-bold mb-1">Level 1 — Beginner</h5>
-                      <p class="text-secondary mb-0">
-                        Basic reading and spelling exercises
-                      </p>
-                    </div>
-                    <button class="btn btn-primary rounded-pill px-4">
-                      Start
-                    </button>
-                  </div>
-                </div>
-
-                <div class="card border-0 bg-light rounded-4">
-                  <div
-                    class="card-body d-flex justify-content-between align-items-center"
-                  >
-                    <div>
-                      <h5 class="fw-bold mb-1">Level 2 — Intermediate</h5>
-                      <p class="text-secondary mb-0">
-                        More reading practice and word completion
-                      </p>
-                    </div>
-                    <button class="btn btn-outline-secondary rounded-pill px-4">
-                      Locked
-                    </button>
-                  </div>
-                </div>
-
-                <div class="card border-0 bg-light rounded-4">
-                  <div
-                    class="card-body d-flex justify-content-between align-items-center"
-                  >
-                    <div>
-                      <h5 class="fw-bold mb-1">Level 3 — Advanced</h5>
-                      <p class="text-secondary mb-0">
-                        Comprehension and harder worksheets
-                      </p>
-                    </div>
-                    <button class="btn btn-outline-secondary rounded-pill px-4">
-                      Locked
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+    if (guestCapped) {
+      mc.innerHTML = `
+        <div class="d-flex flex-column align-items-center justify-content-center h-100 py-4">
+          <div class="card rounded-4 shadow-sm p-4 w-100 lexis-card-sm">
+            <h2 class="text-center fw-bold mb-3 lexis-landing-hero-title">Create an Account</h2>
+            <p class="text-center text-secondary mb-4">You've completed 2 free worksheets! Create an account to keep learning and unlock all features.</p>
+            <form id="guest-signup-form">
+              <div class="mb-3"><label class="form-label mb-1">Username</label><input type="text" id="guest-signup-name" class="form-control rounded-4 py-2" required /></div>
+              <div class="mb-3"><label class="form-label mb-1">Email</label><input type="email" id="guest-signup-email" class="form-control rounded-4 py-2" required /></div>
+              <div class="mb-4"><label class="form-label mb-1">Password</label><input type="password" id="guest-signup-password" class="form-control rounded-4 py-2" required /></div>
+              <p id="guest-signup-error" class="alert alert-danger py-2" style="display: none;"></p>
+              <button type="submit" class="btn w-100 rounded-4 py-2 text-white lexis-btn-primary">Create Account</button>
+            </form>
           </div>
+        </div>`;
+      mc.querySelector("#guest-signup-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = mc.querySelector("#guest-signup-name").value.trim();
+        const email = mc.querySelector("#guest-signup-email").value.trim();
+        const password = mc.querySelector("#guest-signup-password").value;
+        const r = this.sessionModel.convertGuestToAccount({ name, email, password });
+        if (!r.ok) {
+          const err = mc.querySelector("#guest-signup-error");
+          err.textContent = r.error;
+          err.style.display = "block";
+        } else {
+          mc.dispatchEvent(new CustomEvent("worksheet:cancel"));
+        }
+      });
+      return;
+    }
 
-          <div class="card border-0 shadow-sm rounded-4">
-            <div class="card-body p-4">
-              <h3 class="fw-bold mb-3">Today’s Worksheets</h3>
+    mc.innerHTML = `
+      <div class="d-flex flex-column align-items-center justify-content-center h-100 py-4">
+        ${!isGuest ? `
+        <div class="mb-4">
+          <select id="mode-select" class="form-select d-inline-block text-white border-0 rounded-4 px-4 py-2 lexis-mode-select">
+            <option value="normal" ${isNormal ? "selected" : ""}>Normal Mode</option>
+            <option value="hardcore" ${!isNormal ? "selected" : ""}>Hard Mode</option>
+          </select>
+        </div>
+        ` : ''}
 
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <div class="card border-0 bg-white rounded-4 h-100 border">
-                    <div class="card-body">
-                      <h5 class="fw-bold">Reading Practice</h5>
-                      <p class="text-secondary small mb-3">
-                        Train reading fluency with simple exercises.
-                      </p>
-                      <button class="btn btn-sm btn-primary rounded-pill px-3">
-                        Open
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="card border-0 bg-white rounded-4 h-100 border">
-                    <div class="card-body">
-                      <h5 class="fw-bold">Word Completion</h5>
-                      <p class="text-secondary small mb-3">
-                        Fill in missing letters and words.
-                      </p>
-                      <button class="btn btn-sm btn-primary rounded-pill px-3">
-                        Open
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="card border-0 bg-white rounded-4 h-100 border">
-                    <div class="card-body">
-                      <h5 class="fw-bold">Listening & Speech</h5>
-                      <p class="text-secondary small mb-3">
-                        Practice pronunciation and verbalization.
-                      </p>
-                      <button class="btn btn-sm btn-primary rounded-pill px-3">
-                        Open
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="card border-0 bg-white rounded-4 h-100 border">
-                    <div class="card-body">
-                      <h5 class="fw-bold">Comprehension</h5>
-                      <p class="text-secondary small mb-3">
-                        Read short passages and answer questions.
-                      </p>
-                      <button class="btn btn-sm btn-primary rounded-pill px-3">
-                        Open
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        ${isNormal ? `
+        <div class="position-relative flex-grow-1 d-flex align-items-center justify-content-center">
+          ${progress === 0 ? '<div class="alert lexis-prompt-bar rounded-4 px-4 py-3 text-center position-absolute" style="top:0;z-index:2;font-size:0.95rem;">Complete worksheets to unlock levels along the path!</div>' : ''}
+          <div class="position-relative lexis-path" id="path-container">
+            <svg class="position-absolute w-100 h-100 lexis-path-svg"
+                 viewBox="0 0 280 520" preserveAspectRatio="none">
+              ${this._renderConnectors()}
+            </svg>
+            ${this._renderNodes(progress)}
           </div>
-      `;
+        </div>
+        ` : `
+        <div class="flex-grow-1 d-flex flex-column align-items-center justify-content-center gap-2">
+          <h2 class="fw-normal lexis-text-p">Hard Mode</h2>
+          <p class="text-secondary">Earn <span class="lexis-text-orange">${HardcoreWorksheetModel.COIN_REWARD} coin</span> per correct answer</p>
+          ${user.hardcoreBest > 0 ? `<p class="small lexis-text-p">Your best: <strong>${user.hardcoreBest}</strong> correct</p>` : ''}
+          <p class="small text-secondary">One mistake and it's over</p>
+        </div>
+        `}
+
+        <div class="mt-3 mb-4">
+          <button id="start-btn" class="btn text-white rounded-3 px-5 py-2 lexis-btn-start">Start</button>
+        </div>
+      </div>`;
+
+    const modeSelect = document.querySelector("#mode-select");
+    if (modeSelect) {
+      modeSelect.addEventListener("change", () => {
+        this.currentMode = modeSelect.value;
+        this.render();
+      });
+    }
+
+    if (isNormal) {
+      mc.querySelectorAll(".lvl-node[data-idx]").forEach((el) => {
+        if (!el.dataset.locked) el.addEventListener("click", () => this._startWorksheet());
+      });
+    }
+
+    document.querySelector("#start-btn")?.addEventListener("click", () => this._startWorksheet());
+  }
+
+  _renderConnectors() {
+    let html = "";
+    const containerH = 520, leftX = 56, rightX = 224;
+    for (let i = 0; i < TOTAL_STEPS - 1; i++) {
+      const isLeft = i % 2 === 0;
+      html += `<line x1="${isLeft ? leftX : rightX}" y1="${(i / (TOTAL_STEPS - 1)) * containerH}"
+                     x2="${!isLeft ? leftX : rightX}" y2="${((i + 1) / (TOTAL_STEPS - 1)) * containerH}"
+                     stroke="var(--lexis-connector)" stroke-width="2" stroke-dasharray="6 4" />`;
+    }
+    return html;
+  }
+
+  _renderNodes(progress) {
+    let html = "";
+    const containerH = 520, nodeSize = 44, half = nodeSize / 2;
+
+    for (let i = 0; i < TOTAL_STEPS; i++) {
+      const active = i === progress, locked = i > progress;
+      const isLeft = i % 2 === 0;
+      const top = (i / (TOTAL_STEPS - 1)) * containerH - half;
+      const left = isLeft ? 56 - half : 224 - half;
+
+      let cls = "position-absolute rounded-circle lvl-node lexis-node";
+      if (locked) cls += " lexis-node-locked";
+      else if (active) cls += " lexis-node-active";
+      else cls += " lexis-node-done";
+
+      const ring = active ? "box-shadow: 0 0 0 4px var(--lexis-bg-main), 0 0 0 7px var(--lexis-primary);" : "";
+
+      html += `<div class="${cls}" data-idx="${i}" ${locked ? 'data-locked="true"' : ""}
+               style="width:${nodeSize}px;height:${nodeSize}px;top:${top}px;left:${left}px;${ring}"
+               onmouseenter="this.style.transform='scale(1.1)'" onmouseleave="this.style.transform='scale(1)'"></div>`;
+    }
+    return html;
+  }
+
+  _startWorksheet() {
+    const modeSelect = document.querySelector("#mode-select");
+    const mode = modeSelect ? modeSelect.value : "normal";
+    const model = mode === "hardcore"
+      ?       new HardcoreWorksheetModel(this.sessionModel)
+      : new WorksheetModel(generateExercises(5), `worksheet-${Date.now()}`, this.sessionModel);
+    new WorksheetView(model).render();
   }
 }

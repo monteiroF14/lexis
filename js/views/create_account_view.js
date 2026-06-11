@@ -1,62 +1,39 @@
 export class CreateAccountView {
-  #model;
+  #sessionModel;
   #savedHtml = "";
-
-  #formHtml = `
-    <form id="create-account-form">
-      <h2>Create Account</h2>
-      <input type="text"  id="ca-name"     placeholder="Name"     required />
-      <input type="email" id="ca-email"    placeholder="Email"    required />
-      <input type="password" id="ca-password" placeholder="Password" required />
-      <p id="ca-error" style="color:red; display:none;"></p>
-      <button type="submit">Create Account</button>
-      <button type="button" id="return-btn">Back</button>
-    </form>
-  `;
 
   #render = () => {
     const main = document.getElementById("main-container");
     if (!main) return;
-
     this.#savedHtml = main.innerHTML;
-    main.innerHTML = this.#formHtml;
-
-    document.getElementById("return-btn").onclick = () => {
-      main.innerHTML = this.#savedHtml;
-      const indexViewRenderedEvent = new CustomEvent("index:render");
-      main.dispatchEvent(indexViewRenderedEvent);
-    };
-
+    main.innerHTML = `
+      <div class="d-flex flex-column align-items-center justify-content-center min-vh-100 py-5 px-3">
+        <div class="card rounded-4 shadow border-0 p-4 w-100 lexis-card-sm">
+          <h3 class="text-center fw-normal mb-4 lexis-heading-sm">Create an account</h3>
+          <form id="create-account-form">
+            <div class="mb-3"><label for="ca-name" class="form-label mb-1">Username</label><input type="text" id="ca-name" class="form-control rounded-4 py-2" required /></div>
+            <div class="mb-3"><label for="ca-email" class="form-label mb-1">Email</label><input type="email" id="ca-email" class="form-control rounded-4 py-2" required /></div>
+            <div class="mb-4"><label for="ca-password" class="form-label mb-1">Password</label><input type="password" id="ca-password" class="form-control rounded-4 py-2" required /></div>
+            <p id="ca-error" class="alert alert-danger py-2" style="display: none;"></p>
+            <button type="submit" class="btn w-100 rounded-4 py-2 mb-2 text-white lexis-btn-primary fw-medium">Confirm</button>
+            <button type="button" id="ca-skip" class="btn w-100 rounded-4 py-2 mb-2 lexis-btn-undo fw-medium">Continue without an account</button>
+            <button type="button" id="ca-back-btn" class="btn w-100 rounded-4 py-2 lexis-btn-undo fw-medium">Back</button>
+          </form>
+        </div>
+      </div>`;
+    document.getElementById("ca-skip").onclick = () => { window.location.href = import.meta.env.BASE_URL + "html/dashboard.html"; };
+    document.getElementById("ca-back-btn").onclick = () => { main.innerHTML = this.#savedHtml; main.dispatchEvent(new CustomEvent("index:render")); };
     document.getElementById("create-account-form").onsubmit = (e) => {
       e.preventDefault();
-      const data = {
-        name: document.getElementById("ca-name").value,
-        email: document.getElementById("ca-email").value,
-        password: document.getElementById("ca-password").value,
-      };
-
-      const result = this.#model.createAccount(data); // ← model call
-
-      if (!result.ok) {
-        const err = document.getElementById("ca-error");
-        err.textContent = result.error;
-        err.style.display = "block";
-      } else {
-        console.log("Account created:", result.user);
-        // TODO: navigate to app page
-        window.location.href = import.meta.env.BASE_URL + "html/dashboard.html";
-      }
+      const name = document.getElementById("ca-name").value.trim();
+      const email = document.getElementById("ca-email").value.trim();
+      const password = document.getElementById("ca-password").value;
+      const r = this.#sessionModel.createAccount({ name, email, password });
+      if (!r.ok) { const err = document.getElementById("ca-error"); err.textContent = r.error; err.style.display = "block"; }
+      else window.location.href = import.meta.env.BASE_URL + "html/dashboard.html";
     };
   };
 
-  attachTrigger() {
-    document
-      .getElementById("get-started-btn")
-      ?.addEventListener("click", this.#render);
-  }
-
-  constructor(model) {
-    this.#model = model;
-    this.attachTrigger();
-  }
+  attachTrigger() { document.querySelectorAll("[data-trigger='register']").forEach(el => el.addEventListener("click", this.#render)); }
+  constructor(sessionModel) { this.#sessionModel = sessionModel; this.attachTrigger(); }
 }

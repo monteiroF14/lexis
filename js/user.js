@@ -8,12 +8,15 @@ export class User {
     this.xp = 0;
     this.coins = 0;
     this.solvedSheets = [];
+    this.streak = 0;
+    this.longestStreak = 0;
+    this.lastActiveDate = null;
     this.avatar = {};
+    this.purchasedStoreItems = [];
     this.currentTitle = "Explorer";
     this.level = 1;
-
-    function getLevelTitle() {
-      return `Level ${this.level} - ${this.title}`;
-    }
+    this.theme = "light";
+    this.hardcoreBest = 0;
+    this.isAdmin = false;
   }
 }

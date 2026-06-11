@@ -9,116 +9,227 @@
     <title>Lexis - Aprendizagem das palavras</title>
     <meta
       name="description"
-      content="Lexis is a learning web application meant for people with dyslexia to improve their reading and vocal comprehension.
-"
+      content="Lexis is a learning web application meant for people with dyslexia to improve their reading and vocal comprehension."
     />
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/Navbar-Centered-Brand-icons.css" />
     <script defer type="module" src="js/init.js"></script>
+    <script defer type="module" src="js/demo_init.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
   </head>
-
   <body>
-    <nav class="navbar navbar-expand-md sticky-top bg-body py-3">
+    <nav class="navbar navbar-expand-md sticky-top border-bottom lexis-navbar">
       <div class="container">
-        <a
-          class="navbar-brand d-flex flex-grow-1 justify-content-center align-items-center align-content-center"
-          href="#"
-          ><img
-            class="overflow-scroll"
-            id="navbar-home-btn"
+        <a class="navbar-brand" href="#">
+          <img
+            id="navbar-logo"
             src="assets/img/LogoBlue.png"
-            width="202"
-            height="84"
-        /></a>
+            height="36"
+            alt="Lexis"
+          />
+        </a>
+
+        <div class="d-flex d-md-none align-items-center gap-2 ms-auto">
+          <span class="small lexis-text-p theme-icon">☀️</span>
+          <label
+            class="form-check form-switch mb-0"
+            style="padding-left: 2.5rem; min-height: 1rem"
+          >
+            <input
+              class="form-check-input lexis-toggle theme-toggle-input"
+              type="checkbox"
+              id="theme-toggle"
+            />
+          </label>
+        </div>
+
+        <button
+          class="navbar-toggler border-0"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <div
+            class="d-flex gap-2 justify-content-center justify-content-md-end mt-3 mt-md-0 w-100 align-items-center"
+          >
+            <div class="d-md-flex d-none align-items-center gap-2">
+              <span class="small lexis-text-p theme-icon">☀️</span>
+              <label
+                class="form-check form-switch mb-0"
+                style="padding-left: 2.5rem; min-height: 1rem"
+              >
+                <input
+                  class="form-check-input lexis-toggle theme-toggle-input"
+                  type="checkbox"
+                  id="theme-toggle-mob"
+                />
+              </label>
+            </div>
+            <button
+              class="btn btn-sm btn-outline-secondary rounded-pill px-3"
+              data-trigger="login"
+            >
+              Login
+            </button>
+            <button
+              class="btn btn-sm lexis-btn-primary rounded-pill px-3"
+              data-trigger="register"
+            >
+              Get Started
+            </button>
+          </div>
+        </div>
       </div>
     </nav>
-    <div class="container" id="main-container">
-      <div
-        class="d-flex h-75 min-vh-100 mh-100"
-        data-anime-opacity="1, 0"
-        data-anime-scale="1, 0.8"
-        data-anime-start="0"
-        data-anime-end="100vh"
-        id="welcome-container"
-        data-anime-scroll-animation=""
-      >
-        <div class="container-xxl h-100 px-4 py-4 py-xl-5">
-          <div class="row row-cols-1 row-cols-md-2">
-            <div class="col">
-              <img
-                class="rounded object-fit-contain w-100 h-100"
-                style="min-height: 300px"
-                src="assets/img/genius.svg"
-              />
-            </div>
-            <div
-              class="col text-start d-flex flex-column justify-content-center align-items-center gap-5 p-4"
+
+    <main id="main-container">
+      <section class="lexis-landing-hero">
+        <div class="container hero-wrapper">
+          <div id="hero-text" class="hero-text">
+            <h1 class="display-3 fw-bold lexis-landing-hero-title">
+              Learn at your own pace
+            </h1>
+            <p class="fs-4 text-secondary mb-4">
+              Interactive exercises designed for dyslexic learners. Improve your
+              reading, spelling, and comprehension through game-like challenges
+              that adapt to your rhythm.
+            </p>
+            <button
+              class="btn lexis-btn-primary btn-lg rounded-pill px-4 py-2 fs-5"
+              id="get-started-btn"
+              data-trigger="register"
             >
-              <div class="d-flex flex-column">
-                <h3 class="display-3 fw-normal">Welcome to Lexis!</h3>
-                <span class="fs-3 fw-light">Improve your comprehension.</span>
+              Start Learning
+            </button>
+          </div>
+          <div class="hero-image text-center">
+            <img
+              id="hero-image"
+              src="assets/img/genius.svg"
+              class="img-fluid"
+              style="max-height: 400px"
+              alt="Learning"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="lexis-landing-section">
+        <div class="container">
+          <h2 class="text-center fw-bold mb-5 lexis-landing-hero-title">
+            How it works
+          </h2>
+          <div class="row g-4 text-center">
+            <div class="col-md-4">
+              <div class="lexis-landing-card h-100">
+                <div class="lexis-landing-step fw-bold mb-2">1</div>
+                <h5 class="fw-semibold">Pick a mode</h5>
+                <p class="text-secondary mb-0">
+                  Normal mode for progression through levels, or Hard mode for a
+                  challenge with coins.
+                </p>
               </div>
-              <div
-                class="d-flex flex-column align-items-stretch align-self-center gap-3"
-              >
-                <button
-                  class="btn btn-dark btn-lg text-center"
-                  id="get-started-btn"
-                  type="button"
-                >
-                  Get Started</button
-                ><button
-                  class="btn btn-light btn-lg text-center"
-                  id="login-btn"
-                  type="button"
-                >
-                  I already have an account
-                </button>
+            </div>
+            <div class="col-md-4">
+              <div class="lexis-landing-card h-100">
+                <div class="lexis-landing-step fw-bold mb-2">2</div>
+                <h5 class="fw-semibold">Solve exercises</h5>
+                <p class="text-secondary mb-0">
+                  Spelling, letter drag &amp; drop, fill in the blanks, and word
+                  ordering puzzles.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="lexis-landing-card h-100">
+                <div class="lexis-landing-step fw-bold mb-2">3</div>
+                <h5 class="fw-semibold">Earn rewards</h5>
+                <p class="text-secondary mb-0">
+                  Gain XP and coins, build daily streaks, and customize your
+                  avatar.
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        class="d-flex vh-100 justify-content-center align-items-center"
-        data-anime-opacity="0, 1, 0"
-        data-anime-scale="0.8, 1"
-        data-anime-end="100vh"
-        id="info-container"
-        data-anime-scroll-animation=""
-      >
-        <div
-          class="container-xl d-flex align-items-start px-4 py-4 py-xl-5"
-          data-bs-spy="scroll"
-          data-bs-smooth-scroll="true"
-        >
-          <div class="row row-cols-1 row-cols-md-2 d-flex flex-row-reverse">
-            <div class="col">
-              <img
-                class="rounded object-fit-contain w-100 h-100"
-                style="min-height: 300px"
-                src="assets/img/studying.svg"
-              />
+      </section>
+
+      <section class="lexis-landing-section lexis-landing-section-alt">
+        <div class="container">
+          <h2 class="text-center fw-bold mb-5 lexis-landing-hero-title">
+            Try it out
+          </h2>
+          <div id="demo-container" class="lexis-contained mx-auto"></div>
+        </div>
+      </section>
+
+      <section class="lexis-landing-section">
+        <div class="container">
+          <h2 class="text-center fw-bold mb-5 lexis-landing-hero-title">
+            Stay Motivated
+          </h2>
+          <div class="row g-4 text-center">
+            <div class="col-6 col-lg-3">
+              <div class="lexis-landing-card h-100">
+                <div class="display-5 mb-2">🔥</div>
+                <h6 class="fw-semibold">Daily Streaks</h6>
+                <p class="text-secondary small mb-0">
+                  Keep coming back to build your streak.
+                </p>
+              </div>
             </div>
-            <div
-              class="col text-start d-flex flex-column justify-content-center align-items-center gap-5 p-4"
-            >
-              <div class="d-flex flex-column">
-                <h3 class="display-3 fw-normal">The best learning platform.</h3>
-                <span class="fs-3 fw-light"
-                  >It is a long established fact that a reader will be
-                  distracted by the <br />readable content of a page when
-                  looking at its layout. The point of <br />using Lorem Ipsum is
-                  that it has a more-or-less normal distribution of
-                  <br />letters, as opposed to using 'Content here, content
-                  here', making it <br />look like readable English.</span
-                >
+            <div class="col-6 col-lg-3">
+              <div class="lexis-landing-card h-100">
+                <div class="display-5 mb-2">⭐</div>
+                <h6 class="fw-semibold">Level System</h6>
+                <p class="text-secondary small mb-0">
+                  Earn XP and unlock new titles.
+                </p>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="lexis-landing-card h-100">
+                <div class="display-5 mb-2">🪙</div>
+                <h6 class="fw-semibold">In-game Coins</h6>
+                <p class="text-secondary small mb-0">
+                  Earn coins in Hard mode, spend in the store.
+                </p>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3">
+              <div class="lexis-landing-card h-100">
+                <div class="display-5 mb-2">🎨</div>
+                <h6 class="fw-semibold">Avatar Customization</h6>
+                <p class="text-secondary small mb-0">
+                  Unlock accessories and styles for your avatar.
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <script src="assets/js/Scroll-Animation-script.js"></script>
+      </section>
+
+      <section class="lexis-landing-cta">
+        <div class="container text-center">
+          <h2 class="fw-bold lexis-landing-hero-title mb-3">
+            Ready to start learning?
+          </h2>
+          <button
+            class="btn lexis-btn-primary btn-lg rounded-pill px-5 py-2 fs-5"
+            data-trigger="register"
+          >
+            Start Learning Now
+          </button>
+        </div>
+      </section>
+
+      <footer class="lexis-landing-footer text-center py-4">
+        <div class="container">
+          <p class="small text-secondary mb-0">Lexis © 2026</p>
+        </div>
+      </footer>
+    </main>
   </body>
 </html>
